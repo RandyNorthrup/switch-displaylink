@@ -7,8 +7,12 @@
  * and keep it filled by grabbing the root window with XShm. DisplayLinkManager
  * picks the pixels up from evdi and pushes them over USB.
  *
- * Only changed rows are copied and reported via drmModeDirtyFB, so a static
- * desktop costs almost nothing on the USB link.
+ * Double-buffered: frames are drawn into the hidden buffer and page-flipped
+ * in. evdi only completes a flip after DisplayLinkManager has grabbed the new
+ * buffer, so the buffer we draw into is never being read (no tearing). With
+ * -1 it falls back to one buffer updated in place + drmModeDirtyFB.
+ *
+ * Only changed rows are copied, so a static desktop costs almost nothing.
  *
  * Build: make -C mirror      Run: dl-mirror [-d /dev/dri/cardN] [-f fps]
  */
@@ -21,6 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/ipc.h>
+#include <poll.h>
 #include <sys/mman.h>
 #include <sys/shm.h>
 #include <time.h>
@@ -39,12 +44,17 @@
 static volatile sig_atomic_t quit;
 static void on_signal(int sig) { (void)sig; quit = 1; }
 
+#define NBUF 2
+
 struct kms {
 	int fd;
-	uint32_t conn_id, crtc_id, fb_id, handle;
+	uint32_t conn_id, crtc_id;
+	uint32_t fb_id[NBUF], handle[NBUF];
+	uint32_t *map[NBUF];
+	int nbuf, front;
+	int flip_pending;
 	drmModeModeInfo mode;
 	drmModeCrtc *saved_crtc;
-	uint32_t *map;
 	uint32_t pitch; /* in pixels */
 	size_t size;
 };
@@ -97,9 +107,10 @@ static int pick_mode(drmModeConnector *c, int w, int h, drmModeModeInfo *out)
 }
 
 static int kms_setup(struct kms *k, const char *dev, int src_w, int src_h,
-		     int force_w, int force_h)
+		     int force_w, int force_h, int nbuf)
 {
 	memset(k, 0, sizeof(*k));
+	k->nbuf = nbuf;
 	k->fd = open_evdi_card(dev);
 	if (k->fd < 0) {
 		log("no evdi card: %s", strerror(errno));
@@ -155,42 +166,77 @@ static int kms_setup(struct kms *k, const char *dev, int src_w, int src_h,
 		return -1;
 	}
 
-	struct drm_mode_create_dumb cd = {
-		.width = k->mode.hdisplay, .height = k->mode.vdisplay, .bpp = 32,
-	};
-	if (drmIoctl(k->fd, DRM_IOCTL_MODE_CREATE_DUMB, &cd)) {
-		log("create dumb: %s", strerror(errno));
-		return -1;
-	}
-	k->handle = cd.handle;
-	k->pitch = cd.pitch / 4;
-	k->size = cd.size;
+	for (int i = 0; i < k->nbuf; i++) {
+		struct drm_mode_create_dumb cd = {
+			.width = k->mode.hdisplay, .height = k->mode.vdisplay, .bpp = 32,
+		};
+		if (drmIoctl(k->fd, DRM_IOCTL_MODE_CREATE_DUMB, &cd)) {
+			log("create dumb: %s", strerror(errno));
+			return -1;
+		}
+		k->handle[i] = cd.handle;
+		k->pitch = cd.pitch / 4;
+		k->size = cd.size;
 
-	if (drmModeAddFB(k->fd, cd.width, cd.height, 24, 32, cd.pitch, cd.handle, &k->fb_id)) {
-		log("addfb: %s", strerror(errno));
-		return -1;
-	}
+		if (drmModeAddFB(k->fd, cd.width, cd.height, 24, 32, cd.pitch, cd.handle,
+				 &k->fb_id[i])) {
+			log("addfb: %s", strerror(errno));
+			return -1;
+		}
 
-	struct drm_mode_map_dumb md = { .handle = cd.handle };
-	if (drmIoctl(k->fd, DRM_IOCTL_MODE_MAP_DUMB, &md)) {
-		log("map dumb: %s", strerror(errno));
-		return -1;
+		struct drm_mode_map_dumb md = { .handle = cd.handle };
+		if (drmIoctl(k->fd, DRM_IOCTL_MODE_MAP_DUMB, &md)) {
+			log("map dumb: %s", strerror(errno));
+			return -1;
+		}
+		k->map[i] = mmap(NULL, k->size, PROT_READ | PROT_WRITE, MAP_SHARED, k->fd,
+				 md.offset);
+		if (k->map[i] == MAP_FAILED) {
+			k->map[i] = NULL;
+			log("mmap: %s", strerror(errno));
+			return -1;
+		}
+		memset(k->map[i], 0, k->size);
 	}
-	k->map = mmap(NULL, k->size, PROT_READ | PROT_WRITE, MAP_SHARED, k->fd, md.offset);
-	if (k->map == MAP_FAILED) {
-		k->map = NULL;
-		log("mmap: %s", strerror(errno));
-		return -1;
-	}
-	memset(k->map, 0, k->size);
 
 	k->saved_crtc = drmModeGetCrtc(k->fd, k->crtc_id);
-	if (drmModeSetCrtc(k->fd, k->crtc_id, k->fb_id, 0, 0, &k->conn_id, 1, &k->mode)) {
+	if (drmModeSetCrtc(k->fd, k->crtc_id, k->fb_id[0], 0, 0, &k->conn_id, 1, &k->mode)) {
 		log("setcrtc %dx%d: %s", k->mode.hdisplay, k->mode.vdisplay, strerror(errno));
 		return -1;
 	}
-	log("scanning out %dx%d@%d on crtc %u", k->mode.hdisplay, k->mode.vdisplay,
-	    k->mode.vrefresh, k->crtc_id);
+	log("scanning out %dx%d@%d on crtc %u, %s-buffered", k->mode.hdisplay,
+	    k->mode.vdisplay, k->mode.vrefresh, k->crtc_id, k->nbuf > 1 ? "double" : "single");
+	return 0;
+}
+
+static void on_flip(int fd, unsigned seq, unsigned sec, unsigned usec, void *data)
+{
+	(void)fd; (void)seq; (void)sec; (void)usec;
+	struct kms *k = data;
+	k->flip_pending = 0;
+	k->front = !k->front;
+}
+
+/*
+ * Wait up to timeout seconds for the pending flip to complete.
+ * Returns 0 when no flip is pending, -1 on timeout or error.
+ */
+static int kms_wait_flip(struct kms *k, double timeout)
+{
+	drmEventContext ev = {
+		.version = 2,
+		.page_flip_handler = on_flip,
+	};
+	while (k->flip_pending) {
+		struct pollfd pfd = { .fd = k->fd, .events = POLLIN };
+		int r = poll(&pfd, 1, (int)(timeout * 1000));
+		if (r < 0 && errno == EINTR)
+			continue;
+		if (r <= 0)
+			return -1;
+		if (drmHandleEvent(k->fd, &ev))
+			return -1;
+	}
 	return 0;
 }
 
@@ -198,17 +244,21 @@ static void kms_teardown(struct kms *k)
 {
 	if (k->fd < 0)
 		return;
+	if (k->flip_pending && kms_wait_flip(k, 1.0))
+		log("flip still pending at exit");
 	/* Blank the output instead of leaving a stale frame up. */
 	if (k->crtc_id)
 		drmModeSetCrtc(k->fd, k->crtc_id, 0, 0, 0, NULL, 0, NULL);
 	drmModeFreeCrtc(k->saved_crtc);
-	if (k->map)
-		munmap(k->map, k->size);
-	if (k->fb_id)
-		drmModeRmFB(k->fd, k->fb_id);
-	if (k->handle) {
-		struct drm_mode_destroy_dumb dd = { .handle = k->handle };
-		drmIoctl(k->fd, DRM_IOCTL_MODE_DESTROY_DUMB, &dd);
+	for (int i = 0; i < NBUF; i++) {
+		if (k->map[i])
+			munmap(k->map[i], k->size);
+		if (k->fb_id[i])
+			drmModeRmFB(k->fd, k->fb_id[i]);
+		if (k->handle[i]) {
+			struct drm_mode_destroy_dumb dd = { .handle = k->handle[i] };
+			drmIoctl(k->fd, DRM_IOCTL_MODE_DESTROY_DUMB, &dd);
+		}
 	}
 	drmDropMaster(k->fd);
 	close(k->fd);
@@ -287,19 +337,20 @@ static double now(void)
 static void usage(void)
 {
 	fprintf(stderr,
-		"usage: dl-mirror [-d /dev/dri/cardN] [-f fps] [-m WxH] [-C]\n"
+		"usage: dl-mirror [-d /dev/dri/cardN] [-f fps] [-m WxH] [-C] [-1]\n"
 		"  -d  DRM device (default: auto-detect the evdi card)\n"
 		"  -f  max frames per second (default 30)\n"
 		"  -m  force output mode WxH (default: match X screen, else monitor preferred)\n"
-		"  -C  don't draw the mouse cursor\n");
+		"  -C  don't draw the mouse cursor\n"
+		"  -1  single buffer + dirtyfb (may tear) instead of page flipping\n");
 }
 
 int main(int argc, char **argv)
 {
 	const char *dev = NULL;
-	int fps = 30, force_w = 0, force_h = 0, want_cursor = 1, opt;
+	int fps = 30, force_w = 0, force_h = 0, want_cursor = 1, nbuf = NBUF, opt;
 
-	while ((opt = getopt(argc, argv, "d:f:m:Ch")) != -1) {
+	while ((opt = getopt(argc, argv, "d:f:m:C1h")) != -1) {
 		switch (opt) {
 		case 'd': dev = optarg; break;
 		case 'f': fps = atoi(optarg); if (fps < 1) fps = 1; break;
@@ -307,6 +358,7 @@ int main(int argc, char **argv)
 			if (sscanf(optarg, "%dx%d", &force_w, &force_h) != 2) { usage(); return 2; }
 			break;
 		case 'C': want_cursor = 0; break;
+		case '1': nbuf = 1; break;
 		default: usage(); return opt == 'h' ? 0 : 2;
 		}
 	}
@@ -362,7 +414,7 @@ int main(int argc, char **argv)
 	uint32_t *frame = malloc((size_t)stride * sh * 4); /* src + cursor */
 
 	struct kms k = { .fd = -1 };
-	if (kms_setup(&k, dev, sw, sh, force_w, force_h)) {
+	if (kms_setup(&k, dev, sw, sh, force_w, force_h, nbuf)) {
 		kms_teardown(&k);
 		return errno == EAGAIN ? 75 /* EX_TEMPFAIL */ : 1;
 	}
@@ -374,8 +426,9 @@ int main(int argc, char **argv)
 
 	int force_full = 1, ret = 0;
 	const double period = 1.0 / fps;
-	unsigned long frames = 0, pushed = 0;
-	double t_next = now(), t_stat = t_next, t_full = t_next;
+	unsigned long frames = 0, pushed = 0, skipped = 0;
+	int ly0 = 0, ly1 = sh; /* source rows changed by the previous push */
+	double t_next = now(), t_stat = t_next, t_full = t_next, t_flip = 0;
 
 	while (!quit) {
 		if (!XShmGetImage(dpy, root, img, 0, 0, AllPlanes)) {
@@ -402,6 +455,10 @@ int main(int argc, char **argv)
 			t_full = now();
 		}
 
+		/* A flip that completed after the fallback moved scanout: repaint. */
+		if (k.nbuf == 1 && k.flip_pending && !kms_wait_flip(&k, 0))
+			force_full = 1;
+
 		/* Changed source rows → [y0, y1). */
 		int y0 = 0, y1 = sh;
 		if (!force_full) {
@@ -412,16 +469,48 @@ int main(int argc, char **argv)
 				y1--;
 		}
 
+		/*
+		 * Still waiting for DisplayLinkManager to take the last flip: skip
+		 * this frame rather than block. prev is left alone, so the changes
+		 * get picked up next time.
+		 */
+		if (y1 > y0 && k.nbuf > 1 && k.flip_pending && kms_wait_flip(&k, 0)) {
+			if (now() - t_flip > 2.0) {
+				log("flip not completed after 2 s, falling back to single buffer");
+				k.nbuf = 1;
+				force_full = 1;
+				y0 = 0;
+				y1 = sh;
+			} else {
+				skipped++;
+				y1 = y0;
+			}
+		}
+
 		if (y1 > y0) {
+			int retry = 0;
 			memcpy(&prev[y0 * stride], &frame[y0 * stride], (size_t)(y1 - y0) * stride * 4);
 
-			/* Destination rows whose source row falls in [y0, y1). */
+			/*
+			 * The back buffer holds the frame from two pushes ago, so it
+			 * also needs the rows the previous push changed.
+			 */
+			int back = k.nbuf > 1 ? !k.front : k.front;
+			int c0 = y0, c1 = y1;
+			if (k.nbuf > 1) {
+				if (ly0 < c0) c0 = ly0;
+				if (ly1 > c1) c1 = ly1;
+			}
+			ly0 = y0;
+			ly1 = y1;
+
+			/* Destination rows whose source row falls in [c0, c1). */
 			int d0 = 0, d1 = s.dh;
-			while (d0 < s.dh && s.ymap[d0] < y0) d0++;
-			while (d1 > d0 && s.ymap[d1 - 1] >= y1) d1--;
+			while (d0 < s.dh && s.ymap[d0] < c0) d0++;
+			while (d1 > d0 && s.ymap[d1 - 1] >= c1) d1--;
 
 			for (int y = d0; y < d1; y++) {
-				uint32_t *dst = &k.map[(size_t)(s.dy + y) * k.pitch + s.dx];
+				uint32_t *dst = &k.map[back][(size_t)(s.dy + y) * k.pitch + s.dx];
 				const uint32_t *sr = &frame[(size_t)s.ymap[y] * stride];
 				if (s.identity) {
 					memcpy(dst, sr, (size_t)sw * 4);
@@ -431,25 +520,39 @@ int main(int argc, char **argv)
 				}
 			}
 
-			drmModeClip clip = {
-				.x1 = force_full ? 0 : s.dx,
-				.y1 = force_full ? 0 : s.dy + d0,
-				.x2 = force_full ? k.mode.hdisplay : s.dx + s.dw,
-				.y2 = force_full ? k.mode.vdisplay : s.dy + d1,
-			};
-			if (drmModeDirtyFB(k.fd, k.fb_id, &clip, 1) && errno != ENOSYS) {
-				log("dirtyfb: %s", strerror(errno));
-				if (errno == ENODEV || errno == ENOENT) { ret = 75; break; }
+			if (k.nbuf > 1) {
+				/* evdi marks the whole screen dirty on a flip. */
+				if (drmModePageFlip(k.fd, k.crtc_id, k.fb_id[back],
+						    DRM_MODE_PAGE_FLIP_EVENT, &k)) {
+					log("pageflip: %s", strerror(errno));
+					if (errno == ENODEV || errno == ENOENT) { ret = 75; break; }
+					retry = 1;
+				} else {
+					k.flip_pending = 1;
+					t_flip = now();
+				}
+			} else {
+				drmModeClip clip = {
+					.x1 = force_full ? 0 : s.dx,
+					.y1 = force_full ? 0 : s.dy + d0,
+					.x2 = force_full ? k.mode.hdisplay : s.dx + s.dw,
+					.y2 = force_full ? k.mode.vdisplay : s.dy + d1,
+				};
+				if (drmModeDirtyFB(k.fd, k.fb_id[k.front], &clip, 1) && errno != ENOSYS) {
+					log("dirtyfb: %s", strerror(errno));
+					if (errno == ENODEV || errno == ENOENT) { ret = 75; break; }
+				}
 			}
-			force_full = 0;
-			pushed++;
+			force_full = retry;
+			pushed += !retry;
 		}
 		frames++;
 
 		double t = now();
 		if (t - t_stat >= 60) {
-			log("%.1f fps grabbed, %.1f fps pushed", frames / (t - t_stat), pushed / (t - t_stat));
-			frames = pushed = 0;
+			log("%.1f fps grabbed, %.1f fps pushed, %lu skipped (flip pending)",
+			    frames / (t - t_stat), pushed / (t - t_stat), skipped);
+			frames = pushed = skipped = 0;
 			t_stat = t;
 		}
 		t_next += period;
