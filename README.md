@@ -96,16 +96,18 @@ drivers/cpu-pcsample/  CoreSight PC sampler; blocked (external debug fused off)
 mirror/              dl-mirror (KMS mirror daemon) + its systemd user unit
 configs/             /etc/X11 config, displaylink unit, crash-debug sysctls
 upstream/            kernel patches for switch-l4t-kernel-4.9 (unplug fix)
+kernel/              build our kernel fork on Windows/WSL, config (see kernel/README.md)
 evidence/            crash traces, hekate panic dumps, test logs
 scripts/             install.sh            — full fetch+build+install
                       fix-evdi-version.sh   — targeted panic fix (version align)
                       dock-eject.sh         — run before unplugging (see below)
                       mirror-test.sh        — timed dl-mirror run with dmesg capture
                       unplug-watch.sh       — fsync'd dmesg capture for unplug tests
+                      test-kernel.sh        — fetch a WSL build, boot it as hekate entry "L4T Noble TEST"
                       capture-staleness.c   — how stale X root grabs are (compositing test)
                       dl-panic-capture.*    — reliable crash capture
 docs/                mirror.md             — how dl-mirror works, tuning notes
-                      unplug-crash.md       — the open xHCI unplug crash
+                      unplug-crash.md       — the xHCI unplug crash (fixed by xusb_bwfix)
                       fix-and-mirror-plan.md — original plan + what was done
 ```
 
