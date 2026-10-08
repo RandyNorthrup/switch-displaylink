@@ -1,0 +1,98 @@
+From 58f74ab6230b6bac5659aa40488800d46094ee28 Mon Sep 17 00:00:00 2001
+From: Randy Northrup <randy.northrup@gmail.com>
+Date: Wed, 7 Oct 2026 23:53:53 -0700
+Subject: [PATCH 2/4] usb: xhci: don't spin with interrupts off while aborting
+ the command ring
+
+xhci_abort_cmd_ring() waits for the ring to stop with xhci_handshake(),
+holding xhci->lock with interrupts off. On this tree xhci_handshake()
+counts loop iterations (udelay(1) + an MMIO read each), not time. When the
+controller is dead the "5 s + 3 s" wait takes ~18 s on Tegra X1. All
+interrupts are routed to cpu0, so i2c, wifi and the joycon UART time out,
+and the box usually dies with "Watchdog detected hard LOCKUP on cpu 0".
+
+The abort runs from the command timer work (process context), and the
+function already drops the lock to wait for the stop event. So poll CRR
+with readl_poll_timeout(), sleeping 1 ms per step, with the lock dropped.
+The timeouts stay the spec's 5 s + 3 s, but now they're wall time, and the
+rest of the system keeps running. New commands can't ring the doorbell in
+the meantime because cmd_ring_state is ABORTED.
+
+Tested on a Switch Lite (4.9.140-l4t) with the same logic in an
+out-of-tree module (a replacement cmd_timer work function): after a raw
+dock pull the timed-out Disable Slot is aborted, the controller is
+declared dead, and nothing stalls.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ drivers/usb/host/xhci-ring.c | 35 +++++++++++++++++++++++++++++++----
+ 1 file changed, 31 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 6869bfc6..44701c7d 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -65,6 +65,7 @@
+  *   endpoint rings; it generates events on the event ring for these.
+  */
+ 
++#include <linux/iopoll.h>
+ #include <linux/scatterlist.h>
+ #include <linux/slab.h>
+ #include <linux/dma-mapping.h>
+@@ -321,6 +322,34 @@ static void xhci_handle_stopped_cmd_ring(struct xhci_hcd *xhci,
+ }
+ 
+ /* Must be called with xhci->lock held, releases and aquires lock back */
++/*
++ * Wait for the command ring to stop (CRR cleared) after an abort.
++ *
++ * xhci_handshake() would busy-wait here with xhci->lock held and interrupts
++ * off, and it counts loop iterations rather than time: on Tegra X1 a dead
++ * controller keeps cpu0 spinning for ~18 s instead of 5 + 3 s, which stalls
++ * the whole SoC and trips the hard lockup detector. We run from the command
++ * timer work, so sleep and poll with the lock dropped instead. New commands
++ * can't ring the doorbell meanwhile (cmd_ring_state is ABORTED), and a stop
++ * event that arrives while unlocked is handled the same way as during the
++ * wait for cmd_ring_stop_completion below.
++ */
++static int xhci_wait_cmd_ring_stopped(struct xhci_hcd *xhci,
++				      unsigned long flags, u64 timeout_us)
++{
++	u32 val;
++	int ret;
++
++	spin_unlock_irqrestore(&xhci->lock, flags);
++	ret = readl_poll_timeout(&xhci->op_regs->cmd_ring, val,
++				 val == ~(u32)0 || !(val & CMD_RING_RUNNING),
++				 1000, timeout_us);
++	spin_lock_irqsave(&xhci->lock, flags);
++	if (!ret && val == ~(u32)0)		/* card removed */
++		ret = -ENODEV;
++	return ret;
++}
++
+ static int xhci_abort_cmd_ring(struct xhci_hcd *xhci, unsigned long flags)
+ {
+ 	u64 temp_64;
+@@ -341,15 +370,13 @@ static int xhci_abort_cmd_ring(struct xhci_hcd *xhci, unsigned long flags)
+ 	 * seconds), then it should assume that the there are
+ 	 * larger problems with the xHC and assert HCRST.
+ 	 */
+-	ret = xhci_handshake(&xhci->op_regs->cmd_ring,
+-			CMD_RING_RUNNING, 0, 5 * 1000 * 1000);
++	ret = xhci_wait_cmd_ring_stopped(xhci, flags, 5 * USEC_PER_SEC);
+ 	if (ret < 0) {
+ 		/* we are about to kill xhci, give it one more chance */
+ 		xhci_write_64(xhci, temp_64 | CMD_RING_ABORT,
+ 			      &xhci->op_regs->cmd_ring);
+ 		udelay(1000);
+-		ret = xhci_handshake(&xhci->op_regs->cmd_ring,
+-				     CMD_RING_RUNNING, 0, 3 * 1000 * 1000);
++		ret = xhci_wait_cmd_ring_stopped(xhci, flags, 3 * USEC_PER_SEC);
+ 		if (ret < 0) {
+ 			xhci_err(xhci, "Stopped the command ring failed, "
+ 				 "maybe the host is dead\n");
+-- 
+2.43.0
+

@@ -1,0 +1,58 @@
+From e249c3fe7a82667aea4ae56a3f49b461ad89c3b0 Mon Sep 17 00:00:00 2001
+From: Randy Northrup <randy.northrup@gmail.com>
+Date: Wed, 7 Oct 2026 23:55:08 -0700
+Subject: [PATCH 3/4] usb: xhci-tegra: re-probe through the driver core in
+ hcd_reinit
+
+xhci_reinit_work() calls tegra_xusb_remove() and tegra_xusb_probe()
+directly. The driver core never sees the unbind, so the devm resources
+from the first probe stay allocated, and the re-probe fails:
+
+  tegra-xusb 70090000.xusb: can't request region for resource
+  [mem 0x70099000-0x70099fff]
+
+That leaves USB dead until reboot, which is the opposite of what
+en_hcd_reinit is for. Use device_release_driver() + device_attach()
+instead. remove() frees xhci, which contains this work item, but doesn't
+cancel it, so nothing waits on the running work and only pdev is used
+after the unbind.
+
+Tested on a Switch Lite (4.9.140-l4t): the old path reproducibly fails as
+above. The same driver-core unbind/bind, done from an out-of-tree module
+after "HC died", brings the controller back, and a replugged DisplayLink
+dock enumerates and works again.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ drivers/usb/host/xhci-tegra.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
+index 970a984e..bea670ff 100644
+--- a/drivers/usb/host/xhci-tegra.c
++++ b/drivers/usb/host/xhci-tegra.c
+@@ -5426,9 +5426,19 @@ static void xhci_reinit_work(struct work_struct *work)
+ 	xhci->xhc_state |= XHCI_STATE_DYING;
+ 	spin_unlock_irqrestore(&xhci->lock, flags);
+ 
+-	tegra_xusb_remove(pdev);
++	/*
++	 * Go through the driver core. Calling tegra_xusb_remove() and
++	 * tegra_xusb_probe() directly never releases the devm resources of
++	 * the first probe, so the re-probe fails with "can't request region"
++	 * and USB stays dead until reboot. remove() frees xhci (and this
++	 * work item) but doesn't cancel it, so only pdev is used from here.
++	 */
++	get_device(&pdev->dev);
++	device_release_driver(&pdev->dev);
+ 	usleep_range(10, 20);
+-	tegra_xusb_probe(pdev);
++	if (device_attach(&pdev->dev) != 1)
++		dev_err(&pdev->dev, "re-probe after hcd_reinit failed\n");
++	put_device(&pdev->dev);
+ 
+ 	/* probe will set recovery_in_progress to false */
+ }
+-- 
+2.43.0
+

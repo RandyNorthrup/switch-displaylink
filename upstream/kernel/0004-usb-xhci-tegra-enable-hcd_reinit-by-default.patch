@@ -1,0 +1,31 @@
+From 1513a01bc373f7bd1f7d42bc70d7db00eb422d18 Mon Sep 17 00:00:00 2001
+From: Randy Northrup <randy.northrup@gmail.com>
+Date: Wed, 7 Oct 2026 23:55:08 -0700
+Subject: [PATCH 4/4] usb: xhci-tegra: enable hcd_reinit by default
+
+With the previous patch hcd_reinit works, so turn it on. Without it, a
+controller that dies (for example after a dock is pulled mid-transfer)
+leaves every USB port dead until reboot. It can still be turned off with
+xhci_tegra.en_hcd_reinit=0.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ drivers/usb/host/xhci-tegra.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
+index bea670ff..fa431370 100644
+--- a/drivers/usb/host/xhci-tegra.c
++++ b/drivers/usb/host/xhci-tegra.c
+@@ -44,7 +44,7 @@
+ #include "xhci.h"
+ #include "../core/hub.h"
+ 
+-static bool en_hcd_reinit = false;
++static bool en_hcd_reinit = true;
+ module_param(en_hcd_reinit, bool, 0644);
+ MODULE_PARM_DESC(en_hcd_reinit, "Enable hcd reinit when hc died");
+ static void xhci_reinit_work(struct work_struct *work);
+-- 
+2.43.0
+

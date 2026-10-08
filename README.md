@@ -95,6 +95,7 @@ drivers/xusb-otgdefer/ unplug-crash experiment (defer OTG detach); does NOT fix 
 drivers/cpu-pcsample/  CoreSight PC sampler; blocked (external debug fused off)
 mirror/              dl-mirror (KMS mirror daemon) + its systemd user unit
 configs/             /etc/X11 config, displaylink unit, crash-debug sysctls
+upstream/            kernel patches for switch-l4t-kernel-4.9 (unplug fix)
 evidence/            crash traces, hekate panic dumps, test logs
 scripts/             install.sh            — full fetch+build+install
                       fix-evdi-version.sh   — targeted panic fix (version align)

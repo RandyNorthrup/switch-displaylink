@@ -1,0 +1,59 @@
+From eb701592145f3fd18f3f169f4dcb43dbc01fa525 Mon Sep 17 00:00:00 2001
+From: Randy Northrup <randy.northrup@gmail.com>
+Date: Wed, 7 Oct 2026 23:53:07 -0700
+Subject: [PATCH 1/4] usb: xhci: don't drop endpoints of a device that is
+ already gone
+
+When a hub is unplugged, usb_disable_device() drops the endpoints of every
+device behind it, and xhci_check_bandwidth() commits that with a Configure
+Endpoint command. By then the device is already NOTATTACHED. The Disable
+Slot that follows (xhci_free_dev) frees everything in the controller anyway,
+and usb_disable_device() ignores the result.
+
+On the Nintendo Switch (Tegra X1, xhci-tegra) the controller firmware never
+completes that command for a device behind a vanished hub (seen with a
+DisplayLink dock behind a VIA hub). After the 5 s command timer, the abort
+path in xhci_handle_command_timeout() spins with interrupts off on cpu0 for
+~18 s. That stalls the whole SoC and usually ends in "Watchdog detected
+hard LOCKUP on cpu 0".
+
+Skip the command for a NOTATTACHED device and just reset the software
+bandwidth state.
+
+Tested on a Switch Lite (4.9.140-l4t) with the same logic in an out-of-tree
+module (a kallsyms hook of check_bandwidth): a raw dock pull while
+streaming tears down all 6 devices in ~180 ms with no stall, where the
+system used to hang.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ drivers/usb/host/xhci.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index 8c46b5d3..944ef6a5 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -2779,6 +2779,19 @@ int xhci_check_bandwidth(struct usb_hcd *hcd, struct usb_device *udev)
+ 		(xhci->xhc_state & XHCI_STATE_REMOVING))
+ 		return -ENODEV;
+ 
++	/*
++	 * The device is already gone (its hub was unplugged). Dropping its
++	 * endpoints with a Configure Endpoint command is pointless: the
++	 * Disable Slot that follows frees everything in the controller, and
++	 * usb_disable_device() ignores our return value. Some controllers
++	 * (Tegra X1) never complete that command for a device behind a
++	 * vanished hub, so skip it.
++	 */
++	if (udev->state == USB_STATE_NOTATTACHED) {
++		xhci_reset_bandwidth(hcd, udev);
++		return -ENODEV;
++	}
++
+ 	xhci_dbg(xhci, "%s called for udev %p\n", __func__, udev);
+ 	virt_dev = xhci->devs[udev->slot_id];
+ 
+-- 
+2.43.0
+

@@ -162,9 +162,11 @@ lockup PC sampler isn't possible on a retail Switch. [Log](../evidence/cpu-pcsam
 
 ## Next step
 
-Offer upstream a kernel patch: a time-based
-`xhci_handshake` (as mainline later did), and skipping `check_bandwidth` for
-`NOTATTACHED` devices.
+The in-kernel version of the fix is written as four patches against
+theofficialgman/switch-l4t-kernel-4.9 in [upstream/](../upstream/README.md): skip
+`check_bandwidth` for `NOTATTACHED` devices, a sleeping time-based command ring
+abort, a working `hcd_reinit`, and `hcd_reinit` turned on by default. They compile
+but haven't been boot-tested in a built kernel, and they haven't been submitted.
 
 ## Workaround (no longer needed while xusb_bwfix is loaded)
 
