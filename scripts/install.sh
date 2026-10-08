@@ -91,10 +91,6 @@ install -m0644 "$REPO_DIR/scripts/dl-panic-capture.service" /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable dl-panic-capture.service
 
-# --- keep DisplayLinkManager running across unplugs (faster replug) ---------
-install -m0644 "$REPO_DIR/configs/99-displaylink.rules" /etc/udev/rules.d/99-displaylink.rules
-udevadm control --reload
-
 # --- dl-mirror: mirror the desktop onto the dock (user service) -------------
 for p in libdrm-dev libx11-dev libxext-dev libxfixes-dev; do
   dpkg -s "$p" >/dev/null 2>&1 || apt-get install -y "$p"
