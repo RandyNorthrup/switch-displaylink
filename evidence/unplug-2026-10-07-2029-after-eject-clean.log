@@ -1,0 +1,1212 @@
+== 2026-10-07T20:28:45-07:00 evdi  ==
+                     USER        PID ACCESS COMMAND
+/dev/dri/card0:      root       1074 F.... DisplayLinkMana
+Bus 001 Device 006: ID 17e9:4323 DisplayLink Plugable UD-3900PDZ
+2026-10-07T20:18:23,686746-07:00 Booting Linux on physical CPU 0x0
+2026-10-07T20:18:23,686746-07:00 Linux version 4.9.140-l4t (theofficialgman@buildbot) (gcc version 7.5.0 (Linaro GCC 7.5-2019.12) ) #149 SMP PREEMPT Sat Aug 15 22:11:25 EDT 2026
+2026-10-07T20:18:23,686746-07:00 Boot CPU: AArch64 Processor [411fd071]
+2026-10-07T20:18:23,686746-07:00 OF: fdt:memory scan node memory@80000000, reg size 48,
+2026-10-07T20:18:23,686746-07:00 OF: fdt: - 80000000 ,  7fd00000
+2026-10-07T20:18:23,686746-07:00 OF: fdt: - 100000000 ,  80000000
+2026-10-07T20:18:23,686746-07:00 Found tegra_fbmem: 00400000@f5a00000
+2026-10-07T20:18:23,686746-07:00 OF: fdt:Reserved memory: failed to reserve memory for node 'fb0_carveout': base 0x0000000000000000, size 0 MiB
+2026-10-07T20:18:23,686746-07:00 OF: fdt:Reserved memory: failed to reserve memory for node 'fb0_carveout': base 0x0000000000000000, size 0 MiB
+2026-10-07T20:18:23,686746-07:00 OF: fdt:Reserved memory: failed to reserve memory for node 'fb1_carveout': base 0x0000000000000000, size 0 MiB
+2026-10-07T20:18:23,686746-07:00 OF: fdt:Reserved memory: failed to reserve memory for node 'fb1_carveout': base 0x0000000000000000, size 0 MiB
+2026-10-07T20:18:23,686746-07:00 OF: reserved mem: initialized node ramoops_carveout, compatible id nvidia,ramoops
+2026-10-07T20:18:23,686746-07:00 cma: Reserved 512 MiB at 0x00000000d5800000
+2026-10-07T20:18:23,686746-07:00 On node 0 totalpages: 1047296
+2026-10-07T20:18:23,686746-07:00   DMA zone: 8192 pages used for memmap
+2026-10-07T20:18:23,686746-07:00   DMA zone: 0 pages reserved
+2026-10-07T20:18:23,686746-07:00   DMA zone: 523008 pages, LIFO batch:31
+2026-10-07T20:18:23,686746-07:00   Normal zone: 8192 pages used for memmap
+2026-10-07T20:18:23,686746-07:00   Normal zone: 524288 pages, LIFO batch:31
+2026-10-07T20:18:23,686746-07:00 psci: probing for conduit method from DT.
+2026-10-07T20:18:23,686746-07:00 psci: PSCIv1.1 detected in firmware.
+2026-10-07T20:18:23,686746-07:00 psci: Using standard PSCI v0.2 function IDs
+2026-10-07T20:18:23,686746-07:00 psci: MIGRATE_INFO_TYPE not supported.
+2026-10-07T20:18:23,686746-07:00 psci: SMC Calling Convention v1.0
+2026-10-07T20:18:23,686746-07:00 percpu: Embedded 24 pages/cpu @ffffffc0ffdb9000 s58008 r8192 d32104 u98304
+2026-10-07T20:18:23,686746-07:00 pcpu-alloc: s58008 r8192 d32104 u98304 alloc=24*4096
+2026-10-07T20:18:23,686746-07:00 pcpu-alloc: [0] 0 [0] 1 [0] 2 [0] 3 
+2026-10-07T20:18:23,686746-07:00 CPU features: enabling workaround for ARM erratum 832075
+2026-10-07T20:18:23,686746-07:00 Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 1030912
+2026-10-07T20:18:23,686746-07:00 Kernel command line: latency_allowance.ptsa_rework root=/dev/mmcblk0p2 rootfstype=ext4 rw   firmware_class.path=/lib/firmware/ access=m2   rootlabel=SWR-NOB rootlabel_retries=1   boot_m=1 boot_p=1 swr_dir=/switchroot/ubuntu-noble/   pmc_r2p.enabled=1 pmc_r2p.action=self   pmc_r2p.param1=2 pmc_r2p.param2=1   fbcon=map:9 consoleblank=0   nvdec_enabled=0 tegra_fbmem=0x400000@0xf5a00000 systemd.unified_cgroup_hierarchy=0 systemd.legacy_systemd_cgroup_controller=1 splash 
+2026-10-07T20:18:23,686746-07:00 PID hash table entries: 4096 (order: 3, 32768 bytes)
+2026-10-07T20:18:23,686746-07:00 Dentry cache hash table entries: 524288 (order: 10, 4194304 bytes)
+2026-10-07T20:18:23,686746-07:00 Inode-cache hash table entries: 262144 (order: 9, 2097152 bytes)
+2026-10-07T20:18:23,686746-07:00 Memory: 3546080K/4189184K available (13950K kernel code, 1938K rwdata, 6024K rodata, 3968K init, 1131K bss, 118816K reserved, 524288K cma-reserved)
+2026-10-07T20:18:23,686746-07:00 Virtual kernel memory layout:
+2026-10-07T20:18:23,686746-07:00     modules : 0xffffff8000000000 - 0xffffff8008000000   (   128 MB)
+2026-10-07T20:18:23,686746-07:00     vmalloc : 0xffffff8008000000 - 0xffffffbebfff0000   (   250 GB)
+2026-10-07T20:18:23,686746-07:00       .text : 0xffffff8008200000 - 0xffffff8008fa0000   ( 13952 KB)
+2026-10-07T20:18:23,686746-07:00     .rodata : 0xffffff8008fa0000 - 0xffffff8009590000   (  6080 KB)
+2026-10-07T20:18:23,686746-07:00       .init : 0xffffff8009590000 - 0xffffff8009970000   (  3968 KB)
+2026-10-07T20:18:23,686746-07:00       .data : 0xffffff8009970000 - 0xffffff8009b54808   (  1939 KB)
+2026-10-07T20:18:23,686746-07:00        .bss : 0xffffff8009b54808 - 0xffffff8009c6f664   (  1132 KB)
+2026-10-07T20:18:23,686746-07:00     fixed   : 0xffffffbefe7fd000 - 0xffffffbefec00000   (  4108 KB)
+2026-10-07T20:18:23,686746-07:00     PCI I/O : 0xffffffbefee00000 - 0xffffffbeffe00000   (    16 MB)
+2026-10-07T20:18:23,686746-07:00     vmemmap : 0xffffffbf00000000 - 0xffffffc000000000   (     4 GB maximum)
+2026-10-07T20:18:23,686746-07:00               0xffffffbf00000000 - 0xffffffbf04000000   (    64 MB actual)
+2026-10-07T20:18:23,686746-07:00     memory  : 0xffffffc000000000 - 0xffffffc100000000   (  4096 MB)
+2026-10-07T20:18:23,686746-07:00 kmemleak: Kernel memory leak detector disabled
+2026-10-07T20:18:23,686746-07:00 SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+2026-10-07T20:18:23,686746-07:00 Preemptible hierarchical RCU implementation.
+2026-10-07T20:18:23,686746-07:00 	Build-time adjustment of leaf fanout to 64.
+2026-10-07T20:18:23,686746-07:00 	RCU restricting CPUs from NR_CPUS=64 to nr_cpu_ids=4.
+2026-10-07T20:18:23,686746-07:00 RCU: Adjusting geometry for rcu_fanout_leaf=64, nr_cpu_ids=4
+2026-10-07T20:18:23,686746-07:00 NR_IRQS:64 nr_irqs:64 0
+2026-10-07T20:18:23,686746-07:00 /interrupt-controller@60004000: 192 interrupts forwarded to /interrupt-controller
+2026-10-07T20:18:23,686746-07:00 t210b01 clock and reset probe
+2026-10-07T20:18:23,686746-07:00 tegra210b01_enable_utmipll: hw OFF, lock 0, use_pllre NO
+2026-10-07T20:18:23,686746-07:00 tegra-pmc: get_secure_pmc_setting: done secure_pmc=0
+2026-10-07T20:18:23,686746-07:00 clk_cbus_recalc_rate: no gbus parent
+2026-10-07T20:18:23,686746-07:00 clk_cbus_recalc_rate: no gbus parent
+2026-10-07T20:18:23,686746-07:00 clk_cbus_recalc_rate: no gbus parent
+2026-10-07T20:18:23,686746-07:00 clk_cbus_recalc_rate: no gbus parent
+2026-10-07T20:18:23,686746-07:00 clk_cbus_recalc_rate: no gbus parent
+2026-10-07T20:18:23,686746-07:00 arm_arch_timer: Architected cp15 timer(s) running at 19.20MHz (phys).
+2026-10-07T20:18:23,686746-07:00 clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+2026-10-07T20:18:23,686751-07:00 sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
+2026-10-07T20:18:23,687870-07:00 Console: colour dummy device 80x25
+2026-10-07T20:18:23,688630-07:00 console [tty0] enabled
+2026-10-07T20:18:23,688664-07:00 Calibrating delay loop (skipped), value calculated using timer frequency.. 38.40 BogoMIPS (lpj=19200)
+2026-10-07T20:18:23,688691-07:00 pid_max: default: 32768 minimum: 301
+2026-10-07T20:18:23,688927-07:00 Security Framework initialized
+2026-10-07T20:18:23,689035-07:00 Mount-cache hash table entries: 8192 (order: 4, 65536 bytes)
+2026-10-07T20:18:23,689052-07:00 Mountpoint-cache hash table entries: 8192 (order: 4, 65536 bytes)
+2026-10-07T20:18:23,690535-07:00 sched-energy: CPU device node has no sched-energy-costs
+2026-10-07T20:18:23,690565-07:00 ASID allocator initialised with 65536 entries
+2026-10-07T20:18:23,701992-07:00 tegra-id: chipid=12127.
+2026-10-07T20:18:23,702025-07:00 tegra-id: opt_subrevision=0.
+2026-10-07T20:18:23,702050-07:00 Tegra Speedo/IDDQ fuse revision 1
+2026-10-07T20:18:23,702066-07:00 Tegra: CPU Speedo ID 0, SoC Speedo ID 0, GPU Speedo ID 1
+2026-10-07T20:18:23,702082-07:00 Tegra: CPU Process ID 0, SoC Process ID 1, GPU Process ID 1
+2026-10-07T20:18:23,702099-07:00 Tegra: CPU Speedo Value 1644, SoC Speedo Value 1679, GPU Speedo Value 1653
+2026-10-07T20:18:23,702120-07:00 Tegra: CPU IDDQ Value 436, SoC IDDQ Value 392, GPU IDDQ Value 645
+2026-10-07T20:18:23,702151-07:00 Tegra Revision: A01 SKU: 0x83 CPU Process: 0 SoC Process: 1
+2026-10-07T20:18:23,702178-07:00 DTS File Name: arch/arm64/boot/dts/../../../../../hardware/nvidia/platform/t210/nx/kernel-dts/tegra210b01-vali.dts
+2026-10-07T20:18:23,702204-07:00 DTB Build time: Aug 15 2026 22:06:29
+2026-10-07T20:18:23,715199-07:00 CPU1: Booted secondary processor [411fd071]
+2026-10-07T20:18:23,723107-07:00 CPU2: Booted secondary processor [411fd071]
+2026-10-07T20:18:23,731106-07:00 CPU3: Booted secondary processor [411fd071]
+2026-10-07T20:18:23,731189-07:00 Brought up 4 CPUs
+2026-10-07T20:18:23,731250-07:00 SMP: Total of 4 processors activated.
+2026-10-07T20:18:23,731267-07:00 CPU features: detected feature: 32-bit EL0 Support
+2026-10-07T20:18:23,731376-07:00 CPU: All CPU(s) started at EL2
+2026-10-07T20:18:23,731414-07:00 alternatives: patching kernel code
+2026-10-07T20:18:23,735512-07:00 devtmpfs: initialized
+2026-10-07T20:18:23,768054-07:00 clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1911260446275000 ns
+2026-10-07T20:18:23,768116-07:00 futex hash table entries: 1024 (order: 4, 65536 bytes)
+2026-10-07T20:18:23,768268-07:00 cma: strict cma policy: off
+2026-10-07T20:18:23,780189-07:00 xor: measuring software checksum speed
+2026-10-07T20:18:23,789902-07:00    8regs     :  4212.000 MB/sec
+2026-10-07T20:18:23,796106-07:00 random: fast init done
+2026-10-07T20:18:23,799900-07:00    8regs_prefetch:  3684.000 MB/sec
+2026-10-07T20:18:23,809900-07:00    32regs    :  4524.000 MB/sec
+2026-10-07T20:18:23,819900-07:00    32regs_prefetch:  4124.000 MB/sec
+2026-10-07T20:18:23,819915-07:00 xor: using function: 32regs (4524.000 MB/sec)
+2026-10-07T20:18:23,819940-07:00 pinctrl core: initialized pinctrl subsystem
+2026-10-07T20:18:23,820638-07:00 regulator-dummy: no parameters
+2026-10-07T20:18:23,821063-07:00 thermal thermal_zone0: Registering thermal zone thermal_zone0 for type AO-therm
+2026-10-07T20:18:23,821182-07:00 thermal thermal_zone1: Registering thermal zone thermal_zone1 for type CPU-therm
+2026-10-07T20:18:23,821295-07:00 thermal thermal_zone2: Registering thermal zone thermal_zone2 for type GPU-therm
+2026-10-07T20:18:23,822288-07:00 thermal thermal_zone3: Registering thermal zone thermal_zone3 for type PLL-therm
+2026-10-07T20:18:23,822582-07:00 thermal thermal_zone4: Registering thermal zone thermal_zone4 for type Tboard_tegra
+2026-10-07T20:18:23,823433-07:00 thermal thermal_zone5: Registering thermal zone thermal_zone5 for type Tdiode_tegra
+2026-10-07T20:18:23,823627-07:00 thermal thermal_zone6: Registering thermal zone thermal_zone6 for type PMIC-Die
+2026-10-07T20:18:23,823806-07:00 thermal thermal_zone7: Registering thermal zone thermal_zone7 for type Charger-Die
+2026-10-07T20:18:23,823862-07:00 Initializing plugin-manager
+2026-10-07T20:18:23,823972-07:00 Plugin module not found
+2026-10-07T20:18:23,824023-07:00 Plugin-manager not available
+2026-10-07T20:18:23,826374-07:00 NET: Registered protocol family 16
+2026-10-07T20:18:23,827041-07:00 schedtune: init normalization constants...
+2026-10-07T20:18:23,827064-07:00 schedtune: no energy model data
+2026-10-07T20:18:23,827077-07:00 schedtune: disabled!
+2026-10-07T20:18:23,827557-07:00 persistent_ram: found existing invalid buffer, size 33554432, start 0
+2026-10-07T20:18:23,827608-07:00 pstore: using zlib compression
+2026-10-07T20:18:23,828343-07:00 console [pstore-1] enabled
+2026-10-07T20:18:23,828361-07:00 pstore: Registered ramoops as persistent store backend
+2026-10-07T20:18:23,828379-07:00 ramoops: attached 0x200000@0xb0000000, ecc: 0/0
+2026-10-07T20:18:23,830908-07:00 cpuidle: using governor menu
+2026-10-07T20:18:23,831257-07:00 bpmp: mail init ok
+2026-10-07T20:18:23,833485-07:00 tegra_smmu 70019000.iommu: Loaded Tegra IOMMU driver
+2026-10-07T20:18:23,834475-07:00 vdso: 2 pages (1 code @ ffffff8008fa7000, 1 data @ ffffff8009974000)
+2026-10-07T20:18:23,834520-07:00 hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+2026-10-07T20:18:23,847640-07:00 atomic_pool_init():622: DMA: preallocated 1024 KiB pool for atomic allocations
+2026-10-07T20:18:23,848814-07:00 Registering BPMP clocks...
+2026-10-07T20:18:23,848886-07:00 tegra_bpmp_clk_init: clock init ok (1 clks)
+2026-10-07T20:18:23,850432-07:00 tegra_powergate_init: DONE
+2026-10-07T20:18:23,850467-07:00 DTS File Name: arch/arm64/boot/dts/../../../../../hardware/nvidia/platform/t210/nx/kernel-dts/tegra210b01-vali.dts
+2026-10-07T20:18:23,850498-07:00 DTB Build time: Aug 15 2026 22:06:29
+2026-10-07T20:18:23,851958-07:00 tegra_debug_uart_syscore_init: stdout-path property missing
+2026-10-07T20:18:23,851983-07:00 Tegra reboot handler registered.
+2026-10-07T20:18:23,855681-07:00 iommu: Adding device tegra-carveouts to group 0
+2026-10-07T20:18:23,855811-07:00 platform tegra-carveouts: domain=ffffffc0fa884f18 allocates as[0]=ffffffc0fa8e00a8
+2026-10-07T20:18:23,856190-07:00 iommu: Adding device smmu_test to group 1
+2026-10-07T20:18:23,856268-07:00 platform smmu_test: domain=ffffffc0fa891198 allocates as[0]=ffffffc0fa8e0110
+2026-10-07T20:18:23,856686-07:00 iommu: Adding device 70016000.bpmp to group 2
+2026-10-07T20:18:23,856761-07:00 platform 70016000.bpmp: domain=ffffffc0fa891498 allocates as[0]=ffffffc0fa8e0178
+2026-10-07T20:18:23,858415-07:00 bpmp: ping status is 0
+2026-10-07T20:18:23,858551-07:00 bpmp 70016000.bpmp: firmware tag is 
+2026-10-07T20:18:23,858787-07:00 bpmp 70016000.bpmp: probe ok
+2026-10-07T20:18:23,859282-07:00 mc: mapped MMIO address: 0xffffff8008085000 -> 0x70019000
+2026-10-07T20:18:23,859355-07:00 mc: mapped MMIO address: 0xffffff80080ab000 -> 0x7001c000
+2026-10-07T20:18:23,859424-07:00 mc: mapped MMIO address: 0xffffff80080e3000 -> 0x7001d000
+2026-10-07T20:18:23,859445-07:00 nv-tegra-mc 70019000.mc: No mssnvlink node
+2026-10-07T20:18:23,859476-07:00 mc-err: mcerr ops are set to t21x
+2026-10-07T20:18:23,870260-07:00 iommu: Adding device 70090000.xusb to group 3
+2026-10-07T20:18:23,870560-07:00 iommu: Adding device 70006200.serial to group 4
+2026-10-07T20:18:23,870639-07:00 platform 70006200.serial: domain=ffffffc0fa89ccd8 allocates as[0]=ffffffc0fa8e01e0
+2026-10-07T20:18:23,871071-07:00 iommu: Adding device 70006300.serial to group 5
+2026-10-07T20:18:23,871278-07:00 iommu: Adding device sound to group 6
+2026-10-07T20:18:23,871348-07:00 platform sound: domain=ffffffc0fa96f0d8 allocates as[0]=ffffffc0fa8e0248
+2026-10-07T20:18:23,871969-07:00 iommu: Adding device 50000000.host1x to group 7
+2026-10-07T20:18:23,872369-07:00 iommu: Adding device tegradc.0 to group 8
+2026-10-07T20:18:23,872444-07:00 platform tegradc.0: domain=ffffffc0fa96f6d8 allocates as[0]=ffffffc0fa8e02b0
+2026-10-07T20:18:23,876504-07:00 platform tegradc.0: IOVA linear map 0x00000000f5a00000(400000)
+2026-10-07T20:18:23,876855-07:00 iommu: Adding device tegradc.1 to group 9
+2026-10-07T20:18:23,876942-07:00 platform tegradc.1: domain=ffffffc0fa96f918 allocates as[0]=ffffffc0fa8e0318
+2026-10-07T20:18:23,880988-07:00 platform tegradc.1: IOVA linear map 0x00000000f5a00000(400000)
+2026-10-07T20:18:23,881359-07:00 iommu: Adding device 54340000.vic to group 10
+2026-10-07T20:18:23,881539-07:00 iommu: Adding device 544c0000.nvenc to group 11
+2026-10-07T20:18:23,881716-07:00 iommu: Adding device 54500000.tsec to group 12
+2026-10-07T20:18:23,881920-07:00 iommu: Adding device 54100000.tsecb to group 13
+2026-10-07T20:18:23,882102-07:00 iommu: Adding device 54480000.nvdec to group 14
+2026-10-07T20:18:23,882281-07:00 iommu: Adding device 54380000.nvjpg to group 15
+2026-10-07T20:18:23,882951-07:00 iommu: Adding device 57000000.gpu to group 16
+2026-10-07T20:18:23,883045-07:00 platform 57000000.gpu: domain=ffffffc0fa9a56d8 allocates as[0]=ffffffc0fa8e0380
+2026-10-07T20:18:23,883106-07:00 platform 57000000.gpu: domain=ffffffc0fa9a56d8 allocates as[1]=ffffffc0fa8e03e8
+2026-10-07T20:18:23,883169-07:00 platform 57000000.gpu: domain=ffffffc0fa9a56d8 allocates as[2]=ffffffc0fa8e0450
+2026-10-07T20:18:23,883228-07:00 platform 57000000.gpu: domain=ffffffc0fa9a56d8 allocates as[3]=ffffffc0fa8e04b8
+2026-10-07T20:18:23,884097-07:00 tegra-pmc 7000e400.pmc: i2c-thermtrip node not found, emergency thermal reset disabled.
+2026-10-07T20:18:23,884132-07:00 tegra-pmc 7000e400.pmc: scratch reg offset dts data not present
+2026-10-07T20:18:23,884155-07:00 tegra-pmc: ### PMC reset source: TEGRA_POWER_ON_RESET
+2026-10-07T20:18:23,884172-07:00 tegra-pmc: ### PMC reset level: TEGRA_RESET_LEVEL_WARM
+2026-10-07T20:18:23,884188-07:00 tegra-pmc: ### PMC reset status reg: 0x0
+2026-10-07T20:18:23,897050-07:00 padctrl padctrl.0: Pad control driver tegra-pmc-padctrl registered
+2026-10-07T20:18:23,897090-07:00 tegra-pmc 7000e400.pmc: IO padctrl driver initialized
+2026-10-07T20:18:23,897374-07:00 tegra-pmc 7000e400.pmc: PMC: Successfully configure bootrom reset commands
+2026-10-07T20:18:23,897661-07:00 iommu: Adding device 70012000.se to group 17
+2026-10-07T20:18:23,898184-07:00 iommu: Adding device 1003000.pcie to group 18
+2026-10-07T20:18:23,898263-07:00 platform 1003000.pcie: domain=ffffffc0fa9a5f18 allocates as[0]=ffffffc0fa8e0520
+2026-10-07T20:18:23,898687-07:00 iommu: Adding device 7000c000.i2c to group 19
+2026-10-07T20:18:23,898954-07:00 iommu: Adding device 7000c400.i2c to group 20
+2026-10-07T20:18:23,899200-07:00 iommu: Adding device 7000c500.i2c to group 21
+2026-10-07T20:18:23,899430-07:00 iommu: Adding device 7000c700.i2c to group 22
+2026-10-07T20:18:23,899699-07:00 iommu: Adding device 7000d000.i2c to group 23
+2026-10-07T20:18:23,899943-07:00 iommu: Adding device 7000d100.i2c to group 24
+2026-10-07T20:18:23,900221-07:00 iommu: Adding device sdhci-tegra.0 to group 25
+2026-10-07T20:18:23,900295-07:00 platform sdhci-tegra.0: domain=ffffffc0fa9b3a98 allocates as[0]=ffffffc0fa8e0588
+2026-10-07T20:18:23,901050-07:00 iommu: Adding device 700d0000.xudc to group 26
+2026-10-07T20:18:23,902763-07:00 iommu: Adding device 70412000.se to group 27
+2026-10-07T20:18:23,902918-07:00 platform bpmp-clocks: No iommus property found in DT node, got swgids from fixup(2)
+2026-10-07T20:18:23,902970-07:00 iommu: Adding device bpmp-clocks to group 28
+2026-10-07T20:18:23,903106-07:00 platform bpmp-emc: No iommus property found in DT node, got swgids from fixup(2)
+2026-10-07T20:18:23,903146-07:00 iommu: Adding device bpmp-emc to group 29
+2026-10-07T20:18:23,905602-07:00 vdd-ac-bat: 4800 mV 
+2026-10-07T20:18:23,920584-07:00 HugeTLB registered 2 MB page size, pre-allocated 0 pages
+2026-10-07T20:18:23,937923-07:00 raid6: int64x1  gen()   535 MB/s
+2026-10-07T20:18:23,954899-07:00 raid6: int64x1  xor()   570 MB/s
+2026-10-07T20:18:23,971970-07:00 raid6: int64x2  gen()   746 MB/s
+2026-10-07T20:18:23,988910-07:00 raid6: int64x2  xor()   814 MB/s
+2026-10-07T20:18:24,005923-07:00 raid6: int64x4  gen()  1031 MB/s
+2026-10-07T20:18:24,022906-07:00 raid6: int64x4  xor()   867 MB/s
+2026-10-07T20:18:24,039933-07:00 raid6: int64x8  gen()  1171 MB/s
+2026-10-07T20:18:24,056916-07:00 raid6: int64x8  xor()   740 MB/s
+2026-10-07T20:18:24,073921-07:00 raid6: neonx1   gen()  1113 MB/s
+2026-10-07T20:18:24,090930-07:00 raid6: neonx1   xor()   837 MB/s
+2026-10-07T20:18:24,107907-07:00 raid6: neonx2   gen()  1433 MB/s
+2026-10-07T20:18:24,124901-07:00 raid6: neonx2   xor()  1214 MB/s
+2026-10-07T20:18:24,141904-07:00 raid6: neonx4   gen()  1867 MB/s
+2026-10-07T20:18:24,158902-07:00 raid6: neonx4   xor()  1435 MB/s
+2026-10-07T20:18:24,175895-07:00 raid6: neonx8   gen()  2257 MB/s
+2026-10-07T20:18:24,192910-07:00 raid6: neonx8   xor()  1632 MB/s
+2026-10-07T20:18:24,192926-07:00 raid6: using algorithm neonx8 gen() 2257 MB/s
+2026-10-07T20:18:24,192943-07:00 raid6: .... xor() 1632 MB/s, rmw enabled
+2026-10-07T20:18:24,192959-07:00 raid6: using intx1 recovery algorithm
+2026-10-07T20:18:24,193861-07:00 GPIO line 38 (boot-default-input) hogged as input
+2026-10-07T20:18:24,193906-07:00 GPIO line 62 (boot-default-input) hogged as input
+2026-10-07T20:18:24,193941-07:00 GPIO line 189 (boot-default-input) hogged as input
+2026-10-07T20:18:24,193972-07:00 GPIO line 193 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194001-07:00 GPIO line 145 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194028-07:00 GPIO line 147 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194060-07:00 GPIO line 203 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194088-07:00 GPIO line 58 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194140-07:00 GPIO line 61 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194171-07:00 GPIO line 80 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194199-07:00 GPIO line 81 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194228-07:00 GPIO line 82 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194257-07:00 GPIO line 39 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194285-07:00 GPIO line 76 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194312-07:00 GPIO line 21 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194338-07:00 GPIO line 22 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194364-07:00 GPIO line 23 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194390-07:00 GPIO line 24 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194417-07:00 GPIO line 32 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194443-07:00 GPIO line 33 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194468-07:00 GPIO line 34 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194495-07:00 GPIO line 35 (boot-default-input) hogged as input
+2026-10-07T20:18:24,194532-07:00 GPIO line 219 (boot-default-output-low) hogged as output/low
+2026-10-07T20:18:24,194564-07:00 GPIO line 173 (boot-default-output-low) hogged as output/low
+2026-10-07T20:18:24,194593-07:00 GPIO line 77 (boot-default-output-low) hogged as output/low
+2026-10-07T20:18:24,194623-07:00 GPIO line 88 (boot-default-output-low) hogged as output/low
+2026-10-07T20:18:24,194652-07:00 GPIO line 56 (boot-default-output-low) hogged as output/low
+2026-10-07T20:18:24,194680-07:00 GPIO line 63 (boot-default-output-low) hogged as output/low
+2026-10-07T20:18:24,194710-07:00 GPIO line 228 (boot-default-output-low) hogged as output/low
+2026-10-07T20:18:24,194740-07:00 GPIO line 152 (boot-default-output-low) hogged as output/low
+2026-10-07T20:18:24,194769-07:00 GPIO line 78 (boot-default-output-low) hogged as output/low
+2026-10-07T20:18:24,194800-07:00 GPIO line 87 (boot-default-output-low) hogged as output/low
+2026-10-07T20:18:24,194835-07:00 GPIO line 57 (boot-default-output-high) hogged as output/high
+2026-10-07T20:18:24,195200-07:00 gpiochip_setup_dev: registered GPIOs 0 to 255 on device: gpiochip0 (tegra-gpio)
+2026-10-07T20:18:24,202191-07:00 SCSI subsystem initialized
+2026-10-07T20:18:24,202406-07:00 usbcore: registered new interface driver usbfs
+2026-10-07T20:18:24,202457-07:00 usbcore: registered new interface driver hub
+2026-10-07T20:18:24,202574-07:00 usbcore: registered new device driver usb
+2026-10-07T20:18:24,207734-07:00 max77620 4-003c: PMIC Version OTP:0x53 and ES:0x8
+2026-10-07T20:18:24,210417-07:00 max77620 4-003c: Backup battery charging support disabled
+2026-10-07T20:18:24,212080-07:00 vdd-core: 625 <--> 1400 mV at 1050 mV 
+2026-10-07T20:18:24,214280-07:00 vdd-ddr: 1050 <--> 1175 mV at 1100 mV 
+2026-10-07T20:18:24,216120-07:00 vdd-pre-reg: 1325 mV 
+2026-10-07T20:18:24,218115-07:00 vdd-1v8: 1800 mV 
+2026-10-07T20:18:24,220115-07:00 avdd-sys: 1200 mV 
+2026-10-07T20:18:24,221043-07:00 vdd-pex: Bringing 1050000uV into 1000000-1000000uV
+2026-10-07T20:18:24,221198-07:00 vdd-pex: 1000 mV 
+2026-10-07T20:18:24,222007-07:00 vddio-sdmmc1: 1800 <--> 3300 mV at 3300 mV 
+2026-10-07T20:18:24,222983-07:00 vdd-gc-3v1: 3100 mV 
+2026-10-07T20:18:24,225117-07:00 vdd-rtc: 800 mV 
+2026-10-07T20:18:24,226076-07:00 vdd-gc-1v8: Bringing 3100000uV into 1800000-1800000uV
+2026-10-07T20:18:24,226265-07:00 vdd-gc-1v8: 1800 mV 
+2026-10-07T20:18:24,228119-07:00 vdd-tp-2v9: 2900 mV 
+2026-10-07T20:18:24,229114-07:00 vdd-gen-pll-edp: 1000 mV 
+2026-10-07T20:18:24,231120-07:00 vdd-i2c1: 1000 <--> 2800 mV at 2800 mV 
+2026-10-07T20:18:24,233934-07:00 gpiochip_setup_dev: registered GPIOs 504 to 511 on device: gpiochip1 (max77620-gpio)
+2026-10-07T20:18:24,236207-07:00 input: max77620_onoff as /devices/7000d000.i2c/i2c-4/4-003c/max77620-onoff/input/input0
+2026-10-07T20:18:24,236249-07:00 max77620 4-003c: max77620 probe successful
+2026-10-07T20:18:24,237732-07:00 media: Linux media interface: v0.10
+2026-10-07T20:18:24,237784-07:00 Linux video capture interface: v2.00
+2026-10-07T20:18:24,238738-07:00 pps_core: LinuxPPS API ver. 1 registered
+2026-10-07T20:18:24,238762-07:00 pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+2026-10-07T20:18:24,238795-07:00 PTP clock support registered
+2026-10-07T20:18:24,239612-07:00 bq2419x 0-006b: chip type BQ2419X/3 detected
+2026-10-07T20:18:24,244293-07:00 bq2419x 0-006b: Charging SAFETY timer disabled
+2026-10-07T20:18:24,244786-07:00 bq2419x 0-006b: Charging WATCHDOG timer disabled
+2026-10-07T20:18:24,244820-07:00 batt_regulator: Operation of current configuration missing
+2026-10-07T20:18:24,244842-07:00 batt_regulator: normal standby
+2026-10-07T20:18:24,245168-07:00 bq2419x 0-006b: Registering battery charger driver
+2026-10-07T20:18:24,246433-07:00 vbus_regulator: normal standby
+2026-10-07T20:18:24,246670-07:00 bq2419x 0-006b: Charging enabled
+2026-10-07T20:18:24,247649-07:00 bq2419x 0-006b: Charging enabled
+2026-10-07T20:18:24,250051-07:00 bq2419x 0-006b: Thermal Zone registration success
+2026-10-07T20:18:24,250315-07:00 Linux cec interface: v0.10
+2026-10-07T20:18:24,252455-07:00 tegra210-emc 7001b000.external-memory-controller: T210B01 EMC pm ops are registered
+2026-10-07T20:18:24,252731-07:00 Advanced Linux Sound Architecture Driver Initialized.
+2026-10-07T20:18:24,253329-07:00 Bluetooth: Core ver 2.22
+2026-10-07T20:18:24,253387-07:00 NET: Registered protocol family 31
+2026-10-07T20:18:24,253404-07:00 Bluetooth: HCI device and connection manager initialized
+2026-10-07T20:18:24,253430-07:00 Bluetooth: HCI socket layer initialized
+2026-10-07T20:18:24,253450-07:00 Bluetooth: L2CAP socket layer initialized
+2026-10-07T20:18:24,253488-07:00 Bluetooth: SCO socket layer initialized
+2026-10-07T20:18:24,257435-07:00 tegra210_dvfs: no clock found for extern1
+2026-10-07T20:18:24,257482-07:00 tegra210_dvfs: no clock found for extern2
+2026-10-07T20:18:24,257510-07:00 tegra210_dvfs: no clock found for extern3
+2026-10-07T20:18:24,259010-07:00 tegra_dvfs: Unable to get vdd-cpu rail for step info, deferring probe
+2026-10-07T20:18:24,261211-07:00 vdd-3v3: 3300 mV 
+2026-10-07T20:18:24,261701-07:00 lcd-bl-en: 1800 mV 
+2026-10-07T20:18:24,262163-07:00 en-vdd-sd: supplied by vdd-3v3
+2026-10-07T20:18:24,262254-07:00 en-vdd-sd: 3300 mV 
+2026-10-07T20:18:24,263215-07:00 v_pavdd_5v0: 1800 mV 
+2026-10-07T20:18:24,264209-07:00 v_navdd_5v0: 1800 mV 
+2026-10-07T20:18:24,264563-07:00 v_vdd50_a: 5300 mV 
+2026-10-07T20:18:24,264929-07:00 v_vdd5v3: 5300 mV 
+2026-10-07T20:18:24,265400-07:00 bm92t 0-0018: bm92t_probe
+2026-10-07T20:18:24,265709-07:00 bm92t 0-0018: DP handling disabled
+2026-10-07T20:18:24,267184-07:00 bm92t 0-0018: fw_type: 0x603, fw_rev: 0xD7C
+2026-10-07T20:18:24,267930-07:00 bm92t 0-0018: bm92t_debug_init
+2026-10-07T20:18:24,270233-07:00 bm92t 0-0018: Alert= 0x500C Status1= 0x4580 Status2= 0x0000 DP= 0x4000 State= INIT_STATE
+2026-10-07T20:18:24,278211-07:00 bm92t 0-0018: init done
+2026-10-07T20:18:24,278835-07:00 camchar: rtcpu character device driver loaded
+2026-10-07T20:18:24,279967-07:00 clocksource: Switched to clocksource arch_sys_counter
+2026-10-07T20:18:24,280294-07:00 VFS: Disk quotas dquot_6.6.0
+2026-10-07T20:18:24,280391-07:00 VFS: Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+2026-10-07T20:18:24,280526-07:00 FS-Cache: Loaded
+2026-10-07T20:18:24,280738-07:00 nvmap_heap_init: nvmap_heap_init: created heap block cache
+2026-10-07T20:18:24,280911-07:00 nvmap: nvmap_select_cache_ops() nvmap cache ops set to set/ways
+2026-10-07T20:18:24,280937-07:00 nvmap_page_pool_init: Total RAM pages: 1017592
+2026-10-07T20:18:24,280979-07:00 nvmap_page_pool_init: nvmap page pool size: 127199 pages (496 MB)
+2026-10-07T20:18:24,281113-07:00 nvmap_background_zero_thread: PP zeroing thread starting.
+2026-10-07T20:18:24,287441-07:00 pre_t19x_iso_plat_init(): iso emc max clk=2133000KHz
+2026-10-07T20:18:24,287472-07:00 pre_t19x_iso_plat_init(): max_iso_bw=15357600KB
+2026-10-07T20:18:24,287876-07:00 NET: Registered protocol family 2
+2026-10-07T20:18:24,288658-07:00 TCP established hash table entries: 32768 (order: 6, 262144 bytes)
+2026-10-07T20:18:24,289018-07:00 TCP bind hash table entries: 32768 (order: 7, 524288 bytes)
+2026-10-07T20:18:24,289583-07:00 TCP: Hash tables configured (established 32768 bind 32768)
+2026-10-07T20:18:24,289800-07:00 UDP hash table entries: 2048 (order: 4, 65536 bytes)
+2026-10-07T20:18:24,289907-07:00 UDP-Lite hash table entries: 2048 (order: 4, 65536 bytes)
+2026-10-07T20:18:24,290335-07:00 NET: Registered protocol family 1
+2026-10-07T20:18:24,291040-07:00 RPC: Registered named UNIX socket transport module.
+2026-10-07T20:18:24,291067-07:00 RPC: Registered udp transport module.
+2026-10-07T20:18:24,291084-07:00 RPC: Registered tcp transport module.
+2026-10-07T20:18:24,291100-07:00 RPC: Registered tcp NFSv4.1 backchannel transport module.
+2026-10-07T20:18:24,291126-07:00 PCI: CLS 0 bytes, default 64
+2026-10-07T20:18:24,292155-07:00 thermal thermal_zone8: Registering thermal zone thermal_zone8 for type battery
+2026-10-07T20:18:24,296252-07:00 max17042 0-0036: Registering battery gauge driver
+2026-10-07T20:18:24,296631-07:00 Trying to unpack rootfs image as initramfs...
+2026-10-07T20:18:24,387890-07:00 bm92t 0-0018: extcon cable is set to init state
+2026-10-07T20:18:24,498517-07:00 bm92t 0-0018: Alert= 0x0000 Status1= 0x4580 Status2= 0x0000 DP= 0x4000 State= INIT_STATE
+2026-10-07T20:18:24,501716-07:00 bm92t 0-0018: Supported PDOs:
+2026-10-07T20:18:24,501749-07:00 bm92t 0-0018: PDO 1: 3000mA  5000mV DRD
+2026-10-07T20:18:24,501769-07:00 bm92t 0-0018: PDO 2: 3000mA  9000mV No DRD
+2026-10-07T20:18:24,501788-07:00 bm92t 0-0018: PDO 3: 3000mA 12000mV No DRD
+2026-10-07T20:18:24,501806-07:00 bm92t 0-0018: PDO 4: 3000mA 15000mV No DRD
+2026-10-07T20:18:24,501824-07:00 bm92t 0-0018: PDO 5: 5000mA 20000mV No DRD
+2026-10-07T20:18:24,501844-07:00 bm92t 0-0018: Device in powered mode
+2026-10-07T20:18:24,501864-07:00 bm92t 0-0018: Requesting 4: min 900mA, max 3000mA, 15000mV
+2026-10-07T20:18:24,527433-07:00 bm92t 0-0018: Alert= 0x0004 Status1= 0x4580 Status2= 0x0000 DP= 0x4000 State= NEW_PDO
+2026-10-07T20:18:24,575403-07:00 bm92t 0-0018: Alert= 0x1000 Status1= 0x4580 Status2= 0x0000 DP= 0x4000 State= NEW_PDO
+2026-10-07T20:18:24,577187-07:00 bm92t 0-0018: New PD Contract:
+2026-10-07T20:18:24,577213-07:00 bm92t 0-0018: PDO: 4: 3000mA, 15000mV
+2026-10-07T20:18:24,577231-07:00 bm92t 0-0018: RDO: op 900mA, 3000mA max
+2026-10-07T20:18:24,580154-07:00 bm92t 0-0018: Alert= 0x0004 Status1= 0x4580 Status2= 0x0000 DP= 0x4000 State= PS_RDY_SENT
+2026-10-07T20:18:24,580195-07:00 bm92t 0-0018: extcon cable (02: USB HOST) attached
+2026-10-07T20:18:24,587552-07:00 bm92t 0-0018: Alert= 0x0400 Status1= 0x4680 Status2= 0x0000 DP= 0x4000 State= DR_SWAP_SENT
+2026-10-07T20:18:24,589924-07:00 bm92t 0-0018: Alert= 0x0004 Status1= 0x4680 Status2= 0x0000 DP= 0x4000 State= DR_SWAP_SENT
+2026-10-07T20:18:24,596447-07:00 bm92t 0-0018: Alert= 0x0004 Status1= 0x4680 Status2= 0x0000 DP= 0x4000 State= VDM_DISC_ID_SENT
+2026-10-07T20:18:24,598817-07:00 bm92t 0-0018: Alert= 0x0800 Status1= 0x4680 Status2= 0x0001 DP= 0x4000 State= VDM_DISC_ID_SENT
+2026-10-07T20:18:24,601941-07:00 bm92t 0-0018: Alert= 0x0004 Status1= 0x4680 Status2= 0x0000 DP= 0x4000 State= VDM_ACCEPT_DISC_ID_REPLY
+2026-10-07T20:18:24,605203-07:00 bm92t 0-0018: Connected PD device:
+2026-10-07T20:18:24,605231-07:00 bm92t 0-0018: VID: 2109, PID: 0105
+2026-10-07T20:18:24,605249-07:00 bm92t 0-0018: Type: PD Peripheral
+2026-10-07T20:18:24,605268-07:00 bm92t 0-0018: VID/PID not Nintendo Dock
+2026-10-07T20:18:24,878879-07:00 Freeing initrd memory: 13276K
+2026-10-07T20:18:24,887296-07:00 host1x 50000000.host1x: initialized
+2026-10-07T20:18:24,888802-07:00 hw perfevents: enabled with armv8_pmuv3 PMU driver, 7 counters available
+2026-10-07T20:18:24,891788-07:00 audit: initializing netlink subsys (disabled)
+2026-10-07T20:18:24,891889-07:00 audit: type=2000 audit(1.201:1): initialized
+2026-10-07T20:18:24,892557-07:00 workingset: timestamp_bits=46 max_order=20 bucket_order=0
+2026-10-07T20:18:24,896705-07:00 zbud: loaded
+2026-10-07T20:18:24,898761-07:00 squashfs: version 4.0 (2009/01/31) Phillip Lougher
+2026-10-07T20:18:24,898976-07:00 exFAT: file-system version 5.8-2arter97
+2026-10-07T20:18:24,899798-07:00 Installing knfsd (copyright (C) 1996 okir@monad.swb.de).
+2026-10-07T20:18:24,901198-07:00 Key type cifs.idmap registered
+2026-10-07T20:18:24,901240-07:00 ntfs: driver 2.1.32 [Flags: R/W].
+2026-10-07T20:18:24,901728-07:00 fuse init (API version 7.26)
+2026-10-07T20:18:24,905926-07:00 NET: Registered protocol family 38
+2026-10-07T20:18:24,906191-07:00 Block layer SCSI generic (bsg) driver version 0.4 loaded (major 241)
+2026-10-07T20:18:24,906224-07:00 io scheduler noop registered
+2026-10-07T20:18:24,906242-07:00 io scheduler deadline registered (default)
+2026-10-07T20:18:24,906360-07:00 io scheduler cfq registered
+2026-10-07T20:18:24,908478-07:00 gic 702f9000.agic: GIC IRQ controller registered
+2026-10-07T20:18:24,911469-07:00 iommu: Adding device 702ef000.adsp to group 30
+2026-10-07T20:18:24,918423-07:00 tegra-aconnect aconnect@702c0000: Tegra ACONNECT bus registered
+2026-10-07T20:18:24,918892-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: TEGRA_FUSE_SKU_CALIB_0 = 0x924a092
+2026-10-07T20:18:24,918922-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: TEGRA_FUSE_USB_CALIB_EXT_0 = 0x2229
+2026-10-07T20:18:24,920286-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: dev = phy-usb2.0, lane = usb2-0, function = xusb, hs_curr_level_offset = 6
+2026-10-07T20:18:24,920522-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: dev = phy-pcie.1, lane = pcie-0, function = pcie-x1
+2026-10-07T20:18:24,920645-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: dev = phy-pcie.2, lane = pcie-1, function = xusb
+2026-10-07T20:18:24,920736-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: dev = phy-pcie.3, lane = pcie-2, function = pcie-x4
+2026-10-07T20:18:24,920829-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: dev = phy-pcie.4, lane = pcie-3, function = pcie-x4
+2026-10-07T20:18:24,920915-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: dev = phy-pcie.5, lane = pcie-4, function = xusb
+2026-10-07T20:18:24,921045-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: dev = phy-pcie.6, lane = pcie-5, function = xusb
+2026-10-07T20:18:24,927195-07:00 tegra-pwm 7000a000.pwm: PWM clk can sleep in ops
+2026-10-07T20:18:24,929444-07:00 tegra-pcie 1003000.pcie: wrong configuration updated in DT, switching to default 4x1, 1x1 configuration
+2026-10-07T20:18:24,930807-07:00 tegra-pcie 1003000.pcie: PCIE: Enable power rails
+2026-10-07T20:18:24,931027-07:00 tegra-pcie 1003000.pcie: probing port 1, using 1 lanes
+2026-10-07T20:18:24,932364-07:00 Adding domain tsec-pd to PM domain host1x-pd
+2026-10-07T20:18:24,935248-07:00 tsec 54500000.tsec: initialized
+2026-10-07T20:18:24,936450-07:00 tsec 54100000.tsecb: initialized
+2026-10-07T20:18:24,937044-07:00 Adding domain nvdec-pd to PM domain host1x-pd
+2026-10-07T20:18:24,939622-07:00 nvdec 54480000.nvdec: initialized
+2026-10-07T20:18:24,940467-07:00 Adding domain vic03-pd to PM domain host1x-pd
+2026-10-07T20:18:24,940640-07:00 Adding domain msenc-pd to PM domain host1x-pd
+2026-10-07T20:18:24,940802-07:00 Adding domain nvjpg-pd to PM domain host1x-pd
+2026-10-07T20:18:24,943908-07:00 falcon 54340000.vic: initialized
+2026-10-07T20:18:24,944938-07:00 falcon 544c0000.nvenc: initialized
+2026-10-07T20:18:24,945995-07:00 falcon 54380000.nvjpg: initialized
+2026-10-07T20:18:24,948347-07:00 tegradc tegradc.0: disp0 connected to head0->/host1x/dsi
+2026-10-07T20:18:24,948452-07:00 Node path /chosen/display-board not found
+2026-10-07T20:18:24,948471-07:00 display board info: id 0x0, fab 0x0
+2026-10-07T20:18:24,948723-07:00 tegradc tegradc.0: No hpd-gpio in DT
+2026-10-07T20:18:24,948796-07:00 tegradc tegradc.0: DT parsed successfully
+2026-10-07T20:18:24,948853-07:00 tegradc tegradc.0: Display dc.ffffff800a440000 registered with id=0
+2026-10-07T20:18:24,949577-07:00 tegradc tegradc.0: dsi: dpd lookup fail:-19
+2026-10-07T20:18:24,950120-07:00 tegradc tegradc.0: Could not read EDID blob from DT, size:128
+2026-10-07T20:18:24,951113-07:00 tegra124-dfll 70110000.clock: couldn't get vdd_cpu regulator
+2026-10-07T20:18:24,951158-07:00 tegradc tegradc.0: probed
+2026-10-07T20:18:24,957245-07:00 tegradc tegradc.0: [tegra-fb] set_par from 'kworker/u8:2': xres=720 yres=1280 bpp=32 pixclock=12820
+2026-10-07T20:18:24,957312-07:00 tegradc tegradc.0: [tegra-fb] registering fb: xres=720 yres=1280 bpp=32 pixclock=12820 rotation=90
+                                 [tegra-fb]   var: left=72 right=136 hsync=72 upper=9 lower=10 vsync=1
+                                 [tegra-fb]   DC mode: h_active=720 v_active=1280 (FBIOGET_VSCREENINFO will return these)
+2026-10-07T20:18:24,957680-07:00 tegradc tegradc.0: fb registered
+2026-10-07T20:18:24,959570-07:00 tegra-pcie 1003000.pcie: PCI host bridge to bus 0000:00
+2026-10-07T20:18:24,959597-07:00 pci_bus 0000:00: root bus resource [io  0x0000-0xffff]
+2026-10-07T20:18:24,959617-07:00 pci_bus 0000:00: root bus resource [mem 0x13000000-0x1fffffff]
+2026-10-07T20:18:24,959638-07:00 pci_bus 0000:00: root bus resource [mem 0x20000000-0x3fffffff pref]
+2026-10-07T20:18:24,959664-07:00 pci_bus 0000:00: root bus resource [bus 00-ff]
+2026-10-07T20:18:24,959720-07:00 pci 0000:00:02.0: [10de:0faf] type 01 class 0x060400
+2026-10-07T20:18:24,959827-07:00 pci 0000:00:02.0: PME# supported from D0 D1 D2 D3hot D3cold
+2026-10-07T20:18:24,960054-07:00 iommu: Adding device 0000:00:02.0 to group 31
+2026-10-07T20:18:24,960161-07:00 pci 0000:00:02.0: bridge configuration invalid ([bus 00-00]), reconfiguring
+2026-10-07T20:18:24,960330-07:00 pci 0000:01:00.0: [14e4:43ec] type 00 class 0x028000
+2026-10-07T20:18:24,960366-07:00 pci 0000:01:00.0: reg 0x10: [mem 0x00000000-0x00007fff 64bit]
+2026-10-07T20:18:24,960389-07:00 pci 0000:01:00.0: reg 0x18: [mem 0x00000000-0x003fffff 64bit]
+2026-10-07T20:18:24,960582-07:00 pci 0000:01:00.0: supports D1 D2
+2026-10-07T20:18:24,960587-07:00 pci 0000:01:00.0: PME# supported from D0 D1 D2 D3hot D3cold
+2026-10-07T20:18:24,960805-07:00 iommu: Adding device 0000:01:00.0 to group 32
+2026-10-07T20:18:24,960847-07:00 tegra-apbdma 60020000.dma: Tegra20 APB DMA driver register 32 channels
+2026-10-07T20:18:24,960875-07:00 pci_bus 0000:01: busn_res: [bus 01-ff] end is updated to 01
+2026-10-07T20:18:24,960918-07:00 pci 0000:00:02.0: BAR 14: assigned [mem 0x13000000-0x135fffff]
+2026-10-07T20:18:24,960945-07:00 pci 0000:01:00.0: BAR 2: assigned [mem 0x13000000-0x133fffff 64bit]
+2026-10-07T20:18:24,961002-07:00 pci 0000:01:00.0: BAR 0: assigned [mem 0x13400000-0x13407fff 64bit]
+2026-10-07T20:18:24,961043-07:00 pci 0000:00:02.0: PCI bridge to [bus 01]
+2026-10-07T20:18:24,961065-07:00 pci 0000:00:02.0:   bridge window [mem 0x13000000-0x135fffff]
+2026-10-07T20:18:24,965388-07:00 tegra-adma 702e2000.adma: Tegra210 ADMA driver registered 22 channels
+2026-10-07T20:18:24,965843-07:00 tegra-fuse-burn 7000f800.efuse:efuse-burn: Fuse burn driver initialized
+2026-10-07T20:18:24,966103-07:00 kfuse 7000fc00.kfuse: initialized
+2026-10-07T20:18:24,967521-07:00 tegra-pmc-iopower pmc-iopower: NO_IOPOWER setting 0x0
+2026-10-07T20:18:24,968934-07:00 max77812 4-0033: MAX77812 Version OTP:0x05
+2026-10-07T20:18:24,970311-07:00 vdd-gpu: applied init 800000uV constraint
+2026-10-07T20:18:24,970477-07:00 vdd-gpu: 250 <--> 1520 mV at 800 mV 
+2026-10-07T20:18:24,976935-07:00 vddio-ddr: 550 <--> 650 mV at 600 mV 
+2026-10-07T20:18:24,978900-07:00 vdd-cpu: applied init 1000000uV constraint
+2026-10-07T20:18:24,984305-07:00 vdd-cpu: 250 <--> 1520 mV at 1000 mV 
+2026-10-07T20:18:24,987857-07:00 Serial: 8250/16550 driver, 4 ports, IRQ sharing disabled
+2026-10-07T20:18:24,987984-07:00 No Device Node present for smmu client: serial8250 !!
+2026-10-07T20:18:24,988010-07:00 platform serial8250: No iommus property found in DT node, got swgids from fixup(101004000)
+2026-10-07T20:18:24,988067-07:00 iommu: Adding device serial8250 to group 33
+2026-10-07T20:18:24,990123-07:00 70006200.serial: ttyTHS2 at MMIO 0x70006200 (irq = 63, base_baud = 0) is a TEGRA_UART
+2026-10-07T20:18:24,990294-07:00 serial serial0: tty port ttyTHS2 registered
+2026-10-07T20:18:24,990654-07:00 serial-tegra 70006300.serial: RX in PIO mode
+2026-10-07T20:18:24,990761-07:00 70006300.serial: ttyTHS3 at MMIO 0x70006300 (irq = 64, base_baud = 0) is a TEGRA_UART
+2026-10-07T20:18:24,990910-07:00 serial serial1: tty port ttyTHS3 registered
+2026-10-07T20:18:24,991703-07:00 [drm] Initialized
+2026-10-07T20:18:24,995404-07:00 brd: module loaded
+2026-10-07T20:18:25,000676-07:00 loop: module loaded
+2026-10-07T20:18:25,001326-07:00 zram: Added device: zram0
+2026-10-07T20:18:25,001365-07:00 tegra_profiler: version: 1.139, samples/io: 47/27
+2026-10-07T20:18:25,001481-07:00 tegra_profiler: auth: init
+2026-10-07T20:18:25,002044-07:00 nct1008_nct72 0-004c: starting parse dt
+2026-10-07T20:18:25,002223-07:00 nct1008_nct72 0-004c: success parsing dt
+2026-10-07T20:18:25,002563-07:00 nct1008_nct72 0-004c: success in enabling tmp451 VDD rail
+2026-10-07T20:18:25,002777-07:00 THERMAL TSKIN EST: found 2 subdevs
+2026-10-07T20:18:25,002799-07:00 THERMAL TSKIN EST num_resources: 0
+2026-10-07T20:18:25,002818-07:00 [THERMAL TSKIN EST subdev 0]
+2026-10-07T20:18:25,002840-07:00 [THERMAL TSKIN EST subdev 1]
+2026-10-07T20:18:25,002878-07:00 THERMAL TSKIN EST: Found 3 profiles, default profile is Console
+2026-10-07T20:18:25,002988-07:00 continuous_therm_gov: Can't init iir parameters
+2026-10-07T20:18:25,003271-07:00 continuous_therm_gov: DTB IIR params used
+2026-10-07T20:18:25,003289-07:00 GOV gov_bind tz:thermal-fan-est
+2026-10-07T20:18:25,003409-07:00 thermal thermal_zone9: Registering thermal zone thermal_zone9 for type thermal-fan-est
+2026-10-07T20:18:25,003436-07:00 THERMAL TSKIN EST: thz register success.
+2026-10-07T20:18:25,003499-07:00 THERMAL TSKIN EST: end of probe, return err: 0
+2026-10-07T20:18:25,003973-07:00 SCSI Media Changer driver v0.25 
+2026-10-07T20:18:25,005083-07:00 Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)
+2026-10-07T20:18:25,006391-07:00 tegradc tegradc.0: DC initialized, skipping tegra_dc_program_mode.
+2026-10-07T20:18:25,006982-07:00 tegradc tegradc.0: DSI: HS clock rate is 234000
+2026-10-07T20:18:25,007333-07:00 libphy: Fixed MDIO Bus: probed
+2026-10-07T20:18:25,007371-07:00 tun: Universal TUN/TAP device driver, 1.6
+2026-10-07T20:18:25,007389-07:00 tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+2026-10-07T20:18:25,007586-07:00 PPP generic driver version 2.4.2
+2026-10-07T20:18:25,007720-07:00 PPP BSD Compression module registered
+2026-10-07T20:18:25,007739-07:00 PPP Deflate Compression module registered
+2026-10-07T20:18:25,007793-07:00 PPP MPPE Compression module registered
+2026-10-07T20:18:25,007813-07:00 NET: Registered protocol family 24
+2026-10-07T20:18:25,007970-07:00 usbcore: registered new interface driver catc
+2026-10-07T20:18:25,008016-07:00 usbcore: registered new interface driver kaweth
+2026-10-07T20:18:25,008035-07:00 pegasus: v0.9.3 (2013/04/25), Pegasus/Pegasus II USB Ethernet driver
+2026-10-07T20:18:25,008083-07:00 usbcore: registered new interface driver pegasus
+2026-10-07T20:18:25,008125-07:00 usbcore: registered new interface driver rtl8150
+2026-10-07T20:18:25,008183-07:00 usbcore: registered new interface driver r8152
+2026-10-07T20:18:25,008200-07:00 hso: drivers/net/usb/hso.c: Option Wireless
+2026-10-07T20:18:25,008276-07:00 usbcore: registered new interface driver hso
+2026-10-07T20:18:25,008316-07:00 usbcore: registered new interface driver lan78xx
+2026-10-07T20:18:25,008363-07:00 usbcore: registered new interface driver asix
+2026-10-07T20:18:25,008425-07:00 usbcore: registered new interface driver ax88179_178a
+2026-10-07T20:18:25,008466-07:00 usbcore: registered new interface driver cdc_ether
+2026-10-07T20:18:25,008509-07:00 usbcore: registered new interface driver cdc_eem
+2026-10-07T20:18:25,008549-07:00 usbcore: registered new interface driver dm9601
+2026-10-07T20:18:25,008588-07:00 usbcore: registered new interface driver sr9700
+2026-10-07T20:18:25,008637-07:00 usbcore: registered new interface driver CoreChips
+2026-10-07T20:18:25,008687-07:00 usbcore: registered new interface driver smsc75xx
+2026-10-07T20:18:25,008736-07:00 usbcore: registered new interface driver smsc95xx
+2026-10-07T20:18:25,008775-07:00 usbcore: registered new interface driver gl620a
+2026-10-07T20:18:25,008816-07:00 usbcore: registered new interface driver net1080
+2026-10-07T20:18:25,008860-07:00 usbcore: registered new interface driver plusb
+2026-10-07T20:18:25,008902-07:00 usbcore: registered new interface driver rndis_host
+2026-10-07T20:18:25,008942-07:00 usbcore: registered new interface driver cdc_subset
+2026-10-07T20:18:25,008997-07:00 usbcore: registered new interface driver zaurus
+2026-10-07T20:18:25,009040-07:00 usbcore: registered new interface driver MOSCHIP usb-ethernet driver
+2026-10-07T20:18:25,009089-07:00 usbcore: registered new interface driver int51x1
+2026-10-07T20:18:25,009134-07:00 usbcore: registered new interface driver kalmia
+2026-10-07T20:18:25,009175-07:00 usbcore: registered new interface driver ipheth
+2026-10-07T20:18:25,009220-07:00 usbcore: registered new interface driver sierra_net
+2026-10-07T20:18:25,009261-07:00 usbcore: registered new interface driver cx82310_eth
+2026-10-07T20:18:25,009312-07:00 usbcore: registered new interface driver cdc_ncm
+2026-10-07T20:18:25,009358-07:00 usbcore: registered new interface driver huawei_cdc_ncm
+2026-10-07T20:18:25,009401-07:00 usbcore: registered new interface driver lg-vl600
+2026-10-07T20:18:25,009444-07:00 usbcore: registered new interface driver qmi_wwan
+2026-10-07T20:18:25,009485-07:00 usbcore: registered new interface driver cdc_mbim
+2026-10-07T20:18:25,009524-07:00 usbcore: registered new interface driver ch9200
+2026-10-07T20:18:25,011343-07:00 tegra-xusb 70090000.xusb: USB2 port 0 has OTG_CAP
+2026-10-07T20:18:25,011373-07:00 tegra-xusb 70090000.xusb: USB3 port 0 has OTG_CAP
+2026-10-07T20:18:25,012118-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: enabled OTG on UTMI pad 0
+2026-10-07T20:18:25,015156-07:00 usbcore: registered new interface driver cdc_acm
+2026-10-07T20:18:25,015187-07:00 cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+2026-10-07T20:18:25,015252-07:00 usbcore: registered new interface driver usblp
+2026-10-07T20:18:25,015303-07:00 usbcore: registered new interface driver cdc_wdm
+2026-10-07T20:18:25,015345-07:00 usbcore: registered new interface driver uas
+2026-10-07T20:18:25,015398-07:00 usbcore: registered new interface driver usb-storage
+2026-10-07T20:18:25,015439-07:00 usbcore: registered new interface driver ums-alauda
+2026-10-07T20:18:25,015477-07:00 usbcore: registered new interface driver ums-cypress
+2026-10-07T20:18:25,015516-07:00 usbcore: registered new interface driver ums-datafab
+2026-10-07T20:18:25,015560-07:00 usbcore: registered new interface driver ums_eneub6250
+2026-10-07T20:18:25,015600-07:00 usbcore: registered new interface driver ums-freecom
+2026-10-07T20:18:25,015637-07:00 usbcore: registered new interface driver ums-isd200
+2026-10-07T20:18:25,015677-07:00 usbcore: registered new interface driver ums-jumpshot
+2026-10-07T20:18:25,015716-07:00 usbcore: registered new interface driver ums-karma
+2026-10-07T20:18:25,015754-07:00 usbcore: registered new interface driver ums-onetouch
+2026-10-07T20:18:25,015801-07:00 usbcore: registered new interface driver ums-realtek
+2026-10-07T20:18:25,015839-07:00 usbcore: registered new interface driver ums-sddr09
+2026-10-07T20:18:25,015886-07:00 usbcore: registered new interface driver ums-sddr55
+2026-10-07T20:18:25,015924-07:00 usbcore: registered new interface driver ums-usbat
+2026-10-07T20:18:25,015986-07:00 usbcore: registered new interface driver microtekX6
+2026-10-07T20:18:25,016095-07:00 tegra-xusb 70090000.xusb: Firmware timestamp: 2019-10-17 16:01:14 UTC, Version: 51.06 release
+2026-10-07T20:18:25,016096-07:00 usbcore: registered new interface driver usbserial
+2026-10-07T20:18:25,016173-07:00 tegra-xusb 70090000.xusb: xHCI Host Controller
+2026-10-07T20:18:25,016215-07:00 tegra-xusb 70090000.xusb: new USB bus registered, assigned bus number 1
+2026-10-07T20:18:25,017075-07:00 tegra-xusb 70090000.xusb: hcc params 0x0184f525 hci version 0x100 quirks 0x00050010
+2026-10-07T20:18:25,017124-07:00 tegra-usb-cd usb_cd: USB charging enabled
+2026-10-07T20:18:25,017161-07:00 tegra-xusb 70090000.xusb: irq 61, io mem 0x70090000
+2026-10-07T20:18:25,017362-07:00 usb usb1: New USB device found, idVendor=1d6b, idProduct=0002
+2026-10-07T20:18:25,017384-07:00 usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+2026-10-07T20:18:25,017406-07:00 usb usb1: Product: xHCI Host Controller
+2026-10-07T20:18:25,017424-07:00 usb usb1: Manufacturer: Linux 4.9.140-l4t xhci-hcd
+2026-10-07T20:18:25,017441-07:00 usb usb1: SerialNumber: 70090000.xusb
+2026-10-07T20:18:25,018036-07:00 hub 1-0:1.0: USB hub found
+2026-10-07T20:18:25,018100-07:00 hub 1-0:1.0: 5 ports detected
+2026-10-07T20:18:25,018497-07:00 tegra-xudc-new 700d0000.xudc: PMQOS CPU boost enabled
+2026-10-07T20:18:25,018703-07:00 tegra-xusb 70090000.xusb: xHCI Host Controller
+2026-10-07T20:18:25,018732-07:00 tegra-xusb 70090000.xusb: new USB bus registered, assigned bus number 2
+2026-10-07T20:18:25,018818-07:00 usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
+2026-10-07T20:18:25,018860-07:00 tegra-xudc-new 700d0000.xudc: device count: 1
+2026-10-07T20:18:25,018914-07:00 usb usb2: New USB device found, idVendor=1d6b, idProduct=0003
+2026-10-07T20:18:25,018934-07:00 usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+2026-10-07T20:18:25,018979-07:00 usb usb2: Product: xHCI Host Controller
+2026-10-07T20:18:25,019000-07:00 usb usb2: Manufacturer: Linux 4.9.140-l4t xhci-hcd
+2026-10-07T20:18:25,019018-07:00 usb usb2: SerialNumber: 70090000.xusb
+2026-10-07T20:18:25,019517-07:00 hub 2-0:1.0: USB hub found
+2026-10-07T20:18:25,019585-07:00 hub 2-0:1.0: 4 ports detected
+2026-10-07T20:18:25,020792-07:00 tegra-xusb 70090000.xusb: Upgrade port 0 to USB3.0
+2026-10-07T20:18:25,020818-07:00 tegra-xusb 70090000.xusb: Upgrade port 1 to USB3.0
+2026-10-07T20:18:25,021001-07:00 tegra-xusb 70090000.xusb: extcon 0: ffffffc0faaef078 id
+2026-10-07T20:18:25,021026-07:00 tegra-xudc-new 700d0000.xudc: vbus state: 0
+2026-10-07T20:18:25,021050-07:00 tegra-xudc-new 700d0000.xudc: Initialize boost_cpufreq work
+2026-10-07T20:18:25,021100-07:00 tegra-xudc-new 700d0000.xudc: entering ELPG
+2026-10-07T20:18:25,021178-07:00 tegra-xusb 70090000.xusb: Upgrade port 0 to USB3.0
+2026-10-07T20:18:25,021197-07:00 tegra-xusb 70090000.xusb: Upgrade port 1 to USB3.0
+2026-10-07T20:18:25,021402-07:00 tegra-xudc-new 700d0000.xudc: entering ELPG done
+2026-10-07T20:18:25,022065-07:00 mousedev: PS/2 mouse device common for all mice
+2026-10-07T20:18:25,022601-07:00 fts_touch 2-0049: fts_power_ctrl: on
+2026-10-07T20:18:25,025214-07:00 tegradc tegradc.1: disp1 connected to head1->/host1x/sor1
+2026-10-07T20:18:25,025375-07:00 tegradc tegradc.1: No hpd-gpio in DT
+2026-10-07T20:18:25,025424-07:00 tegradc tegradc.1: DT parsed successfully
+2026-10-07T20:18:25,025487-07:00 tegradc tegradc.1: Display dc.ffffff800a940000 registered with id=1
+2026-10-07T20:18:25,025800-07:00 tegradc tegradc.1: dc_dp_out_hotplug_init: couldn't get regulator vdd_hdmi_5v0
+2026-10-07T20:18:25,532707-07:00 Host read timeout at address 540400c4
+2026-10-07T20:18:25,532783-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: power on UTMI pads 0
+2026-10-07T20:18:25,533074-07:00 usb usb2: usb_suspend_both: status 0
+2026-10-07T20:18:25,533085-07:00 nct1008_nct72 0-004c: LOC shutdown limit 120
+2026-10-07T20:18:25,533116-07:00 fts_touch 2-0049: FTS SystemReset
+2026-10-07T20:18:25,533181-07:00 tegradc tegradc.0: dsi clock div corrected
+2026-10-07T20:18:25,533188-07:00 tegradc tegradc.0: nominal-pclk:3333000 parent:234000000 div:3.0 pclk:78000000 3299670~3632970
+2026-10-07T20:18:25,533755-07:00 Registered IR keymap rc-cec
+2026-10-07T20:18:25,534091-07:00 input: RC for stdp2550_cec as /devices/50000000.host1x/tegradc.1/rc/rc0/input2
+2026-10-07T20:18:25,534288-07:00 rc rc0: RC for stdp2550_cec as /devices/50000000.host1x/tegradc.1/rc/rc0
+2026-10-07T20:18:25,534428-07:00 tegradc tegradc.1: Branch device registered
+2026-10-07T20:18:25,534586-07:00 nct1008_nct72 0-004c: EXT shutdown limit 99
+2026-10-07T20:18:25,535518-07:00 tegradc tegradc.1: probed
+2026-10-07T20:18:25,535673-07:00 tegradc tegradc.1: [tegra-fb] set_par from 'kworker/u8:2': xres=640 yres=480 bpp=32 pixclock=39682
+2026-10-07T20:18:25,535712-07:00 tegradc tegradc.1: [tegra-fb] registering fb: xres=640 yres=480 bpp=32 pixclock=39682 rotation=0
+                                 [tegra-fb]   var: left=48 right=16 hsync=96 upper=33 lower=10 vsync=2
+                                 [tegra-fb]   DC mode: h_active=640 v_active=480 (FBIOGET_VSCREENINFO will return these)
+2026-10-07T20:18:25,536009-07:00 tegradc tegradc.1: fb registered
+2026-10-07T20:18:25,539597-07:00 hpd: state 7 (Takeover from bootloader), hpd 0, pending_hpd_evt 1
+2026-10-07T20:18:25,539623-07:00 hpd: switching from state 7 (Takeover from bootloader) to state 0 (Reset)
+2026-10-07T20:18:25,539650-07:00 hpd: state 0 (Reset), hpd 0, pending_hpd_evt 0
+2026-10-07T20:18:25,539677-07:00 tegradc tegradc.1: blank - powerdown
+2026-10-07T20:18:25,539771-07:00 extcon-disp-state extcon:disp-state: cable 44 state 0 already set.
+2026-10-07T20:18:25,539795-07:00 Extcon DP: HPD disabled
+2026-10-07T20:18:25,539812-07:00 hpd: hpd_switch 0
+2026-10-07T20:18:25,539829-07:00 hpd: switching from state 0 (Reset) to state 1 (Check Plug)
+2026-10-07T20:18:25,539850-07:00 hpd: state 1 (Check Plug), hpd 0, pending_hpd_evt 0
+2026-10-07T20:18:25,539870-07:00 hpd: switching from state 1 (Check Plug) to state 3 (Disabled)
+2026-10-07T20:18:25,544342-07:00 fts_touch 2-0049: FTS B60004 =  36 70 01 00 81 06
+2026-10-07T20:18:25,544364-07:00 fts_touch 2-0049: FTS Chip ID : 36 70
+2026-10-07T20:18:25,568785-07:00 nct1008_nct72 0-004c: initial LOC temp: 38000 
+2026-10-07T20:18:25,569693-07:00 nct1008_nct72 0-004c: initial EXT temp: 39500 
+2026-10-07T20:18:25,571489-07:00 nct1008_nct72 0-004c: hi_b:243, lo_b:128
+2026-10-07T20:18:25,572729-07:00 nct1008_nct72 0-004c: nct1008_probe: initialized
+2026-10-07T20:18:25,630530-07:00 rtc rtc0: invalid alarm value: 2005-2-30 23:59:59
+2026-10-07T20:18:25,630730-07:00 max77686-rtc max77620-rtc: rtc core: registered max77620-rtc as rtc0
+2026-10-07T20:18:25,633228-07:00 rtc rtc1: alarm rtc device
+2026-10-07T20:18:25,633267-07:00 tegra_rtc 7000e000.rtc: rtc core: registered 7000e000.rtc as rtc1
+2026-10-07T20:18:25,633313-07:00 tegra_rtc 7000e000.rtc: Tegra internal Real Time Clock
+2026-10-07T20:18:25,633781-07:00 i2c /dev entries driver
+2026-10-07T20:18:25,635370-07:00 max77620-power max77620-power: Event recorder REG_NVERC : 0x4
+2026-10-07T20:18:25,637638-07:00 tegra_soctherm 700e2000.soctherm: pllx_offset tz:0 max:0, min:0
+2026-10-07T20:18:25,637664-07:00 tegra_soctherm 700e2000.soctherm: pllx_offset tz:2 max:0, min:0
+2026-10-07T20:18:25,638122-07:00 tegra_soctherm 700e2000.soctherm: soctherm: trip temperature -2147483647 forced to -127000
+2026-10-07T20:18:25,638152-07:00 tegra_soctherm 700e2000.soctherm: soctherm: trip temperature 2147483647 forced to 127000
+2026-10-07T20:18:25,638181-07:00 tegra_soctherm 700e2000.soctherm: thermtrip: will shut down when cpu reaches 127000 mC
+2026-10-07T20:18:25,638208-07:00 tegra_soctherm 700e2000.soctherm: throttrip: cpu: missing hot temperature
+2026-10-07T20:18:25,638392-07:00 tegra_soctherm 700e2000.soctherm: soctherm: trip temperature -2147483647 forced to -127000
+2026-10-07T20:18:25,638417-07:00 tegra_soctherm 700e2000.soctherm: soctherm: trip temperature 2147483647 forced to 127000
+2026-10-07T20:18:25,638444-07:00 tegra_soctherm 700e2000.soctherm: thermtrip: will shut down when gpu reaches 127000 mC
+2026-10-07T20:18:25,638469-07:00 tegra_soctherm 700e2000.soctherm: throttrip: gpu: missing hot temperature
+2026-10-07T20:18:25,638667-07:00 tegra_soctherm 700e2000.soctherm: soctherm: trip temperature -2147483647 forced to -127000
+2026-10-07T20:18:25,638701-07:00 tegra_soctherm 700e2000.soctherm: thermtrip: will shut down when pll reaches 96000 mC
+2026-10-07T20:18:25,638730-07:00 tegra_soctherm 700e2000.soctherm: throttrip: will throttle when pll reaches 94500 mC
+2026-10-07T20:18:25,639502-07:00 tegra_aotag tegra-aotag: Registering sensor 0
+2026-10-07T20:18:25,639589-07:00 tegra_aotag tegra-aotag: Invalid temp readout
+2026-10-07T20:18:25,639612-07:00 tegra_aotag tegra-aotag: Bound to TZ : ID 0
+2026-10-07T20:18:25,639631-07:00 tegra_aotag tegra-aotag: Probe done [SUCCESS]:0
+2026-10-07T20:18:25,640841-07:00 parse_throttle_dt_data: Num cap clks = 6
+2026-10-07T20:18:25,640871-07:00 parse_throttle_dt_data: clk=cclk_g type=2
+2026-10-07T20:18:25,640899-07:00 parse_throttle_dt_data: clk=gpu type=4
+2026-10-07T20:18:25,640940-07:00 parse_throttle_dt_data: clk=cap.throttle.c2bus type=0
+2026-10-07T20:18:25,640995-07:00 parse_throttle_dt_data: clk=cap.throttle.c3bus type=0
+2026-10-07T20:18:25,641035-07:00 parse_throttle_dt_data: clk=cap.throttle.sclk type=0
+2026-10-07T20:18:25,641053-07:00 parse_throttle_dt_data: clk=emc type=3
+2026-10-07T20:18:25,643843-07:00 tegra_soctherm 700e2000.soctherm: soctherm: trip temperature -2147483647 forced to -127000
+2026-10-07T20:18:25,645022-07:00 tegra_throttle_probe: probe successful. #cdevs=4
+2026-10-07T20:18:25,645729-07:00 FAN dev name: pwm-fan
+2026-10-07T20:18:25,645819-07:00 FAN:gpio request success.
+2026-10-07T20:18:25,645882-07:00 pwm_fan_driver pwm-fan: Found 3 profiles, default profile is Console
+2026-10-07T20:18:25,645971-07:00 pwm_fan_driver pwm-fan: cap state:6, cap pwm:255
+2026-10-07T20:18:25,646272-07:00 pwm_fan_driver pwm-fan: got pwm for fan. polarity is inversed
+2026-10-07T20:18:25,646461-07:00 pwm_fan_driver pwm-fan: fan tach request irq success
+2026-10-07T20:18:25,646491-07:00 pwm_fan_driver pwm-fan: tach period: 1000
+2026-10-07T20:18:25,647646-07:00 device-mapper: uevent: version 1.0.3
+2026-10-07T20:18:25,648052-07:00 device-mapper: ioctl: 4.35.0-ioctl (2016-06-23) initialised: dm-devel@redhat.com
+2026-10-07T20:18:25,648876-07:00 tegra210-cpufreq cpufreq: probe()...err:-517
+2026-10-07T20:18:25,649585-07:00 sdhci: Secure Digital Host Controller Interface driver
+2026-10-07T20:18:25,649607-07:00 sdhci: Copyright(c) Pierre Ossman
+2026-10-07T20:18:25,649623-07:00 sdhci-pltfm: SDHCI platform and OF driver helper
+2026-10-07T20:18:25,650477-07:00 sdhci-tegra sdhci-tegra.0: Got CD GPIO
+2026-10-07T20:18:25,651186-07:00 sdhci-tegra sdhci-tegra.0: Client registration for eMC Successful
+2026-10-07T20:18:25,653155-07:00 sdhci-tegra sdhci-tegra.0: wakeup init done, cdirq 292
+2026-10-07T20:18:25,658347-07:00 tegra-se 70012000.se: tegra_se_probe: complete
+2026-10-07T20:18:25,659425-07:00 tegra-se 70412000.se: tegra_se_probe: complete
+2026-10-07T20:18:25,660405-07:00 tegra-se-elp 70420000.se_elp: tegra_se_elp_probe: complete
+2026-10-07T20:18:25,660674-07:00 hidraw: raw HID events driver (C) Jiri Kosina
+2026-10-07T20:18:25,662842-07:00 usbcore: registered new interface driver usbhid
+2026-10-07T20:18:25,662860-07:00 usbhid: USB HID core driver
+2026-10-07T20:18:25,663447-07:00 tegra21x_actmon 6000c800.actmon: in actmon_register()...
+2026-10-07T20:18:25,664026-07:00 tegra21x_actmon 6000c800.actmon: initialization Completed for the device mc_all
+2026-10-07T20:18:25,666114-07:00 nvpmodel: initialized successfully
+2026-10-07T20:18:25,666888-07:00 usbcore: registered new interface driver snd-usb-audio
+2026-10-07T20:18:25,666991-07:00 No Device Node present for smmu client: snd-soc-dummy !!
+2026-10-07T20:18:25,667013-07:00 platform snd-soc-dummy: No iommus property found in DT node, got swgids from fixup(101004000)
+2026-10-07T20:18:25,667055-07:00 iommu: Adding device snd-soc-dummy to group 34
+2026-10-07T20:18:25,677513-07:00 input: tegra-hda HDMI/DP,pcm=3 as /devices/70030000.hda/sound/card0/input3
+2026-10-07T20:18:25,686068-07:00 mmc0: SDHCI controller on sdhci-tegra.0 [sdhci-tegra.0] using ADMA 64-bit with 64 bit addr
+2026-10-07T20:18:25,743976-07:00 usb 1-1: new high-speed USB device number 2 using tegra-xusb
+2026-10-07T20:18:25,861774-07:00 usb 1-1: New USB device found, idVendor=2109, idProduct=2817
+2026-10-07T20:18:25,861795-07:00 usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+2026-10-07T20:18:25,861813-07:00 usb 1-1: Product: USB2.0 Hub             
+2026-10-07T20:18:25,861829-07:00 usb 1-1: Manufacturer: VIA Labs, Inc.         
+2026-10-07T20:18:25,862845-07:00 hub 1-1:1.0: USB hub found
+2026-10-07T20:18:25,862968-07:00 hub 1-1:1.0: 5 ports detected
+2026-10-07T20:18:25,937926-07:00 mmc0: host does not support reading read-only switch, assuming write-enable
+2026-10-07T20:18:26,081574-07:00 mmc0: hw tuning done...
+2026-10-07T20:18:26,081983-07:00 mmc0: new ultra high speed SDR104 SDXC card at address aaaa
+2026-10-07T20:18:26,082453-07:00 mmcblk0: mmc0:aaaa SN512 477 GiB 
+2026-10-07T20:18:26,091121-07:00  mmcblk0: p1 p2 p3 p4 p5 p6 p7 p8 p9 p10
+2026-10-07T20:18:26,094167-07:00 fts_touch 2-0049: FTS Channel Sense: 32, Force: 18
+2026-10-07T20:18:26,094540-07:00 fts_touch 2-0049: FTS Initialized
+2026-10-07T20:18:26,094832-07:00 input: touchscreen as /devices/7000c500.i2c/i2c-2/2-0049/input/input1
+2026-10-07T20:18:26,095561-07:00 fts_touch 2-0049: fts_debug_msg_event_handler: 16 05 01 23 00 00 00 00
+2026-10-07T20:18:26,112323-07:00 OPE platform probe
+2026-10-07T20:18:26,112449-07:00 OPE platform probe successful
+2026-10-07T20:18:26,112734-07:00 OPE platform probe
+2026-10-07T20:18:26,112853-07:00 OPE platform probe successful
+2026-10-07T20:18:26,150013-07:00 tegra-asoc: sound: ADMAIF1 <-> ADMAIF1 mapping ok
+2026-10-07T20:18:26,150206-07:00 tegra-asoc: sound: ADMAIF2 <-> ADMAIF2 mapping ok
+2026-10-07T20:18:26,150387-07:00 tegra-asoc: sound: ADMAIF3 <-> ADMAIF3 mapping ok
+2026-10-07T20:18:26,150562-07:00 tegra-asoc: sound: ADMAIF4 <-> ADMAIF4 mapping ok
+2026-10-07T20:18:26,150737-07:00 tegra-asoc: sound: ADMAIF5 <-> ADMAIF5 mapping ok
+2026-10-07T20:18:26,150911-07:00 tegra-asoc: sound: ADMAIF6 <-> ADMAIF6 mapping ok
+2026-10-07T20:18:26,151104-07:00 tegra-asoc: sound: ADMAIF7 <-> ADMAIF7 mapping ok
+2026-10-07T20:18:26,151279-07:00 tegra-asoc: sound: ADMAIF8 <-> ADMAIF8 mapping ok
+2026-10-07T20:18:26,151451-07:00 tegra-asoc: sound: ADMAIF9 <-> ADMAIF9 mapping ok
+2026-10-07T20:18:26,151625-07:00 tegra-asoc: sound: ADMAIF10 <-> ADMAIF10 mapping ok
+2026-10-07T20:18:26,176822-07:00 input: tegra-snd-t210ref-mobile-rt565x Headphone Jack as /devices/sound/sound/card1/input4
+2026-10-07T20:18:26,177580-07:00 u32 classifier
+2026-10-07T20:18:26,177598-07:00     Actions configured
+2026-10-07T20:18:26,177617-07:00 Netfilter messages via NETLINK v0.30.
+2026-10-07T20:18:26,177638-07:00 nfnl_acct: registering with nfnetlink.
+2026-10-07T20:18:26,177864-07:00 nf_conntrack version 0.5.0 (16384 buckets, 65536 max)
+2026-10-07T20:18:26,178003-07:00 ctnetlink v0.93: registering with nfnetlink.
+2026-10-07T20:18:26,178168-07:00 nf_tables: (c) 2007-2009 Patrick McHardy <kaber@trash.net>
+2026-10-07T20:18:26,178192-07:00 nf_tables_compat: (c) 2012 Pablo Neira Ayuso <pablo@netfilter.org>
+2026-10-07T20:18:26,178510-07:00 xt_time: kernel timezone is -0000
+2026-10-07T20:18:26,178611-07:00 ipip: IPv4 and MPLS over IPv4 tunneling driver
+2026-10-07T20:18:26,179086-07:00 ip_tables: (C) 2000-2006 Netfilter Core Team
+2026-10-07T20:18:26,179263-07:00 ipt_CLUSTERIP: ClusterIP Version 0.8 loaded successfully
+2026-10-07T20:18:26,179293-07:00 arp_tables: arp_tables: (C) 2002 David S. Miller
+2026-10-07T20:18:26,179339-07:00 Initializing XFRM netlink socket
+2026-10-07T20:18:26,179866-07:00 NET: Registered protocol family 10
+2026-10-07T20:18:26,180638-07:00 ip6_tables: (C) 2000-2006 Netfilter Core Team
+2026-10-07T20:18:26,180932-07:00 sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+2026-10-07T20:18:26,181313-07:00 NET: Registered protocol family 17
+2026-10-07T20:18:26,181341-07:00 NET: Registered protocol family 15
+2026-10-07T20:18:26,181429-07:00 Bridge firewalling registered
+2026-10-07T20:18:26,181449-07:00 Ebtables v2.0 registered
+2026-10-07T20:18:26,181619-07:00 Bluetooth: RFCOMM TTY layer initialized
+2026-10-07T20:18:26,181641-07:00 Bluetooth: RFCOMM socket layer initialized
+2026-10-07T20:18:26,181664-07:00 Bluetooth: RFCOMM ver 1.11
+2026-10-07T20:18:26,181683-07:00 Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+2026-10-07T20:18:26,181701-07:00 Bluetooth: BNEP socket layer initialized
+2026-10-07T20:18:26,181716-07:00 Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+2026-10-07T20:18:26,181734-07:00 Bluetooth: HIDP socket layer initialized
+2026-10-07T20:18:26,181794-07:00 Key type dns_resolver registered
+2026-10-07T20:18:26,182546-07:00 Registered cp15_barrier emulation handler
+2026-10-07T20:18:26,182569-07:00 Registered setend emulation handler
+2026-10-07T20:18:26,183827-07:00 registered taskstats version 1
+2026-10-07T20:18:26,183928-07:00 zswap: loaded using pool lzo/zbud
+2026-10-07T20:18:26,185593-07:00 Btrfs loaded, crc32c=crc32c-generic
+2026-10-07T20:18:26,185809-07:00 tegra_powergate_partition: ve2 is in powergate skip list
+2026-10-07T20:18:26,185932-07:00 Adding domain ve2-pd to PM domain host1x-pd
+2026-10-07T20:18:26,186201-07:00 Adding domain ve-pd to PM domain host1x-pd
+2026-10-07T20:18:26,199462-07:00 last reset is due to power on reset
+2026-10-07T20:18:26,199487-07:00 KERNEL: PMC reset status reg: 0x0
+2026-10-07T20:18:26,204154-07:00 tegra_soctherm 700e2000.soctherm: soctherm: trip temperature -2147483647 forced to -127000
+2026-10-07T20:18:26,204196-07:00 tegra_dfll_action dfll-cdev-cap: Tegra DFLL 'cap cooling device' registered
+2026-10-07T20:18:26,205408-07:00 tegra_dfll_action dfll-cdev-floor: Tegra DFLL 'floor cooling device' registered
+2026-10-07T20:18:26,206892-07:00 tegra210-cpufreq cpufreq: probe()...completed
+2026-10-07T20:18:26,208304-07:00 tegra dvfs: vdd-cpu: nominal 1235mV, offset 250000uV, step 5000uV, scaling enabled
+2026-10-07T20:18:26,208319-07:00 tegra dvfs: vdd-core: nominal 1025mV, offset 625000uV, step 12500uV, scaling enabled
+2026-10-07T20:18:26,208330-07:00 tegra dvfs: vdd-gpu: nominal 800mV, offset 250000uV, step 5000uV, scaling enabled
+2026-10-07T20:18:26,215576-07:00 tegra_dvfs: vdd-gpu-vts: registered
+2026-10-07T20:18:26,216692-07:00 tegra_core_action core_dvfs_cdev_floor: Tegra CORE DVFS 'floor cooling device' registered
+2026-10-07T20:18:26,218177-07:00 tegra_core_action core_dvfs_cdev_cap: Tegra CORE DVFS 'cap cooling device' registered
+2026-10-07T20:18:26,218530-07:00 input: gpio-keys as /devices/gpio-keys/input/input5
+2026-10-07T20:18:26,251757-07:00 tegra_rtc 7000e000.rtc: setting system clock to 2026-10-08 03:18:27 UTC (1791429507)
+2026-10-07T20:18:26,253049-07:00 Disable partitions left on by BL
+2026-10-07T20:18:26,253063-07:00   disb
+2026-10-07T20:18:26,253110-07:00 bwmgr: missing cdev-type property
+2026-10-07T20:18:26,253488-07:00 vdd-gc-3v1: disabling
+2026-10-07T20:18:26,253606-07:00 vdd-gc-1v8: disabling
+2026-10-07T20:18:26,253721-07:00 vdd-gen-pll-edp: disabling
+2026-10-07T20:18:26,253830-07:00 batt_regulator: disabling
+2026-10-07T20:18:26,254294-07:00 v_vdd50_a: disabling
+2026-10-07T20:18:26,254463-07:00 ALSA device list:
+2026-10-07T20:18:26,254475-07:00   #0: tegra-hda at 0x70038000 irq 74
+2026-10-07T20:18:26,254486-07:00   #1: tegra-snd-t210ref-mobile-rt565x
+2026-10-07T20:18:26,256124-07:00 Freeing unused kernel memory: 3968K
+2026-10-07T20:18:26,268906-07:00 tegradc tegradc.0: blank - normal
+2026-10-07T20:18:26,275872-07:00 [fbmem] FBIOGET_VSCREENINFO from 'ply-image' on fb0: xres=720 yres=1280 bpp=32 pixclock=12820
+2026-10-07T20:18:26,275889-07:00 [fbmem] FBIOGET_FSCREENINFO from 'ply-image' on fb0: id='tegra_fb' line_length=2880 smem_len=4194304
+2026-10-07T20:18:26,318356-07:00 tegradc tegradc.0: unblank
+2026-10-07T20:18:26,324512-07:00 tegradc tegradc.0: sync windows ret = 994
+2026-10-07T20:18:26,324780-07:00 [ INITRAMFS ] L4T-INITRAMFS START
+2026-10-07T20:18:26,385025-07:00 usb 1-1.5: new high-speed USB device number 3 using tegra-xusb
+2026-10-07T20:18:26,462216-07:00 usb 1-1.5: New USB device found, idVendor=2109, idProduct=8884
+2026-10-07T20:18:26,462248-07:00 usb 1-1.5: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+2026-10-07T20:18:26,462279-07:00 usb 1-1.5: Product: USB Billboard Device   
+2026-10-07T20:18:26,462302-07:00 usb 1-1.5: Manufacturer: VIA Labs, Inc.         
+2026-10-07T20:18:26,462325-07:00 usb 1-1.5: SerialNumber: 0000000000000001
+2026-10-07T20:18:26,600005-07:00 bm92t 0-0018: Set Charging Current Limit 900ma
+2026-10-07T20:18:26,600048-07:00 bq2419x 0-006b: Setting charging current 900 mA
+2026-10-07T20:18:26,600079-07:00 bq2419x 0-006b: Charging enabled
+2026-10-07T20:18:26,601498-07:00 bq2419x 0-006b: Connected to known safe VBUS source 0x64
+2026-10-07T20:18:26,647992-07:00 usb 1-1.1: new full-speed USB device number 4 using tegra-xusb
+2026-10-07T20:18:26,655434-07:00 [ INITRAMFS ] Found root fs via FS LABEL
+2026-10-07T20:18:26,655572-07:00 [ INITRAMFS ] Selected root device: /dev/mmcblk0p2
+2026-10-07T20:18:26,655869-07:00 [ INITRAMFS ] Found dev node: /dev/mmcblk0p2
+2026-10-07T20:18:26,655913-07:00 [ INITRAMFS ] Checking dev node for errors
+2026-10-07T20:18:26,656610-07:00 [fbmem] FBIOGET_VSCREENINFO from 'ply-image' on fb0: xres=720 yres=1280 bpp=32 pixclock=12820
+2026-10-07T20:18:26,656626-07:00 [fbmem] FBIOGET_FSCREENINFO from 'ply-image' on fb0: id='tegra_fb' line_length=2880 smem_len=4194304
+2026-10-07T20:18:26,740160-07:00 usb 1-1.1: New USB device found, idVendor=046d, idProduct=c52b
+2026-10-07T20:18:26,740176-07:00 usb 1-1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+2026-10-07T20:18:26,740190-07:00 usb 1-1.1: Product: USB Receiver
+2026-10-07T20:18:26,740200-07:00 usb 1-1.1: Manufacturer: Logitech
+2026-10-07T20:18:26,756767-07:00 logitech-djreceiver 0003:046D:C52B.0003: hiddev0,hidraw0: USB HID v1.11 Device [Logitech USB Receiver] on usb-70090000.xusb-1.1/input2
+2026-10-07T20:18:27,045003-07:00 usb 1-1.2: new high-speed USB device number 5 using tegra-xusb
+2026-10-07T20:18:27,134853-07:00 usb 1-1.2: New USB device found, idVendor=2109, idProduct=2817
+2026-10-07T20:18:27,134911-07:00 usb 1-1.2: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+2026-10-07T20:18:27,134992-07:00 usb 1-1.2: Product: USB2.0 Hub             
+2026-10-07T20:18:27,135031-07:00 usb 1-1.2: Manufacturer: VIA Labs, Inc.         
+2026-10-07T20:18:27,136583-07:00 hub 1-1.2:1.0: USB hub found
+2026-10-07T20:18:27,136911-07:00 hub 1-1.2:1.0: 4 ports detected
+2026-10-07T20:18:27,323964-07:00 usb 1-1.3: new high-speed USB device number 6 using tegra-xusb
+2026-10-07T20:18:27,414607-07:00 usb 1-1.3: New USB device found, idVendor=17e9, idProduct=4323
+2026-10-07T20:18:27,414681-07:00 usb 1-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+2026-10-07T20:18:27,414753-07:00 usb 1-1.3: Product: Plugable UD-3900PDZ
+2026-10-07T20:18:27,414805-07:00 usb 1-1.3: Manufacturer: DisplayLink
+2026-10-07T20:18:27,414855-07:00 usb 1-1.3: SerialNumber: 4371A03731
+2026-10-07T20:18:27,426294-07:00 usb 1-1.3: Warning! Unlikely big volume range (=511), cval->res is probably wrong.
+2026-10-07T20:18:27,426351-07:00 usb 1-1.3: [15] FU [Plugable Audio Playback Volume] ch = 6, val = -8176/0/16
+2026-10-07T20:18:27,427348-07:00 usb 1-1.3: Warning! Unlikely big volume range (=767), cval->res is probably wrong.
+2026-10-07T20:18:27,427396-07:00 usb 1-1.3: [12] FU [Mic Capture Volume] ch = 2, val = -4592/7680/16
+2026-10-07T20:18:27,444975-07:00 cdc_ncm 1-1.3:1.5: MAC-Address: 8c:ae:4c:b5:5c:c6
+2026-10-07T20:18:27,445007-07:00 cdc_ncm 1-1.3:1.5: setting rx_max = 16384
+2026-10-07T20:18:27,445188-07:00 cdc_ncm 1-1.3:1.5: setting tx_max = 16384
+2026-10-07T20:18:27,446077-07:00 cdc_ncm 1-1.3:1.5 usb0: register 'cdc_ncm' at usb-70090000.xusb-1.3, CDC NCM, 8c:ae:4c:b5:5c:c6
+2026-10-07T20:18:27,509040-07:00 usb 1-1.2: usb_suspend_both: status 0
+2026-10-07T20:18:27,631057-07:00 usb 1-1.4: new low-speed USB device number 7 using tegra-xusb
+2026-10-07T20:18:27,729156-07:00 usb 1-1.4: New USB device found, idVendor=258a, idProduct=6a88
+2026-10-07T20:18:27,729267-07:00 usb 1-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+2026-10-07T20:18:27,729372-07:00 usb 1-1.4: Product: USB KEYBOARD
+2026-10-07T20:18:27,729450-07:00 usb 1-1.4: Manufacturer: SINO WEALTH
+2026-10-07T20:18:27,738266-07:00 input: SINO WEALTH USB KEYBOARD as /devices/70090000.xusb/usb1/1-1/1-1.4/1-1.4:1.0/0003:258A:6A88.0005/input/input6
+2026-10-07T20:18:27,791670-07:00 hid-generic 0003:258A:6A88.0005: input,hidraw1: USB HID v1.10 Keyboard [SINO WEALTH USB KEYBOARD] on usb-70090000.xusb-1.4/input0
+2026-10-07T20:18:27,807115-07:00 input: SINO WEALTH USB KEYBOARD as /devices/70090000.xusb/usb1/1-1/1-1.4/1-1.4:1.1/0003:258A:6A88.0006/input/input7
+2026-10-07T20:18:27,859600-07:00 hid-generic 0003:258A:6A88.0006: input,hiddev0,hidraw2: USB HID v1.10 Mouse [SINO WEALTH USB KEYBOARD] on usb-70090000.xusb-1.4/input1
+2026-10-07T20:18:28,078098-07:00 [ INITRAMFS ] Mounting dev node
+2026-10-07T20:18:28,126898-07:00 EXT4-fs (mmcblk0p2): mounted filesystem with ordered data mode. Opts: (null)
+2026-10-07T20:18:28,152782-07:00 [fbmem] FBIOGET_VSCREENINFO from 'ply-image' on fb0: xres=720 yres=1280 bpp=32 pixclock=12820
+2026-10-07T20:18:28,152808-07:00 [fbmem] FBIOGET_FSCREENINFO from 'ply-image' on fb0: id='tegra_fb' line_length=2880 smem_len=4194304
+2026-10-07T20:18:28,159996-07:00 [ INITRAMFS ] Rootfs mounted over /dev/mmcblk0p2
+2026-10-07T20:18:28,160166-07:00 [ INITRAMFS ] Resizing root fs if needed
+2026-10-07T20:18:28,164204-07:00 [ INITRAMFS ] Check for dev updates and apply if they exist
+2026-10-07T20:18:28,229327-07:00 [ INITRAMFS ] Boot drive found
+2026-10-07T20:18:28,242698-07:00 [ INITRAMFS ] Set Up Joycon stuff
+2026-10-07T20:18:28,443446-07:00 zram0: detected capacity change from 0 to 3221225472
+2026-10-07T20:18:30,229842-07:00 max17042 0-0036: SOC at 94%
+2026-10-07T20:18:30,464157-07:00 random: crng init done
+2026-10-07T20:18:30,607927-07:00 Adding 3145724k swap on /dev/zram0.  Priority:5 extents:1 across:3145724k SSFS
+2026-10-07T20:18:30,648144-07:00 [fbmem] FBIOGET_VSCREENINFO from 'ply-image' on fb0: xres=720 yres=1280 bpp=32 pixclock=12820
+2026-10-07T20:18:30,648164-07:00 [fbmem] FBIOGET_FSCREENINFO from 'ply-image' on fb0: id='tegra_fb' line_length=2880 smem_len=4194304
+2026-10-07T20:18:30,653924-07:00 [ INITRAMFS ] Switching from initrd to actual rootfs
+2026-10-07T20:18:30,668845-07:00 [ INITRAMFS ] Found symlinked init: ../lib/systemd/systemd!
+2026-10-07T20:18:30,668993-07:00 [ INITRAMFS ] L4T-INITRAMFS END
+2026-10-07T20:18:32,151643-07:00 systemd[1]: systemd 255.4-1ubuntu8.17 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBFDISK +PCRE2 -PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -BPF_FRAMEWORK -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified)
+2026-10-07T20:18:32,151931-07:00 systemd[1]: Detected architecture arm64.
+2026-10-07T20:18:32,153479-07:00 systemd[1]: Warning! Reported kernel version 4.9.140-l4t is older than systemd's required baseline kernel version 4.15. Your mileage may vary.
+2026-10-07T20:18:32,188197-07:00 systemd[1]: Hostname set to <randys-switch>.
+2026-10-07T20:18:32,365176-07:00 input: Logitech M570 as /devices/70090000.xusb/usb1/1-1/1-1.1/1-1.1:1.2/0003:046D:C52B.0003/0003:046D:1028.0004/input/input8
+2026-10-07T20:18:32,366269-07:00 logitech-hidpp-device 0003:046D:1028.0004: input,hidraw3: USB HID v1.11 Mouse [Logitech M570] on usb-70090000.xusb-1.1:1
+2026-10-07T20:18:32,374825-07:00 input: Logitech MX Master 2S as /devices/70090000.xusb/usb1/1-1/1-1.1/1-1.1:1.2/0003:046D:C52B.0003/0003:046D:4069.0007/input/input9
+2026-10-07T20:18:32,377050-07:00 logitech-hidpp-device 0003:046D:4069.0007: input,hidraw4: USB HID v1.11 Keyboard [Logitech MX Master 2S] on usb-70090000.xusb-1.1:2
+2026-10-07T20:18:34,925609-07:00 systemd[1]: Queued start job for default target graphical.target.
+2026-10-07T20:18:34,956908-07:00 systemd[1]: Created slice system-modprobe.slice - Slice /system/modprobe.
+2026-10-07T20:18:34,958028-07:00 systemd[1]: Created slice system-serial\x2dgetty.slice - Slice /system/serial-getty.
+2026-10-07T20:18:34,958707-07:00 systemd[1]: Created slice user.slice - User and Session Slice.
+2026-10-07T20:18:34,958916-07:00 systemd[1]: Started systemd-ask-password-wall.path - Forward Password Requests to Wall Directory Watch.
+2026-10-07T20:18:34,959467-07:00 systemd[1]: Set up automount proc-sys-fs-binfmt_misc.automount - Arbitrary Executable File Formats File System Automount Point.
+2026-10-07T20:18:34,959604-07:00 systemd[1]: Expecting device dev-ttyGS0.device - /dev/ttyGS0...
+2026-10-07T20:18:34,959713-07:00 systemd[1]: Reached target integritysetup.target - Local Integrity Protected Volumes.
+2026-10-07T20:18:34,959852-07:00 systemd[1]: Reached target nss-user-lookup.target - User and Group Name Lookups.
+2026-10-07T20:18:34,959964-07:00 systemd[1]: Reached target remote-fs.target - Remote File Systems.
+2026-10-07T20:18:34,960067-07:00 systemd[1]: Reached target slices.target - Slice Units.
+2026-10-07T20:18:34,960172-07:00 systemd[1]: Reached target swap.target - Swaps.
+2026-10-07T20:18:34,960292-07:00 systemd[1]: Reached target veritysetup.target - Local Verity Protected Volumes.
+2026-10-07T20:18:34,960557-07:00 systemd[1]: Listening on dm-event.socket - Device-mapper event daemon FIFOs.
+2026-10-07T20:18:34,960862-07:00 systemd[1]: Listening on lvm2-lvmpolld.socket - LVM2 poll daemon socket.
+2026-10-07T20:18:34,961189-07:00 systemd[1]: Listening on syslog.socket - Syslog Socket.
+2026-10-07T20:18:34,961439-07:00 systemd[1]: Listening on systemd-fsckd.socket - fsck to fsckd communication Socket.
+2026-10-07T20:18:34,961613-07:00 systemd[1]: Listening on systemd-initctl.socket - initctl Compatibility Named Pipe.
+2026-10-07T20:18:34,967918-07:00 systemd[1]: Listening on systemd-journald-dev-log.socket - Journal Socket (/dev/log).
+2026-10-07T20:18:34,968536-07:00 systemd[1]: Listening on systemd-journald.socket - Journal Socket.
+2026-10-07T20:18:34,968809-07:00 systemd[1]: systemd-pcrextend.socket - TPM2 PCR Extension (Varlink) was skipped because of an unmet condition check (ConditionSecurity=measured-uki).
+2026-10-07T20:18:34,969841-07:00 systemd[1]: Listening on systemd-udevd-control.socket - udev Control Socket.
+2026-10-07T20:18:34,970311-07:00 systemd[1]: Listening on systemd-udevd-kernel.socket - udev Kernel Socket.
+2026-10-07T20:18:34,974309-07:00 systemd[1]: Mounting dev-hugepages.mount - Huge Pages File System...
+2026-10-07T20:18:34,976752-07:00 systemd[1]: Mounting dev-mqueue.mount - POSIX Message Queue File System...
+2026-10-07T20:18:34,978738-07:00 systemd[1]: Mounting sys-kernel-debug.mount - Kernel Debug File System...
+2026-10-07T20:18:34,979122-07:00 systemd[1]: sys-kernel-tracing.mount - Kernel Trace File System was skipped because of an unmet condition check (ConditionPathExists=/sys/kernel/tracing).
+2026-10-07T20:18:34,979807-07:00 systemd[1]: systemd-journald.service: unit configures an IP firewall, but the local system does not support BPF/cgroup firewalling.
+2026-10-07T20:18:34,979841-07:00 systemd[1]: systemd-journald.service: (This warning is only shown for the first unit using IP firewalling.)
+2026-10-07T20:18:34,982520-07:00 systemd[1]: Starting systemd-journald.service - Journal Service...
+2026-10-07T20:18:34,982981-07:00 systemd[1]: Finished blk-availability.service - Availability of block devices.
+2026-10-07T20:18:34,986046-07:00 systemd[1]: Starting keyboard-setup.service - Set the console keyboard layout...
+2026-10-07T20:18:34,986227-07:00 systemd[1]: kmod-static-nodes.service - Create List of Static Device Nodes was skipped because of an unmet condition check (ConditionFileNotEmpty=/lib/modules/4.9.140-l4t/modules.devname).
+2026-10-07T20:18:34,988294-07:00 systemd[1]: Starting lvm2-monitor.service - Monitoring of LVM2 mirrors, snapshots etc. using dmeventd or progress polling...
+2026-10-07T20:18:34,994826-07:00 systemd[1]: Starting modprobe@configfs.service - Load Kernel Module configfs...
+2026-10-07T20:18:35,001027-07:00 systemd[1]: Starting modprobe@dm_mod.service - Load Kernel Module dm_mod...
+2026-10-07T20:18:35,003531-07:00 systemd[1]: Starting modprobe@drm.service - Load Kernel Module drm...
+2026-10-07T20:18:35,010915-07:00 systemd[1]: Starting modprobe@efi_pstore.service - Load Kernel Module efi_pstore...
+2026-10-07T20:18:35,013782-07:00 systemd[1]: Starting modprobe@fuse.service - Load Kernel Module fuse...
+2026-10-07T20:18:35,018056-07:00 systemd[1]: Starting modprobe@loop.service - Load Kernel Module loop...
+2026-10-07T20:18:35,018554-07:00 systemd[1]: systemd-fsck-root.service - File System Check on Root Device was skipped because of an unmet condition check (ConditionPathIsReadWrite=!/).
+2026-10-07T20:18:35,037814-07:00 systemd[1]: Starting systemd-modules-load.service - Load Kernel Modules...
+2026-10-07T20:18:35,037985-07:00 systemd[1]: systemd-pcrmachine.service - TPM2 PCR Machine ID Measurement was skipped because of an unmet condition check (ConditionSecurity=measured-uki).
+2026-10-07T20:18:35,041947-07:00 systemd[1]: Starting systemd-remount-fs.service - Remount Root and Kernel File Systems...
+2026-10-07T20:18:35,045450-07:00 systemd[1]: Starting systemd-tmpfiles-setup-dev-early.service - Create Static Device Nodes in /dev gracefully...
+2026-10-07T20:18:35,045642-07:00 systemd[1]: systemd-tpm2-setup-early.service - TPM2 SRK Setup (Early) was skipped because of an unmet condition check (ConditionSecurity=measured-uki).
+2026-10-07T20:18:35,049689-07:00 systemd[1]: Starting systemd-udev-trigger.service - Coldplug All udev Devices...
+2026-10-07T20:18:35,052767-07:00 systemd[1]: Mounted dev-hugepages.mount - Huge Pages File System.
+2026-10-07T20:18:35,053124-07:00 systemd[1]: Mounted dev-mqueue.mount - POSIX Message Queue File System.
+2026-10-07T20:18:35,053410-07:00 systemd[1]: Mounted sys-kernel-debug.mount - Kernel Debug File System.
+2026-10-07T20:18:35,054035-07:00 systemd[1]: modprobe@configfs.service: Deactivated successfully.
+2026-10-07T20:18:35,054453-07:00 systemd[1]: Finished modprobe@configfs.service - Load Kernel Module configfs.
+2026-10-07T20:18:35,055177-07:00 systemd[1]: modprobe@dm_mod.service: Deactivated successfully.
+2026-10-07T20:18:35,055714-07:00 systemd[1]: Finished modprobe@dm_mod.service - Load Kernel Module dm_mod.
+2026-10-07T20:18:35,056484-07:00 systemd[1]: modprobe@drm.service: Deactivated successfully.
+2026-10-07T20:18:35,056874-07:00 systemd[1]: Finished modprobe@drm.service - Load Kernel Module drm.
+2026-10-07T20:18:35,057833-07:00 systemd[1]: modprobe@efi_pstore.service: Deactivated successfully.
+2026-10-07T20:18:35,058188-07:00 systemd[1]: Finished modprobe@efi_pstore.service - Load Kernel Module efi_pstore.
+2026-10-07T20:18:35,058805-07:00 systemd[1]: modprobe@fuse.service: Deactivated successfully.
+2026-10-07T20:18:35,068551-07:00 systemd-journald[301]: Collecting audit messages is disabled.
+2026-10-07T20:18:35,079423-07:00 EXT4-fs (mmcblk0p2): re-mounted. Opts: (null)
+2026-10-07T20:18:35,083296-07:00 systemd[1]: Finished modprobe@fuse.service - Load Kernel Module fuse.
+2026-10-07T20:18:35,084775-07:00 systemd[1]: modprobe@loop.service: Deactivated successfully.
+2026-10-07T20:18:35,085140-07:00 systemd[1]: Finished modprobe@loop.service - Load Kernel Module loop.
+2026-10-07T20:18:35,085761-07:00 systemd[1]: Finished systemd-remount-fs.service - Remount Root and Kernel File Systems.
+2026-10-07T20:18:35,086367-07:00 systemd[1]: Finished systemd-modules-load.service - Load Kernel Modules.
+2026-10-07T20:18:35,088353-07:00 systemd[1]: Mounting sys-fs-fuse-connections.mount - FUSE Control File System...
+2026-10-07T20:18:35,118413-07:00 systemd[1]: Mounting sys-kernel-config.mount - Kernel Configuration File System...
+2026-10-07T20:18:35,136295-07:00 systemd[1]: systemd-hwdb-update.service - Rebuild Hardware Database was skipped because of an unmet condition check (ConditionNeedsUpdate=/etc).
+2026-10-07T20:18:35,136420-07:00 systemd[1]: systemd-pstore.service - Platform Persistent Storage Archival was skipped because of an unmet condition check (ConditionDirectoryNotEmpty=/sys/fs/pstore).
+2026-10-07T20:18:35,138093-07:00 systemd[1]: Starting dl-panic-capture.service - Archive kernel crash (pstore) records left by a DisplayLink/evdi panic...
+2026-10-07T20:18:35,139754-07:00 systemd[1]: Starting systemd-random-seed.service - Load/Save OS Random Seed...
+2026-10-07T20:18:35,139923-07:00 systemd[1]: systemd-repart.service - Repartition Root Disk was skipped because no trigger condition checks were met.
+2026-10-07T20:18:35,145519-07:00 systemd[1]: Starting systemd-sysctl.service - Apply Kernel Variables...
+2026-10-07T20:18:35,145649-07:00 systemd[1]: systemd-tpm2-setup.service - TPM2 SRK Setup was skipped because of an unmet condition check (ConditionSecurity=measured-uki).
+2026-10-07T20:18:35,147319-07:00 systemd[1]: Mounted sys-fs-fuse-connections.mount - FUSE Control File System.
+2026-10-07T20:18:35,147660-07:00 systemd[1]: Mounted sys-kernel-config.mount - Kernel Configuration File System.
+2026-10-07T20:18:35,190578-07:00 systemd[1]: Finished keyboard-setup.service - Set the console keyboard layout.
+2026-10-07T20:18:35,207750-07:00 systemd[1]: dl-panic-capture.service: Deactivated successfully.
+2026-10-07T20:18:35,208189-07:00 systemd[1]: Finished dl-panic-capture.service - Archive kernel crash (pstore) records left by a DisplayLink/evdi panic.
+2026-10-07T20:18:35,220922-07:00 systemd[1]: Started systemd-journald.service - Journal Service.
+2026-10-07T20:18:35,278235-07:00 systemd-journald[301]: Received client request to flush runtime journal.
+2026-10-07T20:18:36,352858-07:00 fts_touch 2-0049: fts_start_device
+2026-10-07T20:18:36,380167-07:00 fts_touch 2-0049: fts_stop_device
+2026-10-07T20:18:36,382396-07:00 fts_touch 2-0049: fts_power_ctrl: off
+2026-10-07T20:18:36,451915-07:00 cdc_ncm 1-1.3:1.5 enx8cae4cb55cc6: renamed from usb0
+2026-10-07T20:18:36,496187-07:00 fts_touch 2-0049: fts_start_device
+2026-10-07T20:18:36,496212-07:00 fts_touch 2-0049: fts_power_ctrl: on
+2026-10-07T20:18:36,501571-07:00 fts_touch 2-0049: FTS SystemReset
+2026-10-07T20:18:36,505717-07:00 fts_touch 2-0049: fts_stop_device
+2026-10-07T20:18:36,784086-07:00 joycon-serdev: init
+2026-10-07T20:18:36,784189-07:00 joycon_serdev serial0-0: joycon_serdev_probe
+2026-10-07T20:18:36,784339-07:00 joycon_serdev serial0-0: Continuing without charger regulator
+2026-10-07T20:18:36,784780-07:00 Bluetooth: HCI UART driver ver 2.3
+2026-10-07T20:18:36,784792-07:00 Bluetooth: HCI UART protocol H4 registered
+2026-10-07T20:18:36,785002-07:00 Bluetooth: HCI UART protocol Broadcom registered
+2026-10-07T20:18:36,793289-07:00 joycon_serdev serial0-0: Polling based detection
+2026-10-07T20:18:36,793343-07:00 joycon_serdev serial0-0: Probe complete
+2026-10-07T20:18:36,854150-07:00 nvgpu: 57000000.gpu           gm20b_init_clk_setup_sw:1268 [INFO]  GPCPLL initial settings: NA mode, M=1, N=34, P=3 (id = 2)
+2026-10-07T20:18:36,896886-07:00 joycon_serdev serial0-0: Completed handshake - Sio
+2026-10-07T20:18:36,897025-07:00 input: Nintendo Switch Lite Gamepad as /devices/70006200.serial/serial0/serial0-0/input/input10
+2026-10-07T20:18:36,897728-07:00 input: Nintendo Switch Lite Gamepad IMU as /devices/70006200.serial/serial0/serial0-0/input/input11
+2026-10-07T20:18:36,897855-07:00 joycon_serdev serial0-0: Post detect - success
+2026-10-07T20:18:36,953779-07:00 Bluetooth: hci0: BCM: chip id 122
+2026-10-07T20:18:36,954303-07:00 Bluetooth: hci0: BCM: features 0x0f
+2026-10-07T20:18:36,956384-07:00 Bluetooth: hci0: BCM4356A3
+2026-10-07T20:18:36,956405-07:00 Bluetooth: hci0: BCM4356A3 (001.004.009) build 0000
+2026-10-07T20:18:37,054679-07:00 fts_touch 2-0049: fts_debug_msg_event_handler: 16 05 01 23 00 00 00 00
+2026-10-07T20:18:37,054987-07:00 fts_touch 2-0049: fts_power_ctrl: off
+2026-10-07T20:18:37,120789-07:00 fts_touch 2-0049: fts_start_device
+2026-10-07T20:18:37,120812-07:00 fts_touch 2-0049: fts_power_ctrl: on
+2026-10-07T20:18:37,127340-07:00 fts_touch 2-0049: FTS SystemReset
+2026-10-07T20:18:37,127994-07:00 fts_touch 2-0049: fts_stop_device
+2026-10-07T20:18:37,269137-07:00 brcmfmac 0000:01:00.0: enabling device (0000 -> 0002)
+2026-10-07T20:18:37,269179-07:00 brcmfmac: brcmf_chip_recognition: found AXI chip BCM4356, rev=3
+2026-10-07T20:18:37,376352-07:00 brcmfmac: brcmf_pcie_of_probe: Enabling pcie reset on wake quirk
+2026-10-07T20:18:37,536777-07:00 Bluetooth: hci0: BCM4356A3 (001.004.009) build 0112
+2026-10-07T20:18:37,684680-07:00 fts_touch 2-0049: fts_debug_msg_event_handler: 16 05 01 23 00 00 00 00
+2026-10-07T20:18:37,684976-07:00 fts_touch 2-0049: fts_power_ctrl: off
+2026-10-07T20:18:37,770002-07:00 brcmfmac: brcmf_c_preinit_dcmds: Firmware version = wl0: Aug 29 2021 19:23:35 version 7.35.252.108 (c216b7c) FWID 01-65333037
+2026-10-07T20:18:37,847075-07:00 brcmfmac 0000:01:00.0 wlp1s0: renamed from wlan0
+2026-10-07T20:18:38,367787-07:00 using random self ethernet address
+2026-10-07T20:18:38,367805-07:00 using random host ethernet address
+2026-10-07T20:18:38,542371-07:00 bpmp: mounted debugfs mirror
+2026-10-07T20:18:38,604734-07:00 tty_warn_deprecated_flags: 'setserial' is using deprecated serial flags (with no effect): 00000200
+2026-10-07T20:18:39,026052-07:00 Mass Storage Function, version: 2009/09/11
+2026-10-07T20:18:39,026070-07:00 LUN: removable file: (no medium)
+2026-10-07T20:18:39,035410-07:00 using random self ethernet address
+2026-10-07T20:18:39,035427-07:00 using random host ethernet address
+2026-10-07T20:18:39,227861-07:00 usb0: HOST MAC 86:71:af:fa:b8:9c
+2026-10-07T20:18:39,227922-07:00 usb0: MAC 86:71:af:fa:b8:9d
+2026-10-07T20:18:39,229010-07:00 usb1: HOST MAC 86:71:af:fa:b8:9e
+2026-10-07T20:18:39,229043-07:00 usb1: MAC 86:71:af:fa:b8:9f
+2026-10-07T20:18:39,229063-07:00 tegra-xudc-new 700d0000.xudc: exiting ELPG
+2026-10-07T20:18:39,229701-07:00 tegra-xudc-new 700d0000.xudc: exiting ELPG done
+2026-10-07T20:18:39,229725-07:00 tegra-xudc-new 700d0000.xudc: ep 0 (type: 0, dir: out) enabled
+2026-10-07T20:18:39,230175-07:00 tegra-xudc-new 700d0000.xudc: entering ELPG
+2026-10-07T20:18:39,230380-07:00 tegra-xudc-new 700d0000.xudc: entering ELPG done
+2026-10-07T20:18:39,233790-07:00 l4tbr0: port 1(usb0) entered blocking state
+2026-10-07T20:18:39,233826-07:00 l4tbr0: port 1(usb0) entered disabled state
+2026-10-07T20:18:39,234214-07:00 device usb0 entered promiscuous mode
+2026-10-07T20:18:39,238979-07:00 IPv6: ADDRCONF(NETDEV_UP): usb0: link is not ready
+2026-10-07T20:18:39,242705-07:00 l4tbr0: port 2(usb1) entered blocking state
+2026-10-07T20:18:39,242722-07:00 l4tbr0: port 2(usb1) entered disabled state
+2026-10-07T20:18:39,243217-07:00 device usb1 entered promiscuous mode
+2026-10-07T20:18:39,248449-07:00 IPv6: ADDRCONF(NETDEV_UP): usb1: link is not ready
+2026-10-07T20:18:41,914797-07:00 IPv6: ADDRCONF(NETDEV_UP): enx8cae4cb55cc6: link is not ready
+2026-10-07T20:18:41,914968-07:00 IPv6: ADDRCONF(NETDEV_UP): enx8cae4cb55cc6: link is not ready
+2026-10-07T20:18:41,931171-07:00 IPv6: ADDRCONF(NETDEV_UP): wlp1s0: link is not ready
+2026-10-07T20:18:41,973649-07:00 IPv6: ADDRCONF(NETDEV_UP): wlp1s0: link is not ready
+2026-10-07T20:18:42,123244-07:00 IPv6: ADDRCONF(NETDEV_UP): wlp1s0: link is not ready
+2026-10-07T20:18:42,228229-07:00 evdi: loading out-of-tree module taints kernel.
+2026-10-07T20:18:42,229718-07:00 evdi: [I] Initialising logging on level 4
+2026-10-07T20:18:42,229730-07:00 evdi: [I] Atomic driver: yes
+2026-10-07T20:18:43,349862-07:00 [drm] Supports vblank timestamp caching Rev 2 (21.10.2013).
+2026-10-07T20:18:43,349872-07:00 [drm] No driver support for vblank timestamp query.
+2026-10-07T20:18:43,350327-07:00 evdi: [I] Evdi platform_device create
+2026-10-07T20:18:43,350341-07:00 evdi: [I] Attaching to usb:1-1.3
+2026-10-07T20:18:43,726338-07:00 tegradc tegradc.0: [tegra-dc-ext] GET ioctl 0x8004441e from 'Xorg' on DC0 (enabled=1 mode=720x1280)
+2026-10-07T20:18:43,726352-07:00 tegradc tegradc.1: [tegra-dc-ext] GET ioctl 0x8004441e from 'Xorg' on DC1 (enabled=0 mode=640x480)
+2026-10-07T20:18:43,726703-07:00 tegradc tegradc.0: [tegra-dc-ext] GET ioctl 0x40044401 from 'Xorg' on DC0 (enabled=1 mode=720x1280)
+2026-10-07T20:18:43,726714-07:00 tegradc tegradc.1: [tegra-dc-ext] GET ioctl 0x40044401 from 'Xorg' on DC1 (enabled=0 mode=640x480)
+2026-10-07T20:18:43,726721-07:00 tegradc tegradc.0: [tegra-dc-ext] GET_CURSOR from 'Xorg' on DC0
+2026-10-07T20:18:43,726728-07:00 tegradc tegradc.1: [tegra-dc-ext] GET_CURSOR from 'Xorg' on DC1
+2026-10-07T20:18:43,726819-07:00 tegradc tegradc.0: [tegra-fb] ioctl from 'Xorg': cmd=0xc0104642
+2026-10-07T20:18:43,726827-07:00 tegradc tegradc.0: [tegra-fb] FBIO_TEGRA_GET_MODEDB from 'Xorg': requested_len=0
+2026-10-07T20:18:43,726834-07:00 tegradc tegradc.0: [tegra-fb] ioctl from 'Xorg': cmd=0xc0104642
+2026-10-07T20:18:43,726839-07:00 tegradc tegradc.0: [tegra-fb] FBIO_TEGRA_GET_MODEDB from 'Xorg': requested_len=1
+2026-10-07T20:18:43,726845-07:00 tegradc tegradc.0: [tegra-fb] modedb[0]: 1280x720@60 pixclock=12820
+2026-10-07T20:18:43,726883-07:00 tegradc tegradc.0: [tegra-fb] check_var from 'Xorg': xres=720 yres=1280 bpp=32 pixclock=12820 rotation=90
+2026-10-07T20:18:43,803822-07:00 [fbmem] FBIOGET_VSCREENINFO from 'Xorg' on fb0: xres=720 yres=1280 bpp=32 pixclock=12820
+2026-10-07T20:18:43,803841-07:00 tegradc tegradc.0: [tegra-dc-ext] GET ioctl 0x80104409 from 'Xorg' on DC0 (enabled=1 mode=720x1280)
+2026-10-07T20:18:43,809786-07:00 tegradc tegradc.0: unblank
+2026-10-07T20:18:43,809825-07:00 tegradc tegradc.1: blank - powerdown
+2026-10-07T20:18:43,811086-07:00 tegradc tegradc.0: [tegra-dc-ext] GET ioctl 0x80044409 from 'Xorg' on DC0 (enabled=1 mode=720x1280)
+2026-10-07T20:18:44,473642-07:00 fts_touch 2-0049: fts_start_device
+2026-10-07T20:18:44,473660-07:00 fts_touch 2-0049: fts_power_ctrl: on
+2026-10-07T20:18:44,478993-07:00 fts_touch 2-0049: FTS SystemReset
+2026-10-07T20:18:44,489005-07:00 fts_touch 2-0049: fts_stop_device
+2026-10-07T20:18:44,936481-07:00 cdc_ncm 1-1.3:1.5 enx8cae4cb55cc6: network connection: disconnected
+2026-10-07T20:18:45,027181-07:00 fts_touch 2-0049: fts_power_ctrl: off
+2026-10-07T20:18:45,027228-07:00 tegra-i2c 7000c500.i2c: no acknowledge from address 0x49
+2026-10-07T20:18:45,036024-07:00 fts_touch 2-0049: fts_start_device
+2026-10-07T20:18:45,036110-07:00 fts_touch 2-0049: fts_power_ctrl: on
+2026-10-07T20:18:45,042080-07:00 fts_touch 2-0049: FTS SystemReset
+2026-10-07T20:18:45,189962-07:00 evdi: [I] (card0) Opened by Task 1106 (Xorg) of process 1106 (Xorg)
+2026-10-07T20:18:45,190012-07:00 evdi: [I] (card0) Closed by Task 1106 (Xorg) of process 1106 (Xorg)
+2026-10-07T20:18:45,249381-07:00 evdi: [I] (card0) Opened by Task 1106 (Xorg) of process 1106 (Xorg)
+2026-10-07T20:18:45,249414-07:00 evdi: [I] (card0) Closed by Task 1106 (Xorg) of process 1106 (Xorg)
+2026-10-07T20:18:45,596467-07:00 fts_touch 2-0049: fts_debug_msg_event_handler: 16 05 01 23 00 00 00 00
+2026-10-07T20:18:45,600037-07:00 [fbmem] FBIOGET_VSCREENINFO from 'Xorg' on fb0: xres=720 yres=1280 bpp=32 pixclock=12820
+2026-10-07T20:18:45,600054-07:00 tegradc tegradc.0: [tegra-dc-ext] GET ioctl 0x80104409 from 'Xorg' on DC0 (enabled=1 mode=720x1280)
+2026-10-07T20:18:45,600184-07:00 tegradc tegradc.0: unblank
+2026-10-07T20:18:45,600216-07:00 tegradc tegradc.1: blank - powerdown
+2026-10-07T20:18:45,607883-07:00 tegradc tegradc.0: [tegra-dc-ext] GET ioctl 0x80044409 from 'Xorg' on DC0 (enabled=1 mode=720x1280)
+2026-10-07T20:18:46,696518-07:00 bq2419x 0-006b: Battery temp 41
+2026-10-07T20:18:48,053698-07:00 IPv6: ADDRCONF(NETDEV_UP): wlp1s0: link is not ready
+2026-10-07T20:18:49,951545-07:00 evdi: [I] (card0) Opened by Task 1084 (DesktopManagerE) of process 1074 (DisplayLinkMana)
+2026-10-07T20:18:49,956102-07:00 evdi: [I] (card0) Added i2c adapter bus number 7
+2026-10-07T20:18:49,956116-07:00 evdi: [I] (card0) Connected with Task 1084 (DesktopManagerE) of process 1074 (DisplayLinkMana)
+2026-10-07T20:18:49,956123-07:00 evdi: [I] (card0) Connector state: connected
+2026-10-07T20:20:54,253748-07:00 IPv6: ADDRCONF(NETDEV_UP): wlp1s0: link is not ready
+2026-10-07T20:23:37,939912-07:00 max17042 0-0036: SOC at 95%
+2026-10-07T20:24:14,376977-07:00 bq2419x 0-006b: Battery temp 40
+2026-10-07T20:28:11,499736-07:00 IPv6: ADDRCONF(NETDEV_CHANGE): wlp1s0: link becomes ready
+2026-10-07T20:28:47,734643-07:00 usb 1-1.1: USB disconnect, device number 4
+2026-10-07T20:28:47,798075-07:00 usb 1-1.2: USB disconnect, device number 5
+2026-10-07T20:28:47,800600-07:00 usb 1-1.3: USB disconnect, device number 6
+2026-10-07T20:28:47,805215-07:00 cdc_ncm 1-1.3:1.5 enx8cae4cb55cc6: unregister 'cdc_ncm' usb-70090000.xusb-1.3, CDC NCM
+2026-10-07T20:28:47,842072-07:00 evdi: [I] Detached from parent device
+2026-10-07T20:28:47,842162-07:00 usb 1-1.4: USB disconnect, device number 7
+2026-10-07T20:28:47,910680-07:00 usb 1-1.5: USB disconnect, device number 3
+2026-10-07T20:28:47,922130-07:00 evdi: [I] (card0) Disconnected from Task 1084 (DesktopManagerE) of process 1074 (DisplayLinkMana)
+2026-10-07T20:28:47,922143-07:00 evdi: [I] (card0) Removing i2c adapter bus number 7
+2026-10-07T20:28:47,922332-07:00 evdi: [I] (card0) Closed by Task 1084 (DesktopManagerE) of process 1074 (DisplayLinkMana)
+2026-10-07T20:28:47,923980-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: power down UTMI pad 0
+2026-10-07T20:28:47,936006-07:00 usb 1-1: usb_suspend_both: status 0
+2026-10-07T20:28:47,938976-07:00 usb usb1: usb_suspend_both: status 0
+2026-10-07T20:28:47,938992-07:00 tegra-xusb 70090000.xusb: entering ELPG
+2026-10-07T20:28:47,940149-07:00 tegra-pmc: PMC tegra_pmc_utmi_phy_enable_sleepwalk : port 0, speed 3
+2026-10-07T20:28:47,941819-07:00 tegra-xusb 70090000.xusb: entering ELPG done
+2026-10-07T20:29:17,843557-07:00 tegra-xusb 70090000.xusb: exiting ELPG
+2026-10-07T20:29:17,845388-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: power on UTMI pads 0
+2026-10-07T20:29:17,848764-07:00 bq2419x 0-006b: Charging Fault: Input Fault (VBUS OVP or VBAT<VBUS<3.8V)
+2026-10-07T20:29:17,849281-07:00 tegra-xusb 70090000.xusb: Firmware timestamp: 2019-10-17 16:01:14 UTC, Version: 51.06 release
+2026-10-07T20:29:17,849527-07:00 bq2419x 0-006b: USB is disconnected
+2026-10-07T20:29:17,849923-07:00 tegra-pmc: PMC tegra_pmc_utmi_phy_disable_sleepwalk : port 0
+2026-10-07T20:29:17,850671-07:00 tegra-xusb 70090000.xusb: exiting ELPG done
+2026-10-07T20:29:17,866709-07:00 bm92t 0-0018: Alert= 0x0008 Status1= 0x0000 Status2= 0x0000 DP= 0x0000 State= NORMAL_CONFIG_HANDLED
+2026-10-07T20:29:17,867207-07:00 bm92t 0-0018: Set Charging Current Limit 0ma
+2026-10-07T20:29:17,867218-07:00 bq2419x 0-006b: Setting charging current 0 mA
+2026-10-07T20:29:17,867224-07:00 bq2419x 0-006b: Charging enabled
+2026-10-07T20:29:17,868665-07:00 bq2419x 0-006b: Connected to unknown VBUS source 0x0
+2026-10-07T20:29:17,872385-07:00 bm92t 0-0018: extcon cable (73: USB-PD) detached
+2026-10-07T20:29:17,872554-07:00 bm92t 0-0018: extcon cable (02: USB HOST) detached
+2026-10-07T20:29:17,872806-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: power down UTMI pad 0
+2026-10-07T20:29:17,873169-07:00 usb 1-1: USB disconnect, device number 2
+2026-10-07T20:29:17,971173-07:00 bq2419x 0-006b: USB is disconnected
+2026-10-07T20:29:17,982074-07:00 usb usb1: usb_suspend_both: status 0
+2026-10-07T20:29:20,424308-07:00 tegra-xusb 70090000.xusb: entering ELPG
+2026-10-07T20:29:20,432641-07:00 tegra-xusb 70090000.xusb: entering ELPG done
+2026-10-07T20:29:23,316037-07:00 bm92t 0-0018: Alert= 0x0008 Status1= 0x1280 Status2= 0x2000 DP= 0x4000 State= INIT_STATE
+2026-10-07T20:29:23,320487-07:00 bq2419x 0-006b: VBUS enabled, charging disabled
+2026-10-07T20:29:23,320655-07:00 bq2419x 0-006b: Setting VBUS current 1300 mA
+2026-10-07T20:29:23,552260-07:00 bm92t 0-0018: extcon cable (02: USB HOST) attached
+2026-10-07T20:29:23,552617-07:00 tegra-xusb 70090000.xusb: exiting ELPG
+2026-10-07T20:29:23,561161-07:00 bq2419x 0-006b: USB is disconnected
+2026-10-07T20:29:23,563015-07:00 tegra-xusb 70090000.xusb: Firmware timestamp: 2019-10-17 16:01:14 UTC, Version: 51.06 release
+2026-10-07T20:29:23,563273-07:00 tegra-pmc: PMC tegra_pmc_utmi_phy_disable_sleepwalk : port 0
+2026-10-07T20:29:23,563659-07:00 tegra-xusb 70090000.xusb: exiting ELPG done
+2026-10-07T20:29:23,563745-07:00 tegra-xusb 70090000.xusb: Upgrade port 0 to USB3.0
+2026-10-07T20:29:23,563754-07:00 tegra-xusb 70090000.xusb: Upgrade port 1 to USB3.0
+2026-10-07T20:29:23,616089-07:00 bm92t 0-0018: Alert= 0x0800 Status1= 0x9680 Status2= 0x3202 DP= 0x4000 State= INIT_STATE
+2026-10-07T20:29:23,616108-07:00 bm92t 0-0018: Device in OTG mode (no alert)
+2026-10-07T20:29:23,658181-07:00 bm92t 0-0018: Alert= 0x2000 Status1= 0x9680 Status2= 0x3202 DP= 0x4000 State= INIT_STATE
+2026-10-07T20:29:23,658213-07:00 bm92t 0-0018: Device in OTG mode
+2026-10-07T20:29:23,665087-07:00 bm92t 0-0018: Alert= 0x0004 Status1= 0x9680 Status2= 0x3202 DP= 0x4000 State= VDM_DISC_ID_SENT
+2026-10-07T20:29:24,243443-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: power on UTMI pads 0
+2026-10-07T20:29:24,457346-07:00 usb 1-1: new high-speed USB device number 8 using tegra-xusb
+2026-10-07T20:29:24,579825-07:00 usb 1-1: New USB device found, idVendor=2109, idProduct=2817
+2026-10-07T20:29:24,579998-07:00 usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+2026-10-07T20:29:24,580456-07:00 usb 1-1: Product: USB2.0 Hub             
+2026-10-07T20:29:24,580559-07:00 usb 1-1: Manufacturer: VIA Labs, Inc.         
+2026-10-07T20:29:24,586079-07:00 hub 1-1:1.0: USB hub found
+2026-10-07T20:29:24,586671-07:00 hub 1-1:1.0: 5 ports detected
+2026-10-07T20:29:25,113284-07:00 usb 1-1.5: new high-speed USB device number 9 using tegra-xusb
+2026-10-07T20:29:25,195651-07:00 usb 1-1.5: New USB device found, idVendor=2109, idProduct=8884
+2026-10-07T20:29:25,195745-07:00 usb 1-1.5: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+2026-10-07T20:29:25,195808-07:00 usb 1-1.5: Product: USB Billboard Device   
+2026-10-07T20:29:25,195864-07:00 usb 1-1.5: Manufacturer: VIA Labs, Inc.         
+2026-10-07T20:29:25,195916-07:00 usb 1-1.5: SerialNumber: 0000000000000001
+2026-10-07T20:29:25,388211-07:00 usb 1-1.1: new full-speed USB device number 10 using tegra-xusb
+2026-10-07T20:29:25,486504-07:00 usb 1-1.1: New USB device found, idVendor=046d, idProduct=c52b
+2026-10-07T20:29:25,486577-07:00 usb 1-1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+2026-10-07T20:29:25,486620-07:00 usb 1-1.1: Product: USB Receiver
+2026-10-07T20:29:25,486655-07:00 usb 1-1.1: Manufacturer: Logitech
+2026-10-07T20:29:25,503833-07:00 logitech-djreceiver 0003:046D:C52B.000A: hiddev0,hidraw0: USB HID v1.11 Device [Logitech USB Receiver] on usb-70090000.xusb-1.1/input2
+2026-10-07T20:29:25,630490-07:00 input: Logitech M570 as /devices/70090000.xusb/usb1/1-1/1-1.1/1-1.1:1.2/0003:046D:C52B.000A/0003:046D:1028.000B/input/input12
+2026-10-07T20:29:25,632295-07:00 logitech-hidpp-device 0003:046D:1028.000B: input,hidraw1: USB HID v1.11 Mouse [Logitech M570] on usb-70090000.xusb-1.1:1
+2026-10-07T20:29:25,639925-07:00 input: Logitech MX Master 2S as /devices/70090000.xusb/usb1/1-1/1-1.1/1-1.1:1.2/0003:046D:C52B.000A/0003:046D:4069.000C/input/input13
+2026-10-07T20:29:25,641971-07:00 logitech-hidpp-device 0003:046D:4069.000C: input,hidraw2: USB HID v1.11 Keyboard [Logitech MX Master 2S] on usb-70090000.xusb-1.1:2
+2026-10-07T20:29:25,795138-07:00 usb 1-1.2: new high-speed USB device number 11 using tegra-xusb
+2026-10-07T20:29:25,886748-07:00 usb 1-1.2: New USB device found, idVendor=2109, idProduct=2817
+2026-10-07T20:29:25,886819-07:00 usb 1-1.2: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+2026-10-07T20:29:25,886861-07:00 usb 1-1.2: Product: USB2.0 Hub             
+2026-10-07T20:29:25,886898-07:00 usb 1-1.2: Manufacturer: VIA Labs, Inc.         
+2026-10-07T20:29:25,891564-07:00 hub 1-1.2:1.0: USB hub found
+2026-10-07T20:29:25,891828-07:00 hub 1-1.2:1.0: 4 ports detected
+2026-10-07T20:29:26,079437-07:00 usb 1-1.3: new high-speed USB device number 12 using tegra-xusb
+2026-10-07T20:29:26,170597-07:00 usb 1-1.3: New USB device found, idVendor=17e9, idProduct=4323
+2026-10-07T20:29:26,170729-07:00 usb 1-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+2026-10-07T20:29:26,170791-07:00 usb 1-1.3: Product: Plugable UD-3900PDZ
+2026-10-07T20:29:26,170845-07:00 usb 1-1.3: Manufacturer: DisplayLink
+2026-10-07T20:29:26,170893-07:00 usb 1-1.3: SerialNumber: 4371A03731
+2026-10-07T20:29:26,183791-07:00 usb 1-1.3: Warning! Unlikely big volume range (=511), cval->res is probably wrong.
+2026-10-07T20:29:26,183806-07:00 usb 1-1.3: [15] FU [Plugable Audio Playback Volume] ch = 6, val = -8176/0/16
+2026-10-07T20:29:26,184615-07:00 usb 1-1.3: Warning! Unlikely big volume range (=767), cval->res is probably wrong.
+2026-10-07T20:29:26,184626-07:00 usb 1-1.3: [12] FU [Mic Capture Volume] ch = 2, val = -4592/7680/16
+2026-10-07T20:29:26,199307-07:00 cdc_ncm 1-1.3:1.5: MAC-Address: 8c:ae:4c:b5:5c:c6
+2026-10-07T20:29:26,199321-07:00 cdc_ncm 1-1.3:1.5: setting rx_max = 16384
+2026-10-07T20:29:26,199468-07:00 cdc_ncm 1-1.3:1.5: setting tx_max = 16384
+2026-10-07T20:29:26,199892-07:00 cdc_ncm 1-1.3:1.5 usb2: register 'cdc_ncm' at usb-70090000.xusb-1.3, CDC NCM, 8c:ae:4c:b5:5c:c6
+2026-10-07T20:29:26,261011-07:00 usb 1-1.2: usb_suspend_both: status 0
+2026-10-07T20:29:26,389107-07:00 usb 1-1.4: new low-speed USB device number 13 using tegra-xusb
+2026-10-07T20:29:26,490085-07:00 usb 1-1.4: New USB device found, idVendor=258a, idProduct=6a88
+2026-10-07T20:29:26,490183-07:00 usb 1-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+2026-10-07T20:29:26,490243-07:00 usb 1-1.4: Product: USB KEYBOARD
+2026-10-07T20:29:26,490296-07:00 usb 1-1.4: Manufacturer: SINO WEALTH
+2026-10-07T20:29:26,499930-07:00 input: SINO WEALTH USB KEYBOARD as /devices/70090000.xusb/usb1/1-1/1-1.4/1-1.4:1.0/0003:258A:6A88.000D/input/input14
+2026-10-07T20:29:26,554701-07:00 hid-generic 0003:258A:6A88.000D: input,hidraw3: USB HID v1.10 Keyboard [SINO WEALTH USB KEYBOARD] on usb-70090000.xusb-1.4/input0
+2026-10-07T20:29:26,571424-07:00 input: SINO WEALTH USB KEYBOARD as /devices/70090000.xusb/usb1/1-1/1-1.4/1-1.4:1.1/0003:258A:6A88.000E/input/input15
+2026-10-07T20:29:26,624829-07:00 hid-generic 0003:258A:6A88.000E: input,hiddev0,hidraw4: USB HID v1.10 Mouse [SINO WEALTH USB KEYBOARD] on usb-70090000.xusb-1.4/input1
+2026-10-07T20:29:26,705160-07:00 cdc_ncm 1-1.3:1.5 enx8cae4cb55cc6: renamed from usb2
+2026-10-07T20:29:26,774065-07:00 IPv6: ADDRCONF(NETDEV_UP): enx8cae4cb55cc6: link is not ready
+2026-10-07T20:29:26,774221-07:00 IPv6: ADDRCONF(NETDEV_UP): enx8cae4cb55cc6: link is not ready
+2026-10-07T20:29:27,506167-07:00 evdi: [I] Attaching to usb:1-1.3
+2026-10-07T20:29:29,793356-07:00 cdc_ncm 1-1.3:1.5 enx8cae4cb55cc6: network connection: disconnected
+2026-10-07T20:29:38,474919-07:00 evdi: [I] (card0) Opened by Task 3966 (DesktopManagerE) of process 3958 (DisplayLinkMana)
+2026-10-07T20:29:38,483965-07:00 evdi: [I] (card0) Added i2c adapter bus number 7
+2026-10-07T20:29:38,483980-07:00 evdi: [I] (card0) Connected with Task 3966 (DesktopManagerE) of process 3958 (DisplayLinkMana)
+2026-10-07T20:29:38,483988-07:00 evdi: [I] (card0) Connector state: connected
