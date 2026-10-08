@@ -3,7 +3,11 @@
 **Status (2026-10-07 23:35): fixed by [`drivers/xusb-bwfix`](../drivers/xusb-bwfix).**
 A raw pull while mirroring doesn't lock up, the module re-binds the dead xHCI
 controller, and a replug enumerates and mirrors again without a reboot. The module
-is still loaded by hand (insmod). It doesn't load at boot yet.
+loads at boot: `scripts/install.sh` installs it via DKMS (`xusb_bwfix/1.0`) and
+`/etc/modules-load.d/xusb_bwfix.conf`. Check it with `lsmod | grep xusb_bwfix` or
+`dmesg | grep xusb_bwfix` ("hooked check_bandwidth"). If it isn't loaded, the
+unplug lockup is back, so run [`scripts/dock-eject.sh`](../scripts/dock-eject.sh)
+before unplugging.
 
 ## Symptom
 
@@ -158,8 +162,7 @@ lockup PC sampler isn't possible on a retail Switch. [Log](../evidence/cpu-pcsam
 
 ## Next step
 
-Load the module at boot (DKMS + modules-load.d; needs randy's approval because it
-changes boot config), and offer upstream a kernel patch: a time-based
+Offer upstream a kernel patch: a time-based
 `xhci_handshake` (as mainline later did), and skipping `check_bandwidth` for
 `NOTATTACHED` devices.
 

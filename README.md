@@ -10,7 +10,7 @@ external display on a Nintendo Switch running **L4T (Linux for Tegra)**, kernel
 > - **The evdi hotplug panic is fixed:** the version is aligned to evdi 1.14.15,
 >   plus two 4.9 fixes in `drivers/evdi`.
 > - **Unplugging the dock is fixed by [`drivers/xusb-bwfix`](drivers/xusb-bwfix)**
->   (loaded by hand with insmod for now). A raw pull while mirroring no longer locks up,
+>   (installed via DKMS, loaded at boot by `install.sh`). A raw pull while mirroring no longer locks up,
 >   and the module re-binds the dead xHCI controller, so a replug enumerates
 >   and mirrors again without a reboot (tested 23:32). It was a Tegra xHCI bug,
 >   not DisplayLink: a command-timeout handler spun ~18 s with IRQs off.
@@ -90,7 +90,7 @@ drivers/evdi/        open-source evdi kernel-module source (1.12.0 and 1.14.15),
                       incl. the compat49 shim that makes it build on L4T 4.9,
                       plus our 4.9 fixes (dirtyfb double free, vblank counter)
 drivers/xusb-padfix/ unplug-crash experiment; does NOT fix it, kept for reference
-drivers/xusb-bwfix/  the unplug-lockup fix (insmod; see docs/unplug-crash.md)
+drivers/xusb-bwfix/  the unplug-lockup fix (DKMS, loads at boot; see docs/unplug-crash.md)
 drivers/xusb-otgdefer/ unplug-crash experiment (defer OTG detach); does NOT fix it
 drivers/cpu-pcsample/  CoreSight PC sampler; blocked (external debug fused off)
 mirror/              dl-mirror (KMS mirror daemon) + its systemd user unit

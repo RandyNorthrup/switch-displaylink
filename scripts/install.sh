@@ -51,6 +51,20 @@ dkms status | grep -q "evdi/$EVDI_VERSION" || dkms add -m evdi -v "$EVDI_VERSION
 dkms build  -m evdi -v "$EVDI_VERSION" -k "$KVER"
 dkms install -m evdi -v "$EVDI_VERSION" -k "$KVER" --force
 
+# --- xusb_bwfix: keeps a dock unplug from locking up the Tegra xHCI ----------
+#     (see docs/unplug-crash.md). Built against this kernel's xhci.h layout,
+#     loaded at every boot via modules-load.d.
+BWFIX_VERSION=1.0
+BWFIX_SRC="/usr/src/xusb_bwfix-$BWFIX_VERSION"
+rm -rf "$BWFIX_SRC"; mkdir -p "$BWFIX_SRC"
+cp -a "$REPO_DIR/drivers/xusb-bwfix/"{xusb_bwfix.c,Makefile,dkms.conf,kernel-807d12f} "$BWFIX_SRC/"
+dkms remove -m xusb_bwfix -v "$BWFIX_VERSION" --all 2>/dev/null || true
+dkms add     -m xusb_bwfix -v "$BWFIX_VERSION"
+dkms build   -m xusb_bwfix -v "$BWFIX_VERSION" -k "$KVER"
+dkms install -m xusb_bwfix -v "$BWFIX_VERSION" -k "$KVER" --force
+echo xusb_bwfix > /etc/modules-load.d/xusb_bwfix.conf
+lsmod | grep -q '^xusb_bwfix ' || modprobe xusb_bwfix
+
 # --- proprietary DisplayLink userspace -------------------------------------
 if [ ! -x /opt/displaylink/DisplayLinkManager ]; then
   SRCFILE="${DL_DRIVER_FILE:-}"
