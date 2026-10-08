@@ -143,6 +143,10 @@ static struct drm_driver driver = {
 	.enable_vblank = evdi_enable_vblank,
 	.disable_vblank = evdi_disable_vblank,
 #endif
+#if KERNEL_VERSION(4, 12, 0) > LINUX_VERSION_CODE
+	/* <4.12 calls this unconditionally from drm_update_vblank_count (NULL deref on crtc disable) */
+	.get_vblank_counter = drm_vblank_no_hw_counter,
+#endif
 	.gem_prime_import_sg_table = evdi_prime_import_sg_table,
 
 	.name = DRIVER_NAME,

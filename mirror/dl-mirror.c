@@ -375,7 +375,7 @@ int main(int argc, char **argv)
 	int force_full = 1, ret = 0;
 	const double period = 1.0 / fps;
 	unsigned long frames = 0, pushed = 0;
-	double t_next = now(), t_stat = t_next;
+	double t_next = now(), t_stat = t_next, t_full = t_next;
 
 	while (!quit) {
 		if (!XShmGetImage(dpy, root, img, 0, 0, AllPlanes)) {
@@ -390,6 +390,16 @@ int main(int argc, char **argv)
 				draw_cursor(frame, stride, sw, sh, ci);
 				XFree(ci);
 			}
+		}
+
+		/*
+		 * DisplayLinkManager reconnects right after our modeset and drops
+		 * what it had, so a one-off full push isn't enough: resend the whole
+		 * frame every second, not just changed rows.
+		 */
+		if (now() - t_full >= 1.0) {
+			force_full = 1;
+			t_full = now();
 		}
 
 		/* Changed source rows → [y0, y1). */

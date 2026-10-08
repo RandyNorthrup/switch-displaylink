@@ -1,0 +1,4 @@
+dl-mirror: using /dev/dri/card0 (evdi)
+dl-mirror: drmSetMaster: Permission denied (continuing, may already be master)
+dl-mirror: scanning out 1280x720@60 on crtc 26
+dl-mirror: X screen 1280x720 -> 1280x720 at +0+0 (1:1), 30 fps max
