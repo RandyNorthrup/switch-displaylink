@@ -147,6 +147,15 @@ retry:
 	}
 
 	ret = drm_atomic_commit(state);
+#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 10, 0)
+	/*
+	 * Before 4.10 drm_atomic_state is not refcounted: a successful
+	 * drm_atomic_commit() takes ownership and frees it. Freeing it again
+	 * below is a double free (NULL deref in drm_atomic_state_clear).
+	 */
+	if (!ret)
+		state = NULL;
+#endif
 
 out:
 	if (ret == -EDEADLK) {
