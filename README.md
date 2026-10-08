@@ -4,12 +4,17 @@ Getting a **Plugable UD-3900PDZ** (DisplayLink, USB ID `17e9:4323`) working as a
 external display on a Nintendo Switch running **L4T (Linux for Tegra)**, kernel
 `4.9.140-l4t`, aarch64 (Tegra X1).
 
-> Status: DisplayLink sink detected (reads monitor EDID). Hotplug **kernel
-> panic root-caused** to an evdi↔DisplayLinkManager version mismatch, and the
-> fix is **confirmed viable** (evdi 1.14.15 builds on this 4.9 kernel). Apply it
-> with [`scripts/fix-evdi-version.sh`](scripts/fix-evdi-version.sh). Extended
-> desktop over PRIME is blocked by the Tegra driver (`NVIDIA-0 cap 0x0`); mirror
-> comes via a separate X screen. See [docs/fix-and-mirror-plan.md](docs/fix-and-mirror-plan.md).
+> **Status (2026-10-07):**
+> - **Mirroring works.** [`dl-mirror`](docs/mirror.md) mirrors the Switch screen
+>   to the dock tear-free, autostarts at login, and reattaches after a replug.
+> - **The evdi hotplug panic is fixed:** the version is aligned to evdi 1.14.15,
+>   plus two 4.9 fixes in `drivers/evdi`.
+> - **Still open: pulling the cable while the dock is active can still hard-lock
+>   the Switch.** This is a separate bug in the Tegra xHCI controller, not
+>   DisplayLink. Run [`scripts/dock-eject.sh`](scripts/dock-eject.sh) before
+>   unplugging. Details: [docs/unplug-crash.md](docs/unplug-crash.md).
+> - An extended desktop over PRIME is impossible (`NVIDIA-0 cap 0x0`), so
+>   multi-monitor is still to do.
 
 ## Hardware / software
 
@@ -30,10 +35,16 @@ external display on a Nintendo Switch running **L4T (Linux for Tegra)**, kernel
 - `DisplayLinkManager` runs as `displaylink-driver.service`.
 - The dock enumerates and **DisplayLinkManager reads the monitor's EDID** over
   the evdi i2c bus — the DisplayLink *sink* path is good.
+- evdi **1.14.15** is installed (matches DLM 5.9.184), and the hotplug panic is gone.
+- **Mirroring:** `dl-mirror.service` puts the Switch screen on the dock monitor
+  (see [docs/mirror.md](docs/mirror.md)).
 
 ## Diagnosis
 
-### 1. Kernel panic on unplug/replug — evdi ⇄ DisplayLinkManager version mismatch
+### 1. Kernel panic on unplug/replug — evdi ⇄ DisplayLinkManager version mismatch (FIXED)
+
+> Fixed by `scripts/fix-evdi-version.sh` (evdi 1.14.15). A *different* unplug
+> crash remains in the Tegra xHCI controller: [docs/unplug-crash.md](docs/unplug-crash.md).
 
 `DisplayLinkManager v5.9.184` expects **evdi 1.14.x** (the binary literally logs
 `libevdi.so version is not compatible with Dlm`). The loaded/DKMS module is
@@ -73,14 +84,22 @@ platform. Mirroring and multi-monitor therefore need a different mechanism
 ## Repo layout
 
 ```
-drivers/evdi/   open-source evdi kernel-module source (1.12.0 and 1.14.15),
-                 incl. the compat49 shim that makes it build on L4T 4.9
-configs/        the actual /etc/X11 config + the displaylink systemd unit
-evidence/       real crash traces + an environment snapshot
-scripts/        install.sh            — full fetch+build+install
-                 fix-evdi-version.sh   — targeted panic fix (version align)
-                 dl-panic-capture.*    — reliable crash capture
-docs/           fix-and-mirror-plan.md — the path forward
+drivers/evdi/        open-source evdi kernel-module source (1.12.0 and 1.14.15),
+                      incl. the compat49 shim that makes it build on L4T 4.9,
+                      plus our 4.9 fixes (dirtyfb double free, vblank counter)
+drivers/xusb-padfix/ unplug-crash experiment; does NOT fix it, kept for reference
+mirror/              dl-mirror (KMS mirror daemon) + its systemd user unit
+configs/             /etc/X11 config, displaylink unit, crash-debug sysctls
+evidence/            crash traces, hekate panic dumps, test logs
+scripts/             install.sh            — full fetch+build+install
+                      fix-evdi-version.sh   — targeted panic fix (version align)
+                      dock-eject.sh         — run before unplugging (see below)
+                      mirror-test.sh        — timed dl-mirror run with dmesg capture
+                      unplug-watch.sh       — fsync'd dmesg capture for unplug tests
+                      dl-panic-capture.*    — reliable crash capture
+docs/                mirror.md             — how dl-mirror works, tuning notes
+                      unplug-crash.md       — the open xHCI unplug crash
+                      fix-and-mirror-plan.md — original plan + what was done
 ```
 
 ## Install (open-source here; proprietary driver fetched)
@@ -115,6 +134,18 @@ sudo systemctl enable dl-panic-capture.service
 
 After the next crash + reboot, the trace is under `/var/log/dl-panics/<timestamp>/`
 (see `console-readable.txt`).
+
+## Unplugging the dock
+
+Until the [xHCI unplug crash](docs/unplug-crash.md) is fixed, run this first:
+
+```sh
+sudo ./scripts/dock-eject.sh   # then pull the cable
+```
+
+Pulling the cable while the dock is active can freeze the Switch for ~20 s
+(leaving USB dead until reboot) or hard-lock it. To reattach, plug the cable
+back in. A picture returns after ~15 s.
 
 ## Safety
 

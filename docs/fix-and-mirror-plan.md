@@ -1,5 +1,14 @@
 # Fix & mirror plan
 
+> **Where this stands (2026-10-07).** This was the original plan.
+> - Part A: **done via A1.** evdi 1.14.15 is installed, 1.12.0 removed, and the
+>   service picks the version pinned instead of by mtime.
+> - Part B: **done, but neither B1 nor B2.** A direct-KMS mirror daemon
+>   ([`dl-mirror`](mirror.md)) grabs X with XShm and page-flips dumb buffers on
+>   the evdi card. It needs no Xorg config change and no second X screen.
+> - Still open: the [xHCI unplug crash](unplug-crash.md), which is not evdi,
+>   and multi-monitor (B2 is still the likely route).
+
 Two independent problems. Fix the panic first (stability), then get a picture
 (mirror), then multi-monitor.
 
@@ -31,8 +40,7 @@ consistent. Downside: older firmware/features.
   before the device disappears (the crash rides in on "disconnect failed").
 - Keep the dock unplugged when starting/stopping the service.
 
-**Decision needed:** try A1 (build evdi 1.14.15 on 4.9) first, or go straight to
-A2 (downgrade DLM)? A1 is cleaner if it compiles; A2 is the known-good fallback.
+**Decision (made):** A1. evdi 1.14.15 builds and runs on 4.9.
 
 ## Part B — mirror the internal panel to the DisplayLink output
 

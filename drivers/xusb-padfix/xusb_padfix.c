@@ -2,6 +2,11 @@
 /*
  * xusb_padfix -- stop a dock unplug from killing the Tegra xHCI (Switch L4T 4.9).
  *
+ * STATUS: DOES NOT FIX IT (tested 2026-10-07 22:02). The hook fired ("skipped
+ * UTMI pad power-down from tegra_xhci_hub_control"), but a raw pull while
+ * streaming still hard-locked cpu0 ~25 s later. The early pad power-down is
+ * not the cause. Kept for reference; don't install it. See docs/unplug-crash.md.
+ *
  * On a USB2 root-port disconnect, tegra_xhci_hub_control() powers the UTMI
  * pad down as soon as the hub driver clears C_CONNECTION -- which happens
  * BEFORE usb_disconnect() tears down the devices that were behind the port.

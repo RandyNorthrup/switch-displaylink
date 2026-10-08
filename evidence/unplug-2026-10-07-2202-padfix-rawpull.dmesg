@@ -1,0 +1,19 @@
+2026-10-07T22:02:23,226080-07:00 xusb_padfix: skipped UTMI pad power-down from tegra_xhci_hub_control+0x3b0/0x420
+2026-10-07T22:02:23,226251-07:00 usb 1-1: USB disconnect, device number 71
+2026-10-07T22:02:23,226305-07:00 usb 1-1.1: USB disconnect, device number 73
+2026-10-07T22:02:23,229158-07:00 bq2419x 0-006b: Charging Fault: Input Fault (VBUS OVP or VBAT<VBUS<3.8V)
+2026-10-07T22:02:23,229687-07:00 bq2419x 0-006b: USB is disconnected
+2026-10-07T22:02:23,239711-07:00 bm92t_event_handler: 2 callbacks suppressed
+2026-10-07T22:02:23,239717-07:00 bm92t 0-0018: Alert= 0x0200 Status1= 0x4E80 Status2= 0x8000 DP= 0x4000 State= NORMAL_CONFIG_HANDLED
+2026-10-07T22:02:23,252263-07:00 bm92t 0-0018: Alert= 0x0208 Status1= 0x0000 Status2= 0x0000 DP= 0x0000 State= NORMAL_CONFIG_HANDLED
+2026-10-07T22:02:23,252731-07:00 bm92t 0-0018: Set Charging Current Limit 0ma
+2026-10-07T22:02:23,252741-07:00 bq2419x 0-006b: Setting charging current 0 mA
+2026-10-07T22:02:23,252746-07:00 bq2419x 0-006b: Charging enabled
+2026-10-07T22:02:23,257665-07:00 bq2419x 0-006b: Connected to unknown VBUS source 0x0
+2026-10-07T22:02:23,262508-07:00 bm92t 0-0018: extcon cable (73: USB-PD) detached
+2026-10-07T22:02:23,262576-07:00 bm92t 0-0018: extcon cable (02: USB HOST) detached
+2026-10-07T22:02:23,353906-07:00 bq2419x 0-006b: USB is disconnected
+2026-10-07T22:02:24,146615-07:00 evdi: [I] (card0) Disconnected from Task 10157 (DesktopManagerE) of process 10140 (DisplayLinkMana)
+2026-10-07T22:02:24,146639-07:00 evdi: [I] (card0) Removing i2c adapter bus number 7
+2026-10-07T22:02:24,146886-07:00 evdi: [I] (card0) Closed by Task 10157 (DesktopManagerE) of process 10140 (DisplayLinkMana)
+2026-10-07T22:02:24,831754-07:00 evdi: [I] (card0) Closed by Task 7309 (dl-mirror) of process 7309 (dl-mirror)
