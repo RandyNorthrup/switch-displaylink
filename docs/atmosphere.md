@@ -82,8 +82,12 @@ from the HDCP session, but not confirmed), what the configuration messages mean
 1. ~~Capture a full dock attach~~ (done, above).
 2. Find out how DLM keys the `0x24`/`0x45` channel. The binary is aarch64 and
    stripped, but the C++ RTTI names survive (`dl4nivo::…`).
-3. Firmware upload: this attach didn't upload any (the chip kept it while powered).
-   Check a cold dock (dock unpowered first).
+3. Find out what the type `0x08` messages on channel 4 are. They're high-entropy, 11
+   messages totaling ~391 KB, sent 0.5 s and 12.4-12.9 s after attach, around when
+   the display started. None of their bytes match the `.spkg` files directly, so if
+   they're a firmware upload, it's re-wrapped in the session encryption. Unknown for
+   now. Compare with a cold dock (dock unpowered first).
+   The plain frame data is type `0x00` on channel 4 (`0000 xxxx 0400 0000 0000 …`).
 4. Check step 1 on Horizon: a small homebrew app that lists `usb:hs` devices with the
    dock attached.
 
