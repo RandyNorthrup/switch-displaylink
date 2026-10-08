@@ -4,11 +4,12 @@ Getting a **Plugable UD-3900PDZ** (DisplayLink, USB ID `17e9:4323`) working as a
 external display on a Nintendo Switch running **L4T (Linux for Tegra)**, kernel
 `4.9.140-l4t`, aarch64 (Tegra X1).
 
-> Status: driver stack installed and the DisplayLink sink is detected (reads
-> monitor EDID). **Blocked** by (1) a kernel panic on USB hotplug caused by an
-> evdi/DisplayLinkManager version mismatch, and (2) the Tegra X11 driver not
-> supporting RandR PRIME. See [Diagnosis](#diagnosis) and
-> [docs/fix-and-mirror-plan.md](docs/fix-and-mirror-plan.md).
+> Status: DisplayLink sink detected (reads monitor EDID). Hotplug **kernel
+> panic root-caused** to an evdi↔DisplayLinkManager version mismatch, and the
+> fix is **confirmed viable** (evdi 1.14.15 builds on this 4.9 kernel). Apply it
+> with [`scripts/fix-evdi-version.sh`](scripts/fix-evdi-version.sh). Extended
+> desktop over PRIME is blocked by the Tegra driver (`NVIDIA-0 cap 0x0`); mirror
+> comes via a separate X screen. See [docs/fix-and-mirror-plan.md](docs/fix-and-mirror-plan.md).
 
 ## Hardware / software
 
@@ -72,10 +73,32 @@ platform. Mirroring and multi-monitor therefore need a different mechanism
 ## Repo layout
 
 ```
-configs/    the actual /etc/X11 config + the displaylink systemd unit as installed
-evidence/   real crash traces + an environment snapshot
-scripts/    dl-panic-capture.{sh,service} — reliable crash capture for next time
-docs/        fix-and-mirror-plan.md — the actual path forward
+drivers/evdi/   open-source evdi kernel-module source (1.12.0 and 1.14.15),
+                 incl. the compat49 shim that makes it build on L4T 4.9
+configs/        the actual /etc/X11 config + the displaylink systemd unit
+evidence/       real crash traces + an environment snapshot
+scripts/        install.sh            — full fetch+build+install
+                 fix-evdi-version.sh   — targeted panic fix (version align)
+                 dl-panic-capture.*    — reliable crash capture
+docs/           fix-and-mirror-plan.md — the path forward
+```
+
+## Install (open-source here; proprietary driver fetched)
+
+The proprietary DisplayLink userspace is **not** redistributed in this public
+repo. Supply it (Switchroot/L4T aarch64 build — stock Synaptics is x86-only):
+
+```sh
+sudo DL_DRIVER_FILE=/path/to/displaylink-l4t-driver.zip ./scripts/install.sh
+# or DL_DRIVER_URL=https://... ./scripts/install.sh
+```
+
+Already have DisplayLinkManager in `/opt/displaylink` and just need the panic
+fix? Unplug the dock and run:
+
+```sh
+sudo ./scripts/fix-evdi-version.sh   # installs evdi 1.14.15, removes 1.12.0
+sudo reboot                          # new module loads cleanly on boot
 ```
 
 ## Reliable crash capture (install on any affected device)

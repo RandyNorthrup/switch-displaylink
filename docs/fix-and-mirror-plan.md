@@ -8,18 +8,18 @@ Two independent problems. Fix the panic first (stability), then get a picture
 The crash is an evdi ⇄ DisplayLinkManager ABI mismatch. DLM 5.9.184 wants evdi
 1.14.x; the loaded module is 1.12.0. Two ways to make them agree:
 
-### Option A1 — match evdi to DLM 5.9.184 (preferred *if* 1.14.x builds on 4.9)
-1. Confirm `evdi-1.14.15` actually compiles against `linux-headers-4.9.140-l4t`
-   (it ships a `compat49/` shim, so it's intended to). Build log would be under
-   `/var/lib/dkms/evdi/1.14.15/.../log/make.log` — **it is not currently built**,
-   so this is unverified. Try:
-   ```sh
-   sudo dkms add  -m evdi -v 1.14.15        # if not added
-   sudo dkms build -m evdi -v 1.14.15
-   ```
-   If it builds, install and remove the 1.12.0 version so `ls -t` can't pick it.
+### Option A1 — match evdi to DLM 5.9.184  ✅ CONFIRMED VIABLE, PREFERRED
+**`evdi-1.14.15` compiles cleanly on `4.9.140-l4t`** via its `compat49/` shim
+(verified: out-of-tree build `make -C /lib/modules/4.9.140-l4t/build M=<src>
+modules` → exit 0, 3.2 MB `evdi.ko`). So we align to the 1.14.x the DLM expects:
+1. Build + DKMS-install evdi 1.14.15, and **remove 1.12.0** so nothing can
+   mismatch. `scripts/install.sh` does this with a pinned version.
 2. Fix the fragile selector in `displaylink-driver.service` `ExecStartPre` — it
-   chooses evdi by mtime. Pin the version explicitly instead of `ls -t | head`.
+   chose evdi by mtime (`ls -t | head`), which is how 1.12.0 kept winning. The
+   installer rewrites it to a pinned `dkms install -m evdi -v 1.14.15`.
+
+Apply on *this* machine with `scripts/fix-evdi-version.sh` (dock unplugged;
+takes effect on the next clean reboot — no live `rmmod`).
 
 ### Option A2 — match DLM to evdi 1.12.0 (fallback if 1.14.x won't build on 4.9)
 Install an **older DisplayLink release whose bundled evdi is 1.12.x** (DL driver

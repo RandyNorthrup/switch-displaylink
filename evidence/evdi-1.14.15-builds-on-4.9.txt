@@ -1,0 +1,9 @@
+evdi 1.14.15 compile test on kernel 4.9.140-l4t (aarch64)
+=========================================================
+$ make -C /lib/modules/4.9.140-l4t/build M=<evdi-1.14.15 src> DKMS_BUILD=1 modules
+exit: 0
+-> evdi.ko built, 3.2 MB (compat49 shim provides the 4.9 compatibility layer)
+
+Conclusion: Part A1 is viable. Align evdi to 1.14.15 to match
+DisplayLinkManager v5.9.184 (which logs "libevdi.so version is not
+compatible with Dlm" against evdi 1.12.0).
