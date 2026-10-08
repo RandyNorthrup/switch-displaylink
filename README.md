@@ -9,10 +9,12 @@ external display on a Nintendo Switch running **L4T (Linux for Tegra)**, kernel
 >   to the dock tear-free, autostarts at login, and reattaches after a replug.
 > - **The evdi hotplug panic is fixed:** the version is aligned to evdi 1.14.15,
 >   plus two 4.9 fixes in `drivers/evdi`.
-> - **Still open: pulling the cable while the dock is active can still hard-lock
->   the Switch.** This is a separate bug in the Tegra xHCI controller, not
->   DisplayLink. Run [`scripts/dock-eject.sh`](scripts/dock-eject.sh) before
->   unplugging. Details: [docs/unplug-crash.md](docs/unplug-crash.md).
+> - **The unplug lockup is fixed by [`drivers/xusb-bwfix`](drivers/xusb-bwfix)**
+>   (loaded by hand for now). It was a Tegra xHCI bug, not DisplayLink: a
+>   command-timeout handler spun ~18 s with IRQs off. Getting USB back after
+>   the pull without a reboot isn't tested yet. Until it is, run
+>   [`scripts/dock-eject.sh`](scripts/dock-eject.sh) before unplugging.
+>   Details: [docs/unplug-crash.md](docs/unplug-crash.md).
 > - An extended desktop over PRIME is impossible (`NVIDIA-0 cap 0x0`), so
 >   multi-monitor is still to do.
 
@@ -88,6 +90,7 @@ drivers/evdi/        open-source evdi kernel-module source (1.12.0 and 1.14.15),
                       incl. the compat49 shim that makes it build on L4T 4.9,
                       plus our 4.9 fixes (dirtyfb double free, vblank counter)
 drivers/xusb-padfix/ unplug-crash experiment; does NOT fix it, kept for reference
+drivers/xusb-bwfix/  the unplug-lockup fix (insmod; see docs/unplug-crash.md)
 drivers/xusb-otgdefer/ unplug-crash experiment (defer OTG detach); does NOT fix it
 drivers/cpu-pcsample/  CoreSight PC sampler; blocked (external debug fused off)
 mirror/              dl-mirror (KMS mirror daemon) + its systemd user unit

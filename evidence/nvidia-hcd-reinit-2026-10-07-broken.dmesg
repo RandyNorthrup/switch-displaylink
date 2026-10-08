@@ -1,0 +1,12 @@
+[ 1647.810429] tegra-xusb 70090000.xusb: failed to set SS PP
+[ 1647.822215] tegra-xusb 70090000.xusb: Upgrade port 0 to USB3.0
+[ 1647.824221] tegra-xusb 70090000.xusb: Upgrade port 1 to USB3.0
+[ 1647.826449] tegra-xusb 70090000.xusb: failed to set HS PP
+[ 1812.355225] xusb_kick: calling tegra_xhci_hcd_reinit+0x0/0xa0
+[ 1817.528366] tegra-xusb 70090000.xusb: remove, state 4
+[ 1817.530279] xusb_bwfix: usb2 gone: skipped the Configure Endpoint drop
+[ 1817.535158] tegra-xusb 70090000.xusb: USB bus 2 deregistered
+[ 1817.535179] tegra-xusb 70090000.xusb: remove, state 4
+[ 1817.535360] xusb_bwfix: usb1 gone: skipped the Configure Endpoint drop
+[ 1817.536585] tegra-xusb 70090000.xusb: USB bus 1 deregistered
+[ 1817.539460] tegra-xusb 70090000.xusb: can't request region for resource [mem 0x70099000-0x70099fff]

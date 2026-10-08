@@ -1,7 +1,9 @@
 # Unplug crash: Tegra xHCI dies when the dock is pulled
 
-**Status (2026-10-07 23:00): narrowed to the xHCI command path during the first device's teardown, not fixed.** The workaround is
-[`scripts/dock-eject.sh`](../scripts/dock-eject.sh) before pulling the cable.
+**Status (2026-10-07 23:30): lockup fixed by [`drivers/xusb-bwfix`](../drivers/xusb-bwfix)
+(tested with one raw pull). Automatic USB recovery after the pull is written but not
+yet tested.** Until it is, [`scripts/dock-eject.sh`](../scripts/dock-eject.sh) before
+pulling still keeps USB usable without a reboot.
 
 ## Symptom
 
@@ -62,12 +64,64 @@ stack is never printed.
 | OTG host-mode switch-off racing the teardown | [`drivers/xusb-otgdefer`](../drivers/xusb-otgdefer) held bm92t's "USB HOST detached" back 3 s. The hold worked, but the teardown was already stuck on `1-1.1` and cpu0 still hard-locked about 23 s after the pull (2026-10-07 22:53, [evidence](../evidence/hekate-L4T_panic-2026-10-07-2253-unplug-with-otgdefer.txt), [log](../evidence/unplug-2026-10-07-2253-otgdefer-rawpull.dmesg)). |
 | Charger input fault by itself | Pulls with the bus idle (xHCI already in ELPG) don't crash. |
 
-## Working hypothesis
+## Root cause
 
-When VBUS drops with transfers in flight, the xHCI controller (or the fabric
-path to it) wedges. A CPU MMIO access or BPMP clock request then stalls with
-IRQs off, which fits both the 23 s whole-SoC stall and the cpu0 hard lockup.
-Not confirmed yet.
+From the kernel source this kernel was built from (theofficialgman/switch-l4t-kernel-4.9
+@807d12f6, `drivers/usb/host`):
+
+1. The pull wedges the xHC firmware: no command completes after it. The firmware is
+   closed, so why is unknown. Pulls with an idle bus (controller in ELPG) don't
+   trigger it, and neither does tearing the devices down first (`dock-eject.sh`).
+2. `usb_disconnect(1-1.1)` → `usb_disable_device` → `xhci_check_bandwidth` queues a
+   Configure Endpoint (drop) command and waits for it.
+3. After 5 s the command timer runs `xhci_handle_command_timeout()` (xhci-ring.c:1276).
+   It takes `xhci->lock` with `spin_lock_irqsave` and calls `xhci_abort_cmd_ring()`,
+   which polls the ring with `xhci_handshake(..., 5*1000*1000)`, then again with
+   `3*1000*1000` (xhci-ring.c:343-351). `xhci_handshake` counts loop iterations
+   (readl + udelay(1)), not time, so on this SoC that's about 18 s with IRQs off.
+4. 5 s + 18 s is the 23 s stall. With IRQs off that long, i2c, wifi and Joy-Con
+   time out, and when it passes the 10 s watchdog threshold you get
+   `Watchdog detected hard LOCKUP on cpu 0`. It then logs "Stopped the command ring
+   failed", "Abort command ring failed", "HC died", in that order.
+
+## The fix: `drivers/xusb-bwfix`
+
+A module that swaps three things (no kernel rebuild):
+
+- **`tegra_xhci_hc_driver.check_bandwidth`:** for a device that is already
+  `NOTATTACHED`, revert the software state (`reset_bandwidth`) and send no command.
+  The USB core ignores the result on that path, and Disable Slot frees the
+  controller's side.
+- **`xhci->cmd_timer` work function:** a copy of the timeout handler that waits for
+  the ring abort at most `abort_ms` (100 ms), sleeping with the lock dropped. If the
+  abort doesn't finish, it declares the controller dead the same way the original
+  does, minus the IRQs-off spin. The hook is guarded: it only replaces the function
+  pointer if it equals `xhci_handle_command_timeout`, so a wrong struct layout
+  can't write anything. It's re-applied on every root-hub add, because a controller
+  re-init re-runs `INIT_DELAYED_WORK`.
+- **Recovery:** a dead controller is unbound and re-bound through the driver core,
+  so USB comes back. NVIDIA's `en_hcd_reinit` can't do this. Its
+  `xhci_reinit_work()` calls `tegra_xusb_remove()`/`tegra_xusb_probe()` directly, so
+  devm resources are never freed and the re-probe fails with `can't request region
+  for resource [mem 0x70099000-0x70099fff]`, which leaves USB gone until reboot
+  ([log](../evidence/nvidia-hcd-reinit-2026-10-07-broken.dmesg)).
+
+**Test 2026-10-07 23:21** (first version, without the rebind), a raw pull while
+mirroring ([log](../evidence/unplug-2026-10-07-2321-bwfix-rawpull.dmesg)):
+
+```
+23:21:47.865  usb 1-1: USB disconnect / usb 1-1.1: USB disconnect
+23:21:47.929  xusb_bwfix: 1-1.1 gone: skipped the Configure Endpoint drop
+   ... 1-1.2, 1-1.3, 1-1.4, 1-1.5, 1-1: same; teardown done at 48.009 (145 ms)
+23:21:53.362  xusb_bwfix: xHCI command timed out, aborting the command ring
+23:21:53.462  xusb_bwfix: command ring abort didn't finish in 100 ms: xHCI is dead
+23:21:53.462  tegra-xusb: HC died; cleaning up
+```
+
+No stall and no lockup, and the box kept running. One more command (queued around
+48.36, type not logged in that version; the current version logs it) still timed
+out, which confirms the firmware is wedged. USB stayed dead until reboot because
+that version had no recovery.
 
 ## Tried: sampling cpu0's PC through CoreSight (not possible)
 
@@ -81,12 +135,10 @@ lockup PC sampler isn't possible on a retail Switch. [Log](../evidence/cpu-pcsam
 
 ## Next step
 
-Work out from the kernel source (theofficialgman/switch-l4t-kernel-4.9 @807d12f)
-where the xHCI command-timeout path busy-waits with IRQs off during the `1-1.1`
-teardown, then fix it there. The kernel has no kprobes, ftrace or kcore, and
-`xhci-tegra`/`phy-tegra-xusb` are built in (`=y`), so the fix is either a
-pointer swap from a module (as the two experiments above did) or a patched
-kernel Image.
+Test the rebind recovery with a raw pull. Then load the module at boot (DKMS +
+modules-load.d), and offer upstream a kernel patch: a time-based
+`xhci_handshake` (as mainline later did), and skipping `check_bandwidth` for
+`NOTATTACHED` devices.
 
 ## Workaround
 

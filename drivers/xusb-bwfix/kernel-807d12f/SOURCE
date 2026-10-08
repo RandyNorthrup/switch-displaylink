@@ -1,0 +1,2 @@
+# Copied verbatim from theofficialgman/switch-l4t-kernel-4.9 @807d12f6c4fe37e12ea70a6ec9d3bedb78d13233
+# (drivers/usb/host, GPL-2.0) so xusb_bwfix sees the exact struct xhci_hcd layout.
