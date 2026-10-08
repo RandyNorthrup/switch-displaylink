@@ -108,6 +108,7 @@ scripts/             install.sh            — full fetch+build+install
                       dl-panic-capture.*    — reliable crash capture
 docs/                mirror.md             — how dl-mirror works, tuning notes
                       unplug-crash.md       — the xHCI unplug crash (fixed by xusb_bwfix)
+                      atmosphere.md         — driving the dock from Atmosphère (protocol RE, in progress)
                       fix-and-mirror-plan.md — original plan + what was done
 ```
 
