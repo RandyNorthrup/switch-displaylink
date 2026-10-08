@@ -1,0 +1,21 @@
+== 2026-10-07T22:53:26-07:00 evdi  ==
+2026-10-07T22:53:20,010758-07:00 xusb_otgdefer: hooked id_extcons_nb at tegra+0x370; USB HOST detach held back 3000 ms
+2026-10-07T22:53:46,576164-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: power down UTMI pad 0
+2026-10-07T22:53:46,576207-07:00 usb 1-1: USB disconnect, device number 2
+2026-10-07T22:53:46,576213-07:00 usb 1-1.1: USB disconnect, device number 4
+2026-10-07T22:53:46,579499-07:00 bq2419x 0-006b: Charging Fault: Input Fault (VBUS OVP or VBAT<VBUS<3.8V)
+2026-10-07T22:53:46,579964-07:00 bq2419x 0-006b: USB is disconnected
+2026-10-07T22:53:46,598249-07:00 bm92t 0-0018: Alert= 0x0008 Status1= 0x0000 Status2= 0x0000 DP= 0x0000 State= NORMAL_CONFIG_HANDLED
+2026-10-07T22:53:46,598958-07:00 bm92t 0-0018: Set Charging Current Limit 0ma
+2026-10-07T22:53:46,598965-07:00 bq2419x 0-006b: Setting charging current 0 mA
+2026-10-07T22:53:46,598968-07:00 bq2419x 0-006b: Charging enabled
+2026-10-07T22:53:46,604889-07:00 bq2419x 0-006b: Connected to unknown VBUS source 0x0
+2026-10-07T22:53:46,608423-07:00 bm92t 0-0018: extcon cable (73: USB-PD) detached
+2026-10-07T22:53:46,608492-07:00 bm92t 0-0018: extcon cable (02: USB HOST) detached
+2026-10-07T22:53:46,608497-07:00 xusb_otgdefer: USB HOST detached: holding it back 3000 ms
+2026-10-07T22:53:46,613921-07:00 evdi: [I] (card0) Disconnected from Task 1082 (DesktopManagerE) of process 1071 (DisplayLinkMana)
+2026-10-07T22:53:46,613926-07:00 evdi: [I] (card0) Removing i2c adapter bus number 7
+2026-10-07T22:53:46,614475-07:00 evdi: [I] (card0) Closed by Task 1082 (DesktopManagerE) of process 1071 (DisplayLinkMana)
+2026-10-07T22:53:46,701130-07:00 bq2419x 0-006b: USB is disconnected
+2026-10-07T22:53:46,706630-07:00 evdi: [I] (card0) Closed by Task 7285 (dl-mirror) of process 7285 (dl-mirror)
+2026-10-07T22:53:49,633748-07:00 xusb_otgdefer: passing on the held-back USB HOST detach

@@ -1,6 +1,6 @@
 # Unplug crash: Tegra xHCI dies when the dock is pulled
 
-**Status (2026-10-07): root cause narrowed down, not fixed.** The workaround is
+**Status (2026-10-07 23:00): narrowed to the xHCI command path during the first device's teardown, not fixed.** The workaround is
 [`scripts/dock-eject.sh`](../scripts/dock-eject.sh) before pulling the cable.
 
 ## Symptom
@@ -40,6 +40,15 @@ The padctl power-down and the `USB disconnect` fire within 1 ms of the pull,
 before the PD controller (bm92t) reports the detach. So a udev or extcon hook
 would run too late.
 
+**The stall starts inside the teardown of `1-1.1`** (the Logitech HID receiver,
+the first device behind the dock hub). `1-1.1` logs its disconnect at +1 ms,
+`1-1.2` (the VIA USB 2 hub) only at +22.8 s, right after `HC died`. The 22:53
+crash log shows the same thing: nothing after `1-1.1` before the box locked up.
+So the hub driver is stuck in `usb_disconnect(1-1.1)`, and the xHCI commands it
+issues there (stop endpoint, then the configure-endpoint bandwidth drop) never
+complete. That's where the `Timeout while waiting for configure endpoint command`
+line comes from.
+
 The hard-lockup dumps (`evidence/hekate-L4T_panic-*-unplug*.txt`) only carry the
 detecting CPU's backtrace (an idle CPU). arm64 on 4.9 has no NMI, so cpu0's own
 stack is never printed.
@@ -50,6 +59,7 @@ stack is never printed.
 |---|---|
 | evdi / DisplayLinkManager | Disconnect is clean (logged), and the stall comes after it. |
 | Early UTMI pad power-down in `tegra_xhci_hub_control` | [`drivers/xusb-padfix`](../drivers/xusb-padfix) skips it, and it still hard-locked (2026-10-07 22:02, [evidence](../evidence/hekate-L4T_panic-2026-10-07-2202-unplug-with-padfix.txt)). |
+| OTG host-mode switch-off racing the teardown | [`drivers/xusb-otgdefer`](../drivers/xusb-otgdefer) held bm92t's "USB HOST detached" back 3 s. The hold worked, but the teardown was already stuck on `1-1.1` and cpu0 still hard-locked about 23 s after the pull (2026-10-07 22:53, [evidence](../evidence/hekate-L4T_panic-2026-10-07-2253-unplug-with-otgdefer.txt), [log](../evidence/unplug-2026-10-07-2253-otgdefer-rawpull.dmesg)). |
 | Charger input fault by itself | Pulls with the bus idle (xHCI already in ELPG) don't crash. |
 
 ## Working hypothesis
@@ -59,14 +69,24 @@ path to it) wedges. A CPU MMIO access or BPMP clock request then stalls with
 IRQs off, which fits both the 23 s whole-SoC stall and the cpu0 hard lockup.
 Not confirmed yet.
 
+## Tried: sampling cpu0's PC through CoreSight (not possible)
+
+[`drivers/cpu-pcsample`](../drivers/cpu-pcsample) finds each A57 core's
+external debug block (CCPLEX ROM table at `0x73000000`, core debug at
+`0x73410000 + n*1M`; `MDRAR_EL1` reads 0, so the addresses are hardcoded) and
+reads EDPCSR. Stages 0-2 ran without problems, but every core reports
+`EDPRSR 0x28b/0x281`, which has **EDAD and EPMAD set**: external debug access is
+disabled (retail fuses or secure firmware), so EDPCSR reads `0xffffffff`. A
+lockup PC sampler isn't possible on a retail Switch. [Log](../evidence/cpu-pcsample-2026-10-07-2249-stage2.log).
+
 ## Next step
 
-Sample cpu0's program counter from another CPU during the stall, through the
-CoreSight external debug registers (EDPCSR). That tells us exactly what cpu0
-is stuck on, so the fix can be targeted (a module or a kernel patch). The
-kernel has no kprobes, ftrace or kcore, and `xhci-tegra`/`phy-tegra-xusb` are
-built in (`=y`), so a real fix in that code means rebuilding the kernel Image
-(source: theofficialgman/switch-l4t-kernel-4.9 @807d12f).
+Work out from the kernel source (theofficialgman/switch-l4t-kernel-4.9 @807d12f)
+where the xHCI command-timeout path busy-waits with IRQs off during the `1-1.1`
+teardown, then fix it there. The kernel has no kprobes, ftrace or kcore, and
+`xhci-tegra`/`phy-tegra-xusb` are built in (`=y`), so the fix is either a
+pointer swap from a module (as the two experiments above did) or a patched
+kernel Image.
 
 ## Workaround
 

@@ -88,6 +88,8 @@ drivers/evdi/        open-source evdi kernel-module source (1.12.0 and 1.14.15),
                       incl. the compat49 shim that makes it build on L4T 4.9,
                       plus our 4.9 fixes (dirtyfb double free, vblank counter)
 drivers/xusb-padfix/ unplug-crash experiment; does NOT fix it, kept for reference
+drivers/xusb-otgdefer/ unplug-crash experiment (defer OTG detach); does NOT fix it
+drivers/cpu-pcsample/  CoreSight PC sampler; blocked (external debug fused off)
 mirror/              dl-mirror (KMS mirror daemon) + its systemd user unit
 configs/             /etc/X11 config, displaylink unit, crash-debug sysctls
 evidence/            crash traces, hekate panic dumps, test logs
