@@ -1,0 +1,184 @@
+2026-10-07T23:32:57,004145-07:00 nf_conntrack: default automatic helper assignment has been turned off for security reasons and CT-based  firewall rule not found. Use the iptables CT target to attach helpers instead.
+2026-10-07T23:32:59,251573-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: power down UTMI pad 0
+2026-10-07T23:32:59,252269-07:00 usb 1-1: USB disconnect, device number 2
+2026-10-07T23:32:59,252280-07:00 usb 1-1.1: USB disconnect, device number 4
+2026-10-07T23:32:59,254829-07:00 bq2419x 0-006b: Charging Fault: Input Fault (VBUS OVP or VBAT<VBUS<3.8V)
+2026-10-07T23:32:59,255294-07:00 bq2419x 0-006b: USB is disconnected
+2026-10-07T23:32:59,269309-07:00 bm92t_event_handler: 1 callbacks suppressed
+2026-10-07T23:32:59,269315-07:00 bm92t 0-0018: Alert= 0x0200 Status1= 0x0E80 Status2= 0x8000 DP= 0x4000 State= NORMAL_CONFIG_HANDLED
+2026-10-07T23:32:59,275079-07:00 bm92t 0-0018: Alert= 0x0208 Status1= 0x0000 Status2= 0x0000 DP= 0x0000 State= NORMAL_CONFIG_HANDLED
+2026-10-07T23:32:59,276359-07:00 bm92t 0-0018: Set Charging Current Limit 0ma
+2026-10-07T23:32:59,276377-07:00 bq2419x 0-006b: Setting charging current 0 mA
+2026-10-07T23:32:59,276383-07:00 bq2419x 0-006b: Charging enabled
+2026-10-07T23:32:59,278443-07:00 bq2419x 0-006b: Connected to unknown VBUS source 0x0
+2026-10-07T23:32:59,283568-07:00 bm92t 0-0018: extcon cable (73: USB-PD) detached
+2026-10-07T23:32:59,283637-07:00 bm92t 0-0018: extcon cable (02: USB HOST) detached
+2026-10-07T23:32:59,318970-07:00 xusb_bwfix: 1-1.1 gone: skipped the Configure Endpoint drop
+2026-10-07T23:32:59,319182-07:00 usb 1-1.2: USB disconnect, device number 5
+2026-10-07T23:32:59,319377-07:00 xusb_bwfix: 1-1.2 gone: skipped the Configure Endpoint drop
+2026-10-07T23:32:59,321060-07:00 usb 1-1.3: USB disconnect, device number 6
+2026-10-07T23:32:59,328259-07:00 cdc_ncm 1-1.3:1.5 enx8cae4cb55cc6: unregister 'cdc_ncm' usb-70090000.xusb-1.3, CDC NCM
+2026-10-07T23:32:59,366727-07:00 xusb_bwfix: 1-1.3 gone: skipped the Configure Endpoint drop
+2026-10-07T23:32:59,366859-07:00 evdi: [I] Detached from parent device
+2026-10-07T23:32:59,366931-07:00 usb 1-1.4: USB disconnect, device number 7
+2026-10-07T23:32:59,376647-07:00 bq2419x 0-006b: USB is disconnected
+2026-10-07T23:32:59,379522-07:00 evdi: [I] (card0) Disconnected from Task 1894 (DesktopManagerE) of process 1882 (DisplayLinkMana)
+2026-10-07T23:32:59,379538-07:00 evdi: [I] (card0) Removing i2c adapter bus number 7
+2026-10-07T23:32:59,379803-07:00 evdi: [I] (card0) Closed by Task 1894 (DesktopManagerE) of process 1882 (DisplayLinkMana)
+2026-10-07T23:32:59,433083-07:00 xusb_bwfix: 1-1.4 gone: skipped the Configure Endpoint drop
+2026-10-07T23:32:59,433295-07:00 usb 1-1.5: USB disconnect, device number 3
+2026-10-07T23:32:59,433358-07:00 xusb_bwfix: 1-1.5 gone: skipped the Configure Endpoint drop
+2026-10-07T23:32:59,434942-07:00 xusb_bwfix: 1-1 gone: skipped the Configure Endpoint drop
+2026-10-07T23:32:59,544549-07:00 usb usb1: usb_suspend_both: status 0
+2026-10-07T23:32:59,940700-07:00 evdi: [I] (card0) Closed by Task 1612 (dl-mirror) of process 1612 (dl-mirror)
+2026-10-07T23:33:04,414430-07:00 xusb_bwfix: xHCI command (TRB type 10, slot 3) timed out, aborting the command ring
+2026-10-07T23:33:04,515349-07:00 xusb_bwfix: command ring abort didn't finish in 100 ms: xHCI is dead
+2026-10-07T23:33:04,515453-07:00 tegra-xusb 70090000.xusb: HC died; cleaning up
+2026-10-07T23:33:05,566406-07:00 xusb_bwfix: re-binding 70090000.xusb to bring USB back
+2026-10-07T23:33:05,566556-07:00 tegra-xusb 70090000.xusb: remove, state 4
+2026-10-07T23:33:05,566577-07:00 usb usb2: USB disconnect, device number 1
+2026-10-07T23:33:05,566909-07:00 xusb_bwfix: usb2 gone: skipped the Configure Endpoint drop
+2026-10-07T23:33:05,569054-07:00 tegra-xusb 70090000.xusb: USB bus 2 deregistered
+2026-10-07T23:33:05,569078-07:00 tegra-xusb 70090000.xusb: remove, state 4
+2026-10-07T23:33:05,569093-07:00 usb usb1: USB disconnect, device number 1
+2026-10-07T23:33:05,569300-07:00 xusb_bwfix: usb1 gone: skipped the Configure Endpoint drop
+2026-10-07T23:33:05,570672-07:00 tegra-xusb 70090000.xusb: USB bus 1 deregistered
+2026-10-07T23:33:05,575149-07:00 tegra-xusb 70090000.xusb: USB2 port 0 has OTG_CAP
+2026-10-07T23:33:05,575162-07:00 tegra-xusb 70090000.xusb: USB3 port 0 has OTG_CAP
+2026-10-07T23:33:05,577725-07:00 xusb_bwfix: 70090000.xusb re-bound: ok
+2026-10-07T23:33:05,582409-07:00 tegra-xusb 70090000.xusb: Firmware timestamp: 2019-10-17 16:01:14 UTC, Version: 51.06 release
+2026-10-07T23:33:05,582436-07:00 tegra-xusb 70090000.xusb: xHCI Host Controller
+2026-10-07T23:33:05,582457-07:00 tegra-xusb 70090000.xusb: new USB bus registered, assigned bus number 1
+2026-10-07T23:33:05,583233-07:00 tegra-xusb 70090000.xusb: hcc params 0x0184f525 hci version 0x100 quirks 0x00050010
+2026-10-07T23:33:05,583255-07:00 tegra-xusb 70090000.xusb: irq 61, io mem 0x70090000
+2026-10-07T23:33:05,585483-07:00 usb usb1: New USB device found, idVendor=1d6b, idProduct=0002
+2026-10-07T23:33:05,585496-07:00 usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+2026-10-07T23:33:05,585504-07:00 usb usb1: Product: xHCI Host Controller
+2026-10-07T23:33:05,585510-07:00 usb usb1: Manufacturer: Linux 4.9.140-l4t xhci-hcd
+2026-10-07T23:33:05,585538-07:00 usb usb1: SerialNumber: 70090000.xusb
+2026-10-07T23:33:05,588983-07:00 hub 1-0:1.0: USB hub found
+2026-10-07T23:33:05,589020-07:00 hub 1-0:1.0: 5 ports detected
+2026-10-07T23:33:05,589312-07:00 xusb_bwfix: command timeout hooked (re-init)
+2026-10-07T23:33:05,589406-07:00 tegra-xusb 70090000.xusb: xHCI Host Controller
+2026-10-07T23:33:05,589422-07:00 tegra-xusb 70090000.xusb: new USB bus registered, assigned bus number 2
+2026-10-07T23:33:05,589486-07:00 usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
+2026-10-07T23:33:05,589549-07:00 usb usb2: New USB device found, idVendor=1d6b, idProduct=0003
+2026-10-07T23:33:05,589557-07:00 usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+2026-10-07T23:33:05,589563-07:00 usb usb2: Product: xHCI Host Controller
+2026-10-07T23:33:05,589569-07:00 usb usb2: Manufacturer: Linux 4.9.140-l4t xhci-hcd
+2026-10-07T23:33:05,589575-07:00 usb usb2: SerialNumber: 70090000.xusb
+2026-10-07T23:33:05,590062-07:00 hub 2-0:1.0: USB hub found
+2026-10-07T23:33:05,590216-07:00 hub 2-0:1.0: 4 ports detected
+2026-10-07T23:33:05,592455-07:00 tegra-xusb 70090000.xusb: Upgrade port 0 to USB3.0
+2026-10-07T23:33:05,592468-07:00 tegra-xusb 70090000.xusb: Upgrade port 1 to USB3.0
+2026-10-07T23:33:05,592574-07:00 tegra-xusb 70090000.xusb: extcon 0: ffffffc0fa4f8878 id
+2026-10-07T23:33:05,694567-07:00 usb usb1: usb_suspend_both: status 0
+2026-10-07T23:33:05,694693-07:00 usb usb2: usb_suspend_both: status 0
+2026-10-07T23:33:27,785218-07:00 bm92t 0-0018: Alert= 0x0008 Status1= 0x0D80 Status2= 0x0000 DP= 0x4000 State= INIT_STATE
+2026-10-07T23:33:27,935753-07:00 bm92t 0-0018: Alert= 0x4000 Status1= 0x0D80 Status2= 0x0000 DP= 0x4000 State= INIT_STATE
+2026-10-07T23:33:28,011345-07:00 bm92t 0-0018: Alert= 0x1000 Status1= 0x4D80 Status2= 0x0000 DP= 0x4000 State= INIT_STATE
+2026-10-07T23:33:28,014880-07:00 bm92t 0-0018: Supported PDOs:
+2026-10-07T23:33:28,015039-07:00 bm92t 0-0018: PDO 1: 3000mA  5000mV DRD
+2026-10-07T23:33:28,015159-07:00 bm92t 0-0018: PDO 2: 3000mA  9000mV No DRD
+2026-10-07T23:33:28,015265-07:00 bm92t 0-0018: PDO 3: 3000mA 12000mV No DRD
+2026-10-07T23:33:28,015367-07:00 bm92t 0-0018: PDO 4: 3000mA 15000mV No DRD
+2026-10-07T23:33:28,015711-07:00 bm92t 0-0018: PDO 5: 5000mA 20000mV No DRD
+2026-10-07T23:33:28,015764-07:00 bm92t 0-0018: Device in powered mode
+2026-10-07T23:33:28,015817-07:00 bm92t 0-0018: Requesting 4: min 900mA, max 3000mA, 15000mV
+2026-10-07T23:33:28,040830-07:00 bm92t 0-0018: Alert= 0x0004 Status1= 0x4D80 Status2= 0x0000 DP= 0x4000 State= NEW_PDO
+2026-10-07T23:33:28,088800-07:00 bm92t 0-0018: Alert= 0x1000 Status1= 0x4D80 Status2= 0x0000 DP= 0x4000 State= NEW_PDO
+2026-10-07T23:33:28,090541-07:00 bm92t 0-0018: New PD Contract:
+2026-10-07T23:33:28,090554-07:00 bm92t 0-0018: PDO: 4: 3000mA, 15000mV
+2026-10-07T23:33:28,090562-07:00 bm92t 0-0018: RDO: op 900mA, 3000mA max
+2026-10-07T23:33:28,093604-07:00 bm92t 0-0018: Alert= 0x0004 Status1= 0x4D80 Status2= 0x0000 DP= 0x4000 State= PS_RDY_SENT
+2026-10-07T23:33:28,093623-07:00 bm92t 0-0018: extcon cable (02: USB HOST) attached
+2026-10-07T23:33:28,093795-07:00 tegra-xusb 70090000.xusb: Upgrade port 0 to USB3.0
+2026-10-07T23:33:28,093809-07:00 tegra-xusb 70090000.xusb: Upgrade port 1 to USB3.0
+2026-10-07T23:33:28,101077-07:00 bm92t 0-0018: Alert= 0x0400 Status1= 0x4E80 Status2= 0x0000 DP= 0x4000 State= DR_SWAP_SENT
+2026-10-07T23:33:28,103315-07:00 bm92t 0-0018: Alert= 0x0004 Status1= 0x4E80 Status2= 0x0000 DP= 0x4000 State= DR_SWAP_SENT
+2026-10-07T23:33:28,109651-07:00 bm92t 0-0018: Alert= 0x0004 Status1= 0x4E80 Status2= 0x0000 DP= 0x4000 State= VDM_DISC_ID_SENT
+2026-10-07T23:33:28,111988-07:00 bm92t 0-0018: Alert= 0x0800 Status1= 0x4E80 Status2= 0x0001 DP= 0x4000 State= VDM_DISC_ID_SENT
+2026-10-07T23:33:28,117926-07:00 bm92t 0-0018: Connected PD device:
+2026-10-07T23:33:28,117938-07:00 bm92t 0-0018: VID: 2109, PID: 0105
+2026-10-07T23:33:28,117945-07:00 bm92t 0-0018: Type: PD Peripheral
+2026-10-07T23:33:28,117952-07:00 bm92t 0-0018: VID/PID not Nintendo Dock
+2026-10-07T23:33:28,250472-07:00 bq2419x 0-006b: USB is disconnected
+2026-10-07T23:33:28,772396-07:00 tegra-xusb-padctl 7009f000.xusb_padctl: power on UTMI pads 0
+2026-10-07T23:33:28,983541-07:00 usb 1-1: new high-speed USB device number 2 using tegra-xusb
+2026-10-07T23:33:29,103063-07:00 usb 1-1: New USB device found, idVendor=2109, idProduct=2817
+2026-10-07T23:33:29,103241-07:00 usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+2026-10-07T23:33:29,103357-07:00 usb 1-1: Product: USB2.0 Hub             
+2026-10-07T23:33:29,103841-07:00 usb 1-1: Manufacturer: VIA Labs, Inc.         
+2026-10-07T23:33:29,108220-07:00 hub 1-1:1.0: USB hub found
+2026-10-07T23:33:29,109116-07:00 hub 1-1:1.0: 5 ports detected
+2026-10-07T23:33:29,631564-07:00 usb 1-1.5: new high-speed USB device number 3 using tegra-xusb
+2026-10-07T23:33:29,713059-07:00 usb 1-1.5: New USB device found, idVendor=2109, idProduct=8884
+2026-10-07T23:33:29,713162-07:00 usb 1-1.5: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+2026-10-07T23:33:29,713224-07:00 usb 1-1.5: Product: USB Billboard Device   
+2026-10-07T23:33:29,713283-07:00 usb 1-1.5: Manufacturer: VIA Labs, Inc.         
+2026-10-07T23:33:29,713336-07:00 usb 1-1.5: SerialNumber: 0000000000000001
+2026-10-07T23:33:29,904685-07:00 usb 1-1.1: new full-speed USB device number 4 using tegra-xusb
+2026-10-07T23:33:29,989101-07:00 usb 1-1.1: New USB device found, idVendor=046d, idProduct=c52b
+2026-10-07T23:33:29,989192-07:00 usb 1-1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+2026-10-07T23:33:29,989249-07:00 usb 1-1.1: Product: USB Receiver
+2026-10-07T23:33:29,989300-07:00 usb 1-1.1: Manufacturer: Logitech
+2026-10-07T23:33:30,007628-07:00 logitech-djreceiver 0003:046D:C52B.000A: hiddev0,hidraw0: USB HID v1.11 Device [Logitech USB Receiver] on usb-70090000.xusb-1.1/input2
+2026-10-07T23:33:30,123087-07:00 input: Logitech M570 as /devices/70090000.xusb/usb1/1-1/1-1.1/1-1.1:1.2/0003:046D:C52B.000A/0003:046D:1028.000B/input/input12
+2026-10-07T23:33:30,125759-07:00 logitech-hidpp-device 0003:046D:1028.000B: input,hidraw1: USB HID v1.11 Mouse [Logitech M570] on usb-70090000.xusb-1.1:1
+2026-10-07T23:33:30,132417-07:00 input: Logitech MX Master 2S as /devices/70090000.xusb/usb1/1-1/1-1.1/1-1.1:1.2/0003:046D:C52B.000A/0003:046D:4069.000C/input/input13
+2026-10-07T23:33:30,133107-07:00 logitech-hidpp-device 0003:046D:4069.000C: input,hidraw2: USB HID v1.11 Keyboard [Logitech MX Master 2S] on usb-70090000.xusb-1.1:2
+2026-10-07T23:33:30,143435-07:00 bm92t 0-0018: Set Charging Current Limit 900ma
+2026-10-07T23:33:30,143477-07:00 bq2419x 0-006b: Setting charging current 900 mA
+2026-10-07T23:33:30,143502-07:00 bq2419x 0-006b: Charging enabled
+2026-10-07T23:33:30,144925-07:00 bq2419x 0-006b: Connected to known safe VBUS source 0x64
+2026-10-07T23:33:30,297441-07:00 usb 1-1.2: new high-speed USB device number 5 using tegra-xusb
+2026-10-07T23:33:30,388479-07:00 usb 1-1.2: New USB device found, idVendor=2109, idProduct=2817
+2026-10-07T23:33:30,388555-07:00 usb 1-1.2: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+2026-10-07T23:33:30,388599-07:00 usb 1-1.2: Product: USB2.0 Hub             
+2026-10-07T23:33:30,388638-07:00 usb 1-1.2: Manufacturer: VIA Labs, Inc.         
+2026-10-07T23:33:30,391451-07:00 hub 1-1.2:1.0: USB hub found
+2026-10-07T23:33:30,391702-07:00 hub 1-1.2:1.0: 4 ports detected
+2026-10-07T23:33:30,578568-07:00 usb 1-1.3: new high-speed USB device number 6 using tegra-xusb
+2026-10-07T23:33:30,669701-07:00 usb 1-1.3: New USB device found, idVendor=17e9, idProduct=4323
+2026-10-07T23:33:30,669799-07:00 usb 1-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+2026-10-07T23:33:30,669863-07:00 usb 1-1.3: Product: Plugable UD-3900PDZ
+2026-10-07T23:33:30,669915-07:00 usb 1-1.3: Manufacturer: DisplayLink
+2026-10-07T23:33:30,669964-07:00 usb 1-1.3: SerialNumber: 4371A03731
+2026-10-07T23:33:30,684635-07:00 usb 1-1.3: Warning! Unlikely big volume range (=511), cval->res is probably wrong.
+2026-10-07T23:33:30,684647-07:00 usb 1-1.3: [15] FU [Plugable Audio Playback Volume] ch = 6, val = -8176/0/16
+2026-10-07T23:33:30,686622-07:00 usb 1-1.3: Warning! Unlikely big volume range (=767), cval->res is probably wrong.
+2026-10-07T23:33:30,687764-07:00 usb 1-1.3: [12] FU [Mic Capture Volume] ch = 2, val = -4592/7680/16
+2026-10-07T23:33:30,711611-07:00 cdc_ncm 1-1.3:1.5: MAC-Address: 8c:ae:4c:b5:5c:c6
+2026-10-07T23:33:30,711647-07:00 cdc_ncm 1-1.3:1.5: setting rx_max = 16384
+2026-10-07T23:33:30,711878-07:00 cdc_ncm 1-1.3:1.5: setting tx_max = 16384
+2026-10-07T23:33:30,713172-07:00 cdc_ncm 1-1.3:1.5 usb2: register 'cdc_ncm' at usb-70090000.xusb-1.3, CDC NCM, 8c:ae:4c:b5:5c:c6
+2026-10-07T23:33:30,763395-07:00 usb 1-1.2: usb_suspend_both: status 0
+2026-10-07T23:33:30,901453-07:00 usb 1-1.4: new low-speed USB device number 7 using tegra-xusb
+2026-10-07T23:33:30,999357-07:00 usb 1-1.4: New USB device found, idVendor=258a, idProduct=6a88
+2026-10-07T23:33:30,999537-07:00 usb 1-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+2026-10-07T23:33:30,999598-07:00 usb 1-1.4: Product: USB KEYBOARD
+2026-10-07T23:33:30,999691-07:00 usb 1-1.4: Manufacturer: SINO WEALTH
+2026-10-07T23:33:31,010871-07:00 input: SINO WEALTH USB KEYBOARD as /devices/70090000.xusb/usb1/1-1/1-1.4/1-1.4:1.0/0003:258A:6A88.000D/input/input14
+2026-10-07T23:33:31,065932-07:00 hid-generic 0003:258A:6A88.000D: input,hidraw3: USB HID v1.10 Keyboard [SINO WEALTH USB KEYBOARD] on usb-70090000.xusb-1.4/input0
+2026-10-07T23:33:31,080161-07:00 input: SINO WEALTH USB KEYBOARD as /devices/70090000.xusb/usb1/1-1/1-1.4/1-1.4:1.1/0003:258A:6A88.000E/input/input15
+2026-10-07T23:33:31,133153-07:00 hid-generic 0003:258A:6A88.000E: input,hiddev0,hidraw4: USB HID v1.10 Mouse [SINO WEALTH USB KEYBOARD] on usb-70090000.xusb-1.4/input1
+2026-10-07T23:33:31,233627-07:00 cdc_ncm 1-1.3:1.5 enx8cae4cb55cc6: renamed from usb2
+2026-10-07T23:33:31,284659-07:00 IPv6: ADDRCONF(NETDEV_UP): enx8cae4cb55cc6: link is not ready
+2026-10-07T23:33:31,284831-07:00 IPv6: ADDRCONF(NETDEV_UP): enx8cae4cb55cc6: link is not ready
+2026-10-07T23:33:31,982695-07:00 evdi: [I] Attaching to usb:1-1.3
+2026-10-07T23:33:34,303841-07:00 cdc_ncm 1-1.3:1.5 enx8cae4cb55cc6: network connection: disconnected
+2026-10-07T23:33:42,090534-07:00 evdi: [I] (card0) Opened by Task 3978 (DesktopManagerE) of process 3968 (DisplayLinkMana)
+2026-10-07T23:33:42,101678-07:00 evdi: [I] (card0) Added i2c adapter bus number 7
+2026-10-07T23:33:42,101691-07:00 evdi: [I] (card0) Connected with Task 3978 (DesktopManagerE) of process 3968 (DisplayLinkMana)
+2026-10-07T23:33:42,101697-07:00 evdi: [I] (card0) Connector state: connected
+2026-10-07T23:33:43,971315-07:00 evdi: [I] (card0) Opened by Task 1612 (dl-mirror) of process 1612 (dl-mirror)
+2026-10-07T23:33:43,971708-07:00 evdi: [I] (card0) Connector state: connected
+2026-10-07T23:33:43,972658-07:00 evdi: [I] (card0) Edid property set
+2026-10-07T23:33:43,986248-07:00 evdi: [I] (card0) Notifying display power state: on
+2026-10-07T23:33:43,986539-07:00 evdi: [I] (card0) Notifying mode changed: 1280x720@60; bpp 32; pixel format XR24
+2026-10-07T23:33:43,986552-07:00 evdi: [I] (card0) Notifying display power state: on
+2026-10-07T23:33:44,050137-07:00 evdi: [W] evdi_painter_connect:947 (card0) Double connect - replacing ffffffc0b3b4e000 with ffffffc0b3b4e000
+2026-10-07T23:33:44,050149-07:00 evdi: [I] (card0) Connected with Task 3978 (DesktopManagerE) of process 3968 (DisplayLinkMana)
+2026-10-07T23:33:44,050155-07:00 evdi: [I] (card0) Connector state: connected
+2026-10-07T23:33:44,080985-07:00 evdi: [I] (card0) Notifying mode changed: 1280x720@60; bpp 32; pixel format XR24
+2026-10-07T23:33:44,081002-07:00 evdi: [I] (card0) Notifying display power state: on

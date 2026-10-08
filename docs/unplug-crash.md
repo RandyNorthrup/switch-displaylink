@@ -1,9 +1,9 @@
 # Unplug crash: Tegra xHCI dies when the dock is pulled
 
-**Status (2026-10-07 23:30): lockup fixed by [`drivers/xusb-bwfix`](../drivers/xusb-bwfix)
-(tested with one raw pull). Automatic USB recovery after the pull is written but not
-yet tested.** Until it is, [`scripts/dock-eject.sh`](../scripts/dock-eject.sh) before
-pulling still keeps USB usable without a reboot.
+**Status (2026-10-07 23:35): fixed by [`drivers/xusb-bwfix`](../drivers/xusb-bwfix).**
+A raw pull while mirroring doesn't lock up, the module re-binds the dead xHCI
+controller, and a replug enumerates and mirrors again without a reboot. The module
+is still loaded by hand (insmod). It doesn't load at boot yet.
 
 ## Symptom
 
@@ -123,6 +123,29 @@ No stall and no lockup, and the box kept running. One more command (queued aroun
 out, which confirms the firmware is wedged. USB stayed dead until reboot because
 that version had no recovery.
 
+**Test 2026-10-07 23:32** (current version, with the rebind), a raw pull while
+mirroring, then a replug ([log](../evidence/unplug-2026-10-07-2332-bwfix-rebind-rawpull.dmesg)):
+
+```
+23:32:59.252  usb 1-1: USB disconnect
+23:32:59.319  xusb_bwfix: 1-1.1 gone: skipped the Configure Endpoint drop
+   ... all 6 devices skipped; teardown done at 59.435 (183 ms)
+23:33:04.414  xusb_bwfix: xHCI command (TRB type 10, slot 3) timed out, aborting the command ring
+23:33:04.515  xusb_bwfix: command ring abort didn't finish in 100 ms: xHCI is dead
+23:33:04.515  tegra-xusb: HC died; cleaning up
+23:33:05.566  xusb_bwfix: re-binding 70090000.xusb to bring USB back
+23:33:05.578  xusb_bwfix: 70090000.xusb re-bound: ok
+23:33:28.984  usb 1-1: new high-speed USB device number 2   (replug)
+23:33:42.102  evdi: Connector state: connected               (DLM)
+23:33:43.971  evdi: Opened by dl-mirror                      (picture back)
+```
+
+No stall and no lockup. USB came back on its own, and the mirror resumed about 15 s
+after the replug (the normal replug latency, see [mirror.md](mirror.md)). The command
+that times out after the pull is TRB type 10 (Disable Slot) on slot 3. It's queued
+by `xhci_free_dev` when the last device reference goes away, not by the bandwidth drop,
+so the firmware is wedged by the pull itself. The rebind is the recovery, not a workaround.
+
 ## Tried: sampling cpu0's PC through CoreSight (not possible)
 
 [`drivers/cpu-pcsample`](../drivers/cpu-pcsample) finds each A57 core's
@@ -135,12 +158,12 @@ lockup PC sampler isn't possible on a retail Switch. [Log](../evidence/cpu-pcsam
 
 ## Next step
 
-Test the rebind recovery with a raw pull. Then load the module at boot (DKMS +
-modules-load.d), and offer upstream a kernel patch: a time-based
+Load the module at boot (DKMS + modules-load.d; needs randy's approval because it
+changes boot config), and offer upstream a kernel patch: a time-based
 `xhci_handshake` (as mainline later did), and skipping `check_bandwidth` for
 `NOTATTACHED` devices.
 
-## Workaround
+## Workaround (no longer needed while xusb_bwfix is loaded)
 
 ```sh
 sudo scripts/dock-eject.sh   # deauthorizes the dock's USB ports; then pull the cable

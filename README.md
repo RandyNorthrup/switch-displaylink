@@ -9,11 +9,11 @@ external display on a Nintendo Switch running **L4T (Linux for Tegra)**, kernel
 >   to the dock tear-free, autostarts at login, and reattaches after a replug.
 > - **The evdi hotplug panic is fixed:** the version is aligned to evdi 1.14.15,
 >   plus two 4.9 fixes in `drivers/evdi`.
-> - **The unplug lockup is fixed by [`drivers/xusb-bwfix`](drivers/xusb-bwfix)**
->   (loaded by hand for now). It was a Tegra xHCI bug, not DisplayLink: a
->   command-timeout handler spun ~18 s with IRQs off. Getting USB back after
->   the pull without a reboot isn't tested yet. Until it is, run
->   [`scripts/dock-eject.sh`](scripts/dock-eject.sh) before unplugging.
+> - **Unplugging the dock is fixed by [`drivers/xusb-bwfix`](drivers/xusb-bwfix)**
+>   (loaded by hand with insmod for now). A raw pull while mirroring no longer locks up,
+>   and the module re-binds the dead xHCI controller, so a replug enumerates
+>   and mirrors again without a reboot (tested 23:32). It was a Tegra xHCI bug,
+>   not DisplayLink: a command-timeout handler spun ~18 s with IRQs off.
 >   Details: [docs/unplug-crash.md](docs/unplug-crash.md).
 > - An extended desktop over PRIME is impossible (`NVIDIA-0 cap 0x0`), so
 >   multi-monitor is still to do.
