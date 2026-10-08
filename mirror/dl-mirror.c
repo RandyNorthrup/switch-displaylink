@@ -22,6 +22,8 @@
 #define _GNU_SOURCE
 #include <errno.h>
 #include <fcntl.h>
+#include <glob.h>
+#include <libgen.h>
 #include <signal.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -87,6 +89,38 @@ static int open_evdi_card(const char *want)
 	}
 	errno = ENODEV;
 	return -1;
+}
+
+/*
+ * Does any evdi card report a connected monitor? Reads sysfs only: opening
+ * the card makes evdi log Opened/Closed every time, which -w would spam.
+ */
+static int evdi_monitor_present(void)
+{
+	glob_t g;
+	int found = 0;
+	if (glob("/sys/class/drm/card[0-9]*-*/status", 0, NULL, &g))
+		return 0;
+	for (size_t i = 0; i < g.gl_pathc && !found; i++) {
+		char card[256], drv[256], link[512], st[32] = "";
+		/* /sys/class/drm/card0-DVI-I-1/status -> card0 */
+		if (sscanf(g.gl_pathv[i], "/sys/class/drm/%255[^-]", card) != 1)
+			continue;
+		snprintf(link, sizeof(link), "/sys/class/drm/%s/device/driver", card);
+		ssize_t n = readlink(link, drv, sizeof(drv) - 1);
+		if (n <= 0)
+			continue;
+		drv[n] = 0;
+		if (strcmp(basename(drv), "evdi"))
+			continue;
+		FILE *f = fopen(g.gl_pathv[i], "r");
+		if (f) {
+			found = fgets(st, sizeof(st), f) && !strncmp(st, "connected", 9);
+			fclose(f);
+		}
+	}
+	globfree(&g);
+	return found;
 }
 
 /* Prefer a mode matching the X screen exactly (no scaling), else preferred. */
@@ -426,7 +460,9 @@ int main(int argc, char **argv)
 
 again:
 	for (;;) {
-		if (!kms_setup(&k, dev, sw, sh, force_w, force_h, nbuf))
+		if (wait && !dev && !evdi_monitor_present())
+			errno = EAGAIN;
+		else if (!kms_setup(&k, dev, sw, sh, force_w, force_h, nbuf))
 			break;
 		int tempfail = errno == EAGAIN || errno == ENODEV;
 		kms_teardown(&k);
