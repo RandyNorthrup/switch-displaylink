@@ -74,10 +74,15 @@ if command -v sha256sum >/dev/null && [ -x /opt/displaylink/DisplayLinkManager ]
     || log "NOTE: DisplayLinkManager sha256=$got (differs from pinned build)"
 fi
 
-# --- corrected systemd unit (pins evdi version instead of ls -t) -----------
-install -m0644 "$REPO_DIR/configs/displaylink-driver.service" /etc/systemd/system/displaylink-driver.service
-sed -i "s|dkms install \$(ls -t /usr/src .*modprobe evdi)|modprobe evdi \|\| (dkms install -m evdi -v $EVDI_VERSION -k \$(uname -r) \&\& modprobe evdi)|" \
-  /etc/systemd/system/displaylink-driver.service || true
+# --- pin evdi version in the service via a drop-in (vendor unit used 'ls -t',
+#     which selected the mismatched 1.12.0) ---------------------------------
+DROPIN_DIR=/etc/systemd/system/displaylink-driver.service.d
+mkdir -p "$DROPIN_DIR"
+cat > "$DROPIN_DIR/override.conf" <<EOF
+[Service]
+ExecStartPre=
+ExecStartPre=/bin/sh -c 'modprobe evdi || (dkms install -m evdi -v $EVDI_VERSION -k \$(uname -r) && modprobe evdi)'
+EOF
 
 # --- reliable crash capture ------------------------------------------------
 install -m0755 "$REPO_DIR/scripts/dl-panic-capture.sh"      /usr/local/sbin/dl-panic-capture.sh

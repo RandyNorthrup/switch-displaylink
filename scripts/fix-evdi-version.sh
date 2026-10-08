@@ -33,10 +33,15 @@ for d in /usr/src/evdi-*; do
 done
 
 echo "[fix] pinning evdi version in the DisplayLink service (was 'ls -t', which chose 1.12.0)"
-UNIT=/etc/systemd/system/displaylink-driver.service
-[ -f "$UNIT" ] || UNIT=/usr/lib/systemd/system/displaylink-driver.service
-# Replace the mtime-based ExecStartPre with an explicit version.
-sed -i -E "s|^(ExecStartPre=).*modprobe evdi.*$|\1/bin/sh -c 'modprobe evdi || (dkms install -m evdi -v $EVDI_VERSION -k \$(uname -r) \&\& modprobe evdi)'|" "$UNIT"
+# Use a systemd drop-in rather than editing the vendor unit: reset the
+# mtime-based ExecStartPre (the empty assignment) and add a pinned one.
+DROPIN_DIR=/etc/systemd/system/displaylink-driver.service.d
+mkdir -p "$DROPIN_DIR"
+cat > "$DROPIN_DIR/override.conf" <<EOF
+[Service]
+ExecStartPre=
+ExecStartPre=/bin/sh -c 'modprobe evdi || (dkms install -m evdi -v $EVDI_VERSION -k \$(uname -r) && modprobe evdi)'
+EOF
 systemctl daemon-reload
 
 echo
