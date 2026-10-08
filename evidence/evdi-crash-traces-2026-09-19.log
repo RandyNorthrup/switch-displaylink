@@ -1,0 +1,165 @@
+2026-09-19T18:11:03.461214-07:00 randys-switch kernel: evdi: [D] evdi_crtc_init:403 drm_crtc_init: 0 pffffffc0aadecc00
+2026-09-19T18:11:03.461241-07:00 randys-switch kernel: evdi: [D] evdi_detect:95 (dev=0) poll connector state: disconnected
+2026-09-19T18:11:03.461246-07:00 randys-switch kernel: evdi evdi.0: No connectors reported connected with modes
+2026-09-19T18:11:03.461249-07:00 randys-switch kernel: [drm] Cannot find any crtc or sizes - going 1024x768
+2026-09-19T18:11:03.464217-07:00 randys-switch kernel: evdi evdi.0: fb2: evdidrmfb frame buffer device
+2026-09-19T18:11:03.468221-07:00 randys-switch kernel: [drm] Supports vblank timestamp caching Rev 2 (21.10.2013).
+2026-09-19T18:11:03.468238-07:00 randys-switch kernel: [drm] No driver support for vblank timestamp query.
+2026-09-19T18:11:03.468242-07:00 randys-switch kernel: [drm] Initialized evdi 1.6.1 20180913 on minor 0
+2026-09-19T18:11:03.474217-07:00 randys-switch kernel: evdi: [D] evdi_driver_postclose:143 (dev=0) Process tries to close us, postclose
+2026-09-19T18:11:03.474249-07:00 randys-switch kernel: evdi: [I] Task 1056 (Xorg) of process 1056 (Xorg)
+2026-09-19T18:11:03.480219-07:00 randys-switch kernel: evdi: [D] evdi_driver_postclose:143 (dev=0) Process tries to close us, postclose
+2026-09-19T18:11:03.480257-07:00 randys-switch kernel: evdi: [I] Task 1056 (Xorg) of process 1056 (Xorg)
+2026-09-19T18:11:04.527209-07:00 randys-switch kernel: evdi: [D] evdi_remove_all:232 removing all evdi devices
+2026-09-19T18:11:04.527230-07:00 randys-switch kernel: evdi: [D] evdi_remove_all:235 removing evdi 0
+2026-09-19T18:11:06.123216-07:00 randys-switch kernel: tegradc tegradc.0: blank - powerdown
+2026-09-19T18:11:06.123254-07:00 randys-switch kernel: tegradc tegradc.1: blank - powerdown
+2026-09-19T18:11:20.113304-07:00 randys-switch kernel: evdi: [D] evdi_driver_postclose:143 (dev=0) Process tries to close us, postclose
+2026-09-19T18:11:20.113343-07:00 randys-switch kernel: evdi: [I] Task 1056 (Xorg) of process 1056 (Xorg)
+2026-09-19T18:11:20.113348-07:00 randys-switch kernel: sysfs group 'power' not found for kobject 'fb2'
+2026-09-19T18:11:20.113353-07:00 randys-switch kernel: ------------[ cut here ]------------
+2026-09-19T18:11:20.113358-07:00 randys-switch kernel: WARNING: CPU: 0 PID: 1056 at fs/sysfs/group.c:237 sysfs_remove_group+0x90/0xa0
+2026-09-19T18:11:20.113362-07:00 randys-switch kernel: Modules linked in: evdi(O) hci_uart btbcm brcmfmac brcmutil nvgpu joycon_serdev [last unloaded: btbcm]
+2026-09-19T18:11:20.113366-07:00 randys-switch kernel: 
+2026-09-19T18:11:20.113369-07:00 randys-switch kernel: CPU: 0 PID: 1056 Comm: Xorg Tainted: G           O    4.9.140-l4t #149
+2026-09-19T18:11:20.113373-07:00 randys-switch kernel: Hardware name: Nintendo Switch Lite (DT)
+2026-09-19T18:11:20.113377-07:00 randys-switch kernel: task: ffffffc0e10b0000 task.stack: ffffffc0e10ac000
+2026-09-19T18:11:20.113380-07:00 randys-switch kernel: PC is at sysfs_remove_group+0x90/0xa0
+2026-09-19T18:11:20.113383-07:00 randys-switch kernel: LR is at sysfs_remove_group+0x90/0xa0
+2026-09-19T18:11:20.113388-07:00 randys-switch kernel: pc : [<ffffff80083fbe80>] lr : [<ffffff80083fbe80>] pstate: 40000045
+2026-09-19T18:11:20.113391-07:00 randys-switch kernel: sp : ffffffc0e10afa00
+2026-09-19T18:11:20.113394-07:00 randys-switch kernel: x29: ffffffc0e10afa00 x28: ffffffc0ed370cd0 
+2026-09-19T18:11:20.113398-07:00 randys-switch kernel: x27: 0000000000000040 x26: ffffff8009a73000 
+2026-09-19T18:11:20.113401-07:00 randys-switch kernel: x25: ffffffc053d5ea00 x24: ffffffc0f7dae9e0 
+2026-09-19T18:11:20.113404-07:00 randys-switch kernel: x23: ffffffc03f920410 x22: ffffffc0a7098400 
+2026-09-19T18:11:20.113408-07:00 randys-switch kernel: x21: ffffffc0aa71e810 x20: ffffff8009a74a00 
+2026-09-19T18:11:20.113412-07:00 randys-switch kernel: x19: 0000000000000000 x18: ffffffffffffffff 
+2026-09-19T18:11:20.113415-07:00 randys-switch kernel: x17: 0000000000000001 x16: ffffffbf037e0520 
+2026-09-19T18:11:20.113419-07:00 randys-switch kernel: x15: ffffff8089b5fa62 x14: ffffff8009b5fa70 
+2026-09-19T18:11:20.113422-07:00 randys-switch kernel: x13: 0000000000000000 x12: 0000000005f5e0ff 
+2026-09-19T18:11:20.113425-07:00 randys-switch kernel: x11: ffffffc0e10af6d0 x10: 0000000000000af9 
+2026-09-19T18:11:20.113428-07:00 randys-switch kernel: x9 : 0000000000084639 x8 : ffffff80086346c0 
+2026-09-19T18:11:20.113432-07:00 randys-switch kernel: x7 : ffffff80099b2d30 x6 : ffffff8008633b40 
+2026-09-19T18:11:20.113436-07:00 randys-switch kernel: x5 : ffffffc0ffdbdbe8 x4 : 0000000000000001 
+2026-09-19T18:11:20.113439-07:00 randys-switch kernel: x3 : 0000000000000007 x2 : 0000000000000006 
+2026-09-19T18:11:20.113442-07:00 randys-switch kernel: x1 : ffffffc0e10b0000 x0 : 000000000000002f 
+2026-09-19T18:11:20.113446-07:00 randys-switch kernel: 
+2026-09-19T18:11:20.113449-07:00 randys-switch kernel: ---[ end trace 733fc0c9f9be0e99 ]---
+2026-09-19T18:11:20.113452-07:00 randys-switch kernel: Call trace:
+2026-09-19T18:11:20.113456-07:00 randys-switch kernel: [<ffffff80083fbe80>] sysfs_remove_group+0x90/0xa0
+2026-09-19T18:11:20.113459-07:00 randys-switch kernel: [<ffffff80088f3128>] dpm_sysfs_remove+0x58/0x70
+2026-09-19T18:11:20.113463-07:00 randys-switch kernel: [<ffffff80088e54a0>] device_del+0x40/0x240
+2026-09-19T18:11:20.113466-07:00 randys-switch kernel: [<ffffff80088e5760>] device_destroy+0x40/0x60
+2026-09-19T18:11:20.113469-07:00 randys-switch kernel: [<ffffff8008749e20>] __unlink_framebuffer+0x50/0x90
+2026-09-19T18:11:20.113473-07:00 randys-switch kernel: [<ffffff8008749f24>] unlink_framebuffer+0x14/0x40
+2026-09-19T18:11:20.113476-07:00 randys-switch kernel: [<ffffff8001147410>] evdi_fbdev_unplug+0x20/0x30 [evdi]
+2026-09-19T18:11:20.113479-07:00 randys-switch kernel: [<ffffff8001146650>] evdi_driver_unload+0x3c/0xac [evdi]
+2026-09-19T18:11:20.113483-07:00 randys-switch kernel: [<ffffff80088c68f8>] drm_dev_unregister+0x38/0xd0
+2026-09-19T18:11:20.113486-07:00 randys-switch kernel: [<ffffff80088c6ee4>] drm_put_dev+0x34/0x70
+2026-09-19T18:11:20.113489-07:00 randys-switch kernel: [<ffffff80088c19e8>] drm_release+0x2f8/0x320
+2026-09-19T18:11:20.113493-07:00 randys-switch kernel: [<ffffff8008377a58>] __fput+0x88/0x1d0
+2026-09-19T18:11:20.113496-07:00 randys-switch kernel: [<ffffff8008377bfc>] ____fput+0xc/0x20
+2026-09-19T18:11:20.113500-07:00 randys-switch kernel: [<ffffff8008246d68>] task_work_run+0xb8/0xe0
+2026-09-19T18:11:20.113503-07:00 randys-switch kernel: [<ffffff800822d1f4>] do_exit+0x2c4/0x980
+2026-09-19T18:11:20.113507-07:00 randys-switch kernel: [<ffffff800822d918>] do_group_exit+0x38/0xa0
+2026-09-19T18:11:20.113510-07:00 randys-switch kernel: [<ffffff800823834c>] get_signal+0xfc/0x4d0
+2026-09-19T18:11:20.113513-07:00 randys-switch kernel: [<ffffff80082083c8>] do_signal+0x68/0x3e0
+2026-09-19T18:11:20.113516-07:00 randys-switch kernel: [<ffffff80082088a4>] do_notify_resume+0x84/0xa0
+2026-09-19T21:32:54.683151-07:00 randys-switch kernel: Unable to handle kernel read from unreadable memory at virtual address ffffffc0f8a418c8
+2026-09-19T21:32:54.683157-07:00 randys-switch kernel: Mem abort info:
+2026-09-19T21:32:54.683160-07:00 randys-switch kernel:   ESR = 0x8600000d
+2026-09-19T21:32:54.683163-07:00 randys-switch kernel:   Exception class = IABT (current EL), IL = 32 bits
+2026-09-19T21:32:54.683166-07:00 randys-switch kernel:   SET = 0, FnV = 0
+2026-09-19T21:32:54.683169-07:00 randys-switch kernel:   EA = 0, S1PTW = 0
+2026-09-19T21:32:54.683171-07:00 randys-switch kernel: swapper pgtable: 4k pages, 39-bit VAs, pgd = ffffff8009c73000
+2026-09-19T21:32:54.683174-07:00 randys-switch kernel: [ffffffc0f8a418c8] *pgd=00e8000140000711, *pud=00e8000140000711
+2026-09-19T21:32:54.683176-07:00 randys-switch kernel: Internal error: Oops: 8600000d [#1] PREEMPT SMP
+2026-09-19T21:32:54.683180-07:00 randys-switch kernel: Modules linked in: evdi(O) brcmfmac nvgpu brcmutil hci_uart joycon_serdev btbcm [last unloaded: evdi]
+2026-09-19T21:32:54.683183-07:00 randys-switch kernel: CPU: 0 PID: 69941 Comm: dlmirror Tainted: G           O    4.9.140-l4t #149
+2026-09-19T21:32:54.683185-07:00 randys-switch kernel: Hardware name: Nintendo Switch Lite (DT)
+2026-09-19T21:32:54.683188-07:00 randys-switch kernel: task: ffffffc0b6accf80 task.stack: ffffffc0e7438000
+2026-09-19T21:32:54.683190-07:00 randys-switch kernel: PC is at 0xffffffc0f8a418c8
+2026-09-19T21:32:54.683193-07:00 randys-switch kernel: LR is at drm_atomic_state_clear+0x1c/0x30
+2026-09-19T21:32:54.683195-07:00 randys-switch kernel: pc : [<ffffffc0f8a418c8>] lr : [<ffffff80088d726c>] pstate: 00000045
+2026-09-19T21:32:54.683198-07:00 randys-switch kernel: sp : ffffffc0e743bbe0
+2026-09-19T21:32:54.683200-07:00 randys-switch kernel: x29: ffffffc0e743bbe0 x28: 0000000000000071 
+2026-09-19T21:32:54.683203-07:00 randys-switch kernel: x27: ffffffc0da787380 x26: 0000000000000000 
+2026-09-19T21:32:54.683206-07:00 randys-switch kernel: x25: ffffffc0fa3d4600 x24: ffffffc0bad32a00 
+2026-09-19T21:32:54.683208-07:00 randys-switch kernel: x23: ffffffc0aed98300 x22: ffffffc0da787388 
+2026-09-19T21:32:54.683211-07:00 randys-switch kernel: x21: ffffffc0fa3d4600 x20: ffffffc0d38bb080 
+2026-09-19T21:32:54.683213-07:00 randys-switch kernel: x19: ffffffc0d38bbe00 x18: 0000000000000007 
+2026-09-19T21:32:54.683216-07:00 randys-switch kernel: x17: ffffff8008fa9778 x16: 0000000000000078 
+2026-09-19T21:32:54.683218-07:00 randys-switch kernel: x15: 0000000000000005 x14: 0000000000000001 
+2026-09-19T21:32:54.683221-07:00 randys-switch kernel: x13: ffffff8008fa9750 x12: 0000000000000001 
+2026-09-19T21:32:54.683223-07:00 randys-switch kernel: x11: ffffff8008fa9758 x10: 0000000000000980 
+2026-09-19T21:32:54.683225-07:00 randys-switch kernel: x9 : ffffffc0e743b970 x8 : ffffffc0b6acd960 
+2026-09-19T21:32:54.683227-07:00 randys-switch kernel: x7 : ffffffc0ffdefc40 x6 : 0500000000000044 
+2026-09-19T21:32:54.683230-07:00 randys-switch kernel: x5 : 00000040f67bb000 x4 : 0000000000000001 
+2026-09-19T21:32:54.683232-07:00 randys-switch kernel: x3 : ffffffc0d38bbe00 x2 : 0000000000000000 
+2026-09-19T21:32:54.683237-07:00 randys-switch kernel: x1 : ffffffc0f8a418c8 x0 : ffffffc0d38bbe00 
+2026-09-19T21:32:54.683240-07:00 randys-switch kernel: 
+2026-09-19T21:32:54.683243-07:00 randys-switch kernel: Process dlmirror (pid: 69941, stack limit = 0xffffffc0e7438000)
+2026-09-19T21:32:54.683246-07:00 randys-switch kernel: Call trace:
+2026-09-19T21:32:54.683248-07:00 randys-switch kernel: [<ffffffc0f8a418c8>] 0xffffffc0f8a418c8
+2026-09-19T21:32:54.683251-07:00 randys-switch kernel: [<ffffff80088d80ac>] drm_atomic_state_free+0x1c/0x70
+2026-09-19T21:32:54.683253-07:00 randys-switch kernel: [<ffffff80011476e0>] evdi_user_framebuffer_dirty+0x120/0x180 [evdi]
+2026-09-19T21:32:54.683256-07:00 randys-switch kernel: [<ffffff80088dae90>] drm_mode_dirtyfb_ioctl+0xf0/0x200
+2026-09-19T21:32:54.683259-07:00 randys-switch kernel: [<ffffff80088c31bc>] drm_ioctl+0x1bc/0x450
+2026-09-19T21:32:54.683262-07:00 randys-switch kernel: [<ffffff8008389ce4>] do_vfs_ioctl+0xa4/0x860
+2026-09-19T21:32:54.683264-07:00 randys-switch kernel: [<ffffff800838a518>] SyS_ioctl+0x78/0xa0
+2026-09-19T21:32:54.683266-07:00 randys-switch kernel: [<ffffff8008202980>] el0_svc_naked+0x34/0x38
+2026-09-19T21:32:54.683269-07:00 randys-switch kernel: ---[ end trace 4a828ece66dc5233 ]---
+2026-09-19T21:32:54.687890-07:00 randys-switch kernel: evdi: [W] evdi_painter_connect:892 (card0) Double connect - replacing ffffffc0f5e50800 with ffffffc0f5e50800
+2026-09-19T21:32:54.687917-07:00 randys-switch kernel: evdi: [I] (card0) Connected with Task 69615 (DesktopManagerE) of process 69603 (DisplayLinkMana)
+2026-09-19T21:32:56.604005-07:00 randys-switch kernel: cdc_ncm 1-1.1:1.5 enx8cae4cc56586: unregister 'cdc_ncm' usb-70090000.xusb-1.1, CDC NCM
+2026-09-19T21:32:59.669898-07:00 randys-switch kernel: usb 1-1.1: Warning! Unlikely big volume range (=511), cval->res is probably wrong.
+2026-09-19T21:32:59.669925-07:00 randys-switch kernel: usb 1-1.1: [15] FU [Plugable Audio Playback Volume] ch = 6, val = -8176/0/16
+2026-09-19T21:32:59.672901-07:00 randys-switch kernel: usb 1-1.1: Warning! Unlikely big volume range (=767), cval->res is probably wrong.
+2026-09-19T21:32:59.672929-07:00 randys-switch kernel: usb 1-1.1: [12] FU [Mic Capture Volume] ch = 2, val = -4592/7680/16
+2026-09-19T21:51:41.572541-07:00 randys-switch kernel: Internal error: Oops - SP/PC alignment exception: 8a000000 [#1] PREEMPT SMP
+2026-09-19T21:51:41.572544-07:00 randys-switch kernel: Modules linked in: evdi(O) brcmfmac nvgpu brcmutil joycon_serdev hci_uart btbcm
+2026-09-19T21:51:41.572548-07:00 randys-switch kernel: CPU: 3 PID: 4079 Comm: dlmirror Tainted: G           O    4.9.140-l4t #149
+2026-09-19T21:51:41.572551-07:00 randys-switch kernel: Hardware name: Nintendo Switch Lite (DT)
+2026-09-19T21:51:41.572553-07:00 randys-switch kernel: task: ffffffc0b8a0b500 task.stack: ffffffc077fd0000
+2026-09-19T21:51:41.572556-07:00 randys-switch kernel: PC is at 0xffffffffffffffff
+2026-09-19T21:51:41.572558-07:00 randys-switch kernel: LR is at drm_atomic_state_clear+0x1c/0x30
+2026-09-19T21:51:41.572560-07:00 randys-switch kernel: pc : [<ffffffffffffffff>] lr : [<ffffff80088d726c>] pstate: 00000045
+2026-09-19T21:51:41.572562-07:00 randys-switch kernel: sp : ffffffc077fd3be0
+2026-09-19T21:51:41.572564-07:00 randys-switch kernel: x29: ffffffc077fd3be0 x28: 0000000000000071 
+2026-09-19T21:51:41.572567-07:00 randys-switch kernel: x27: ffffffc0f9146980 x26: 0000000000000000 
+2026-09-19T21:51:41.572569-07:00 randys-switch kernel: x25: ffffffc0f8a42f00 x24: ffffffc0bf590200 
+2026-09-19T21:51:41.572570-07:00 randys-switch kernel: x23: ffffffc0f7bb3780 x22: ffffffc0f9146988 
+2026-09-19T21:51:41.572572-07:00 randys-switch kernel: x21: ffffffc0f8a42f00 x20: ffffffc0d6ae8580 
+2026-09-19T21:51:41.572574-07:00 randys-switch kernel: x19: ffffffc0d6ae8b80 x18: 0000000000000001 
+2026-09-19T21:51:41.572576-07:00 randys-switch kernel: x17: 0000000000000000 x16: ffffff800838c8f0 
+2026-09-19T21:51:41.572578-07:00 randys-switch kernel: x15: 0000000000000003 x14: 0000000000000000 
+2026-09-19T21:51:41.572580-07:00 randys-switch kernel: x13: ffffff8008fa9750 x12: 0000000000001b45 
+2026-09-19T21:51:41.572582-07:00 randys-switch kernel: x11: ffffff8008fa9758 x10: 0000000000000980 
+2026-09-19T21:51:41.572584-07:00 randys-switch kernel: x9 : ffffffc077fd3970 x8 : ffffffc0b8a0bee0 
+2026-09-19T21:51:41.572585-07:00 randys-switch kernel: x7 : ffffffc0ffe07c40 x6 : 0000008000000000 
+2026-09-19T21:51:41.572588-07:00 randys-switch kernel: x5 : 00000040f6803000 x4 : 0000000000000000 
+2026-09-19T21:51:41.572589-07:00 randys-switch kernel: x3 : ffffffc0b8a0b500 x2 : 0000000000383b83 
+2026-09-19T21:51:41.572592-07:00 randys-switch kernel: x1 : ffffffffffffffff x0 : ffffffc0d6ae8b80 
+2026-09-19T21:51:41.572594-07:00 randys-switch kernel: 
+2026-09-19T21:51:41.572596-07:00 randys-switch kernel: Process dlmirror (pid: 4079, stack limit = 0xffffffc077fd0000)
+2026-09-19T21:51:41.572597-07:00 randys-switch kernel: Call trace:
+2026-09-19T21:51:41.572599-07:00 randys-switch kernel: [<ffffffffffffffff>] 0xffffffffffffffff
+2026-09-19T21:51:41.572601-07:00 randys-switch kernel: [<ffffff80088d80ac>] drm_atomic_state_free+0x1c/0x70
+2026-09-19T21:51:41.572603-07:00 randys-switch kernel: [<ffffff800114e6e0>] evdi_user_framebuffer_dirty+0x120/0x180 [evdi]
+2026-09-19T21:51:41.572605-07:00 randys-switch kernel: [<ffffff80088dae90>] drm_mode_dirtyfb_ioctl+0xf0/0x200
+2026-09-19T21:51:41.572607-07:00 randys-switch kernel: [<ffffff80088c31bc>] drm_ioctl+0x1bc/0x450
+2026-09-19T21:51:41.572609-07:00 randys-switch kernel: [<ffffff8008389ce4>] do_vfs_ioctl+0xa4/0x860
+2026-09-19T21:51:41.572611-07:00 randys-switch kernel: [<ffffff800838a518>] SyS_ioctl+0x78/0xa0
+2026-09-19T21:51:41.572613-07:00 randys-switch kernel: [<ffffff8008202980>] el0_svc_naked+0x34/0x38
+2026-09-19T21:51:41.572614-07:00 randys-switch kernel: ---[ end trace 4c2d081305349556 ]---
+2026-09-19T21:51:41.667938-07:00 randys-switch kernel: evdi: [W] evdi_painter_connect:892 (card0) Double connect - replacing ffffffc0f5ee0200 with ffffffc0f5ee0200
+2026-09-19T21:51:41.667976-07:00 randys-switch kernel: evdi: [I] (card0) Connected with Task 1111 (DesktopManagerE) of process 1101 (DisplayLinkMana)
+2026-09-19T21:54:01.646922-07:00 randys-switch kernel: bq2419x 0-006b: Battery temp 40
+2026-09-19T21:59:12.141459-07:00 randys-switch kernel: Booting Linux on physical CPU 0x0
+2026-09-19T21:59:12.141814-07:00 randys-switch kernel: Linux version 4.9.140-l4t (theofficialgman@buildbot) (gcc version 7.5.0 (Linaro GCC 7.5-2019.12) ) #149 SMP PREEMPT Sat Aug 15 22:11:25 EDT 2026
+2026-09-19T21:59:12.141819-07:00 randys-switch kernel: Boot CPU: AArch64 Processor [411fd071]
+2026-09-19T21:59:12.141821-07:00 randys-switch kernel: OF: fdt:memory scan node memory@80000000, reg size 48,
+2026-09-19T21:59:12.141823-07:00 randys-switch kernel: OF: fdt: - 80000000 ,  7fd00000
+2026-09-19T21:59:12.141824-07:00 randys-switch kernel: OF: fdt: - 100000000 ,  80000000
+2026-09-19T21:59:12.141826-07:00 randys-switch kernel: Found tegra_fbmem: 00400000@f5a00000
+2026-09-19T21:59:12.141830-07:00 randys-switch kernel: OF: fdt:Reserved memory: failed to reserve memory for node 'fb0_carveout': base 0x0000000000000000, size 0 MiB

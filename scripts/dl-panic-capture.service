@@ -1,0 +1,15 @@
+[Unit]
+Description=Archive kernel crash (pstore) records left by a DisplayLink/evdi panic
+DefaultDependencies=no
+After=systemd-pstore.service
+# Run before systemd-pstore clears /sys/fs/pstore. If ordering proves racy,
+# disable systemd-pstore.service and rely on this unit alone.
+Before=sysinit.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/dl-panic-capture.sh
+RemainAfterExit=no
+
+[Install]
+WantedBy=sysinit.target
