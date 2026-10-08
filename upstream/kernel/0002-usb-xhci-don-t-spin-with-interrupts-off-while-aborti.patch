@@ -1,4 +1,4 @@
-From 58f74ab6230b6bac5659aa40488800d46094ee28 Mon Sep 17 00:00:00 2001
+From 4250c7f63531fdeb0e8b86dd906e65c819817b00 Mon Sep 17 00:00:00 2001
 From: Randy Northrup <randy.northrup@gmail.com>
 Date: Wed, 7 Oct 2026 23:53:53 -0700
 Subject: [PATCH 2/4] usb: xhci: don't spin with interrupts off while aborting
@@ -24,6 +24,7 @@ dock pull the timed-out Disable Slot is aborted, the controller is
 declared dead, and nothing stalls.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Signed-off-by: Randy Northrup <randy.northrup@gmail.com>
 ---
  drivers/usb/host/xhci-ring.c | 35 +++++++++++++++++++++++++++++++----
  1 file changed, 31 insertions(+), 4 deletions(-)

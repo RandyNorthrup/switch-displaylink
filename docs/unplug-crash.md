@@ -166,7 +166,8 @@ The in-kernel version of the fix is written as four patches against
 theofficialgman/switch-l4t-kernel-4.9 in [upstream/](../upstream/README.md): skip
 `check_bandwidth` for `NOTATTACHED` devices, a sleeping time-based command ring
 abort, a working `hcd_reinit`, and `hcd_reinit` turned on by default. They compile
-but haven't been boot-tested in a built kernel, and they haven't been submitted.
+but haven't been boot-tested in a built kernel. Submitted as
+[theofficialgman/switch-l4t-kernel-4.9#1](https://github.com/theofficialgman/switch-l4t-kernel-4.9/pull/1).
 
 ## Workaround (no longer needed while xusb_bwfix is loaded)
 

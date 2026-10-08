@@ -31,7 +31,7 @@ cd switch-l4t-kernel-4.9
 git am /path/to/switch-displaylink/upstream/kernel/*.patch
 ```
 
-**Before submitting:** the commits have no `Signed-off-by` line. If the repo
-wants a DCO sign-off, the submitter adds their own after reading
-https://developercertificate.org (for example `git rebase --signoff 807d12f6`).
-The commit messages credit AI assistance (`Co-Authored-By: Claude`).
+**Submitted:** 2026-10-08 as
+[theofficialgman/switch-l4t-kernel-4.9#1](https://github.com/theofficialgman/switch-l4t-kernel-4.9/pull/1)
+from branch `xhci-unplug-lockup` of RandyNorthrup/switch-l4t-kernel-4.9. Each commit
+carries Randy's DCO `Signed-off-by` and credits AI assistance (`Co-Authored-By: Claude`).

@@ -1,4 +1,4 @@
-From 1513a01bc373f7bd1f7d42bc70d7db00eb422d18 Mon Sep 17 00:00:00 2001
+From c16327344b5920365b82d6d3fe247f439c2d3e7e Mon Sep 17 00:00:00 2001
 From: Randy Northrup <randy.northrup@gmail.com>
 Date: Wed, 7 Oct 2026 23:55:08 -0700
 Subject: [PATCH 4/4] usb: xhci-tegra: enable hcd_reinit by default
@@ -9,6 +9,7 @@ leaves every USB port dead until reboot. It can still be turned off with
 xhci_tegra.en_hcd_reinit=0.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Signed-off-by: Randy Northrup <randy.northrup@gmail.com>
 ---
  drivers/usb/host/xhci-tegra.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

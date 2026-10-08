@@ -1,4 +1,4 @@
-From e249c3fe7a82667aea4ae56a3f49b461ad89c3b0 Mon Sep 17 00:00:00 2001
+From 9cdaab03b845628c74343841d3b5067c91fb4d65 Mon Sep 17 00:00:00 2001
 From: Randy Northrup <randy.northrup@gmail.com>
 Date: Wed, 7 Oct 2026 23:55:08 -0700
 Subject: [PATCH 3/4] usb: xhci-tegra: re-probe through the driver core in
@@ -23,6 +23,7 @@ after "HC died", brings the controller back, and a replugged DisplayLink
 dock enumerates and works again.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Signed-off-by: Randy Northrup <randy.northrup@gmail.com>
 ---
  drivers/usb/host/xhci-tegra.c | 14 ++++++++++++--
  1 file changed, 12 insertions(+), 2 deletions(-)
