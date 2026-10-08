@@ -20,7 +20,7 @@ external display on a Nintendo Switch running **L4T (Linux for Tegra)**, kernel
 
 | Thing | Value |
 |---|---|
-| Device | Nintendo Switch, hostname `randys-switch` |
+| Device | Nintendo **Switch Lite** (`nintendo,hoag`), hostname `randys-switch` — no video out, USB-C is USB 2 only |
 | SoC | Tegra X1 (aarch64) |
 | Kernel | `4.9.140-l4t` (theofficialgman L4T build #149) |
 | GPU X driver | NVIDIA Tegra DDX (`nvidia_drv.so`), internal panel = `DSI-0` @ 1280x720 |
@@ -96,6 +96,7 @@ scripts/             install.sh            — full fetch+build+install
                       dock-eject.sh         — run before unplugging (see below)
                       mirror-test.sh        — timed dl-mirror run with dmesg capture
                       unplug-watch.sh       — fsync'd dmesg capture for unplug tests
+                      capture-staleness.c   — how stale X root grabs are (compositing test)
                       dl-panic-capture.*    — reliable crash capture
 docs/                mirror.md             — how dl-mirror works, tuning notes
                       unplug-crash.md       — the open xHCI unplug crash

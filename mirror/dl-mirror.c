@@ -45,6 +45,8 @@
 #include <xf86drm.h>
 #include <xf86drmMode.h>
 
+#include <spawn.h>
+#include <sys/wait.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/extensions/XShm.h>
@@ -71,6 +73,7 @@ struct kms {
 	uint32_t pitch; /* in pixels */
 	size_t size;
 	double t_flip; /* when the pending flip was queued */
+	double max_flip; /* longest flip -> flip-done this stats period */
 };
 
 /* DL_MIRROR_TRACE=1: log every push and how long the flip took to land. */
@@ -265,6 +268,8 @@ static void on_flip(int fd, unsigned seq, unsigned sec, unsigned usec, void *dat
 	struct kms *k = data;
 	if (trace)
 		fprintf(stderr, "dl-mirror: trace flip done %.1f ms (t=%.3f)\n", (now() - k->t_flip) * 1e3, now());
+	if (now() - k->t_flip > k->max_flip)
+		k->max_flip = now() - k->t_flip;
 	k->flip_pending = 0;
 	k->front = !k->front;
 }
@@ -379,6 +384,30 @@ static void draw_cursor(uint32_t *img, int stride, int w, int h, XFixesCursorIma
 	}
 }
 
+/*
+ * Suspend KWin compositing while mirroring. With the GL compositor running,
+ * a root-window grab lags the real screen by 40 ms on average and up to
+ * ~230 ms, and it only catches up on KWin's next repaint: short-lived changes
+ * were skipped and a dialog that appeared and then sat still never reached the
+ * dock until the mouse moved. Without compositing the grab is current (<2 ms).
+ * dl-mirror.service also resumes compositing on stop, in case we die.
+ */
+static int keep_compositor;
+extern char **environ;
+
+static void kwin_compositing(int on)
+{
+	if (keep_compositor)
+		return;
+	char *argv[] = { "dbus-send", "--session", "--type=method_call",
+			 "--dest=org.kde.KWin", "/Compositor",
+			 on ? "org.kde.kwin.Compositing.resume"
+			    : "org.kde.kwin.Compositing.suspend", NULL };
+	pid_t pid;
+	if (posix_spawnp(&pid, "dbus-send", NULL, NULL, argv, environ) == 0)
+		waitpid(pid, NULL, 0);
+}
+
 static double now(void)
 {
 	struct timespec ts;
@@ -389,22 +418,23 @@ static double now(void)
 static void usage(void)
 {
 	fprintf(stderr,
-		"usage: dl-mirror [-w] [-d /dev/dri/cardN] [-f fps] [-m WxH] [-C] [-1]\n"
+		"usage: dl-mirror [-w] [-d /dev/dri/cardN] [-f fps] [-m WxH] [-C] [-K] [-1]\n"
 		"  -w  wait for the dock monitor (and again after it goes away) instead of exiting\n"
 		"  -d  DRM device (default: auto-detect the evdi card)\n"
-		"  -f  max frames per second (default 30)\n"
+		"  -f  max frames per second (default 60)\n"
 		"  -m  force output mode WxH (default: match X screen, else monitor preferred)\n"
 		"  -C  don't draw the mouse cursor\n"
+		"  -K  keep KWin compositing on (grabs then lag the screen)\n"
 		"  -1  single buffer + dirtyfb (may tear) instead of page flipping\n");
 }
 
 int main(int argc, char **argv)
 {
 	const char *dev = NULL;
-	int fps = 30, force_w = 0, force_h = 0, want_cursor = 1, nbuf = NBUF, wait = 0, opt;
+	int fps = 60, force_w = 0, force_h = 0, want_cursor = 1, nbuf = NBUF, wait = 0, opt;
 	trace = getenv("DL_MIRROR_TRACE") ? atoi(getenv("DL_MIRROR_TRACE")) : 0;
 
-	while ((opt = getopt(argc, argv, "wd:f:m:C1h")) != -1) {
+	while ((opt = getopt(argc, argv, "wd:f:m:CK1h")) != -1) {
 		switch (opt) {
 		case 'w': wait = 1; break;
 		case 'd': dev = optarg; break;
@@ -413,6 +443,7 @@ int main(int argc, char **argv)
 			if (sscanf(optarg, "%dx%d", &force_w, &force_h) != 2) { usage(); return 2; }
 			break;
 		case 'C': want_cursor = 0; break;
+		case 'K': keep_compositor = 1; break;
 		case '1': nbuf = 1; break;
 		default: usage(); return opt == 'h' ? 0 : 2;
 		}
@@ -497,19 +528,29 @@ again:
 	log("X screen %dx%d -> %dx%d at +%d+%d%s, %d fps max", sw, sh, s.dw, s.dh,
 	    s.dx, s.dy, s.identity ? " (1:1)" : " (scaled)", fps);
 
+	kwin_compositing(0);
 	int force_full = 1;
 	const double period = 1.0 / fps;
 	unsigned long frames = 0, pushed = 0, skipped = 0;
 	int ly0 = 0, ly1 = sh; /* source rows changed by the previous push */
 	double t_next = now(), t_stat = t_next, t_full = t_next, t_flip = 0;
 	double t_start = t_next, t_full_push = t_next;
+	double max_grab = 0, max_gap = 0, t_iter = 0; /* stall stats */
+	double t_change = t_next; /* last time the screen changed */
 
 	while (!quit) {
+		double t_it = now();
+		if (t_iter && t_it - t_iter > max_gap)
+			max_gap = t_it - t_iter;
+		t_iter = t_it;
+		double t_grab = now();
 		if (!XShmGetImage(dpy, root, img, 0, 0, AllPlanes)) {
 			log("XShmGetImage failed");
 			ret = 1;
 			break;
 		}
+		if (now() - t_grab > max_grab)
+			max_grab = now() - t_grab;
 		memcpy(frame, src, (size_t)stride * sh * 4);
 		if (want_cursor) {
 			XFixesCursorImage *ci = XFixesGetCursorImage(dpy);
@@ -523,11 +564,13 @@ again:
 		 * DisplayLinkManager reconnects right after our modeset and drops
 		 * what it had, so a one-off full push isn't enough: resend the whole
 		 * frame every second for the first few seconds. After that only every
-		 * 30 s as a safety net: a full frame costs DLM a whole-screen encode,
-		 * and keystrokes queued behind it showed up late on the dock.
+		 * 30 s as a safety net, and only once the screen has been still for
+		 * 2 s: a full frame costs DLM a 100-200 ms whole-screen encode, which
+		 * showed up as a split-second freeze when anything was moving.
 		 */
 		if (now() - t_full >= 1.0) {
-			if (now() - t_start < 5.0 || now() - t_full_push >= 30.0) {
+			if (now() - t_start < 5.0 ||
+			    (now() - t_full_push >= 30.0 && now() - t_change >= 2.0)) {
 				force_full = 1;
 				t_full_push = now();
 			}
@@ -577,6 +620,8 @@ again:
 			}
 		}
 
+		if (y1 > y0 && !force_full)
+			t_change = now();
 		if (y1 > y0) {
 			int retry = 0;
 			static double t_push;
@@ -665,9 +710,12 @@ again:
 
 		double t = now();
 		if (t - t_stat >= 60) {
-			log("%.1f fps grabbed, %.1f fps pushed, %lu skipped (flip pending)",
-			    frames / (t - t_stat), pushed / (t - t_stat), skipped);
+			log("%.1f fps grabbed, %.1f fps pushed, %lu skipped (flip pending); "
+			    "max grab %.0f ms, max flip %.0f ms, max loop gap %.0f ms",
+			    frames / (t - t_stat), pushed / (t - t_stat), skipped,
+			    max_grab * 1e3, k.max_flip * 1e3, max_gap * 1e3);
 			frames = pushed = skipped = 0;
+			max_grab = max_gap = k.max_flip = 0;
 			t_stat = t;
 		}
 		t_next += period;
@@ -680,6 +728,7 @@ again:
 	}
 
 	kms_teardown(&k);
+	kwin_compositing(1);
 	if (wait && ret == 75 && !quit) {
 		ret = 0;
 		goto again;

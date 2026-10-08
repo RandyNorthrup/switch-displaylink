@@ -9,6 +9,8 @@ After=graphical-session.target
 
 [Service]
 ExecStart=/usr/local/bin/dl-mirror -w
+# dl-mirror suspends KWin compositing while mirroring; make sure it comes back.
+ExecStopPost=-/usr/bin/dbus-send --session --type=method_call --dest=org.kde.KWin /Compositor org.kde.kwin.Compositing.resume
 Restart=on-failure
 RestartSec=5
 
