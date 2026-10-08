@@ -12,7 +12,13 @@
  * buffer, so the buffer we draw into is never being read (no tearing). With
  * -1 it falls back to one buffer updated in place + drmModeDirtyFB.
  *
- * Only changed rows are copied, so a static desktop costs almost nothing.
+ * Only changed rows are copied, and before each flip the back buffer is
+ * dirtied with just those rows, so evdi hands DisplayLinkManager a small rect
+ * instead of marking the whole screen dirty (a full-screen encode per keystroke
+ * made typing lag on the dock). A static desktop costs almost nothing.
+ *
+ * DL_MIRROR_TRACE=1 logs every push and flip; =2 also blocks on each flip to
+ * time the flip event (diagnostic only).
  *
  * With -w it waits for the dock monitor instead of exiting, and goes back to
  * waiting when the dock goes away (used by dl-mirror.service).
@@ -64,7 +70,12 @@ struct kms {
 	drmModeCrtc *saved_crtc;
 	uint32_t pitch; /* in pixels */
 	size_t size;
+	double t_flip; /* when the pending flip was queued */
 };
+
+/* DL_MIRROR_TRACE=1: log every push and how long the flip took to land. */
+static int trace;
+static double now(void);
 
 /* Find the card whose kernel driver is evdi. */
 static int open_evdi_card(const char *want)
@@ -252,6 +263,8 @@ static void on_flip(int fd, unsigned seq, unsigned sec, unsigned usec, void *dat
 {
 	(void)fd; (void)seq; (void)sec; (void)usec;
 	struct kms *k = data;
+	if (trace)
+		fprintf(stderr, "dl-mirror: trace flip done %.1f ms (t=%.3f)\n", (now() - k->t_flip) * 1e3, now());
 	k->flip_pending = 0;
 	k->front = !k->front;
 }
@@ -389,6 +402,7 @@ int main(int argc, char **argv)
 {
 	const char *dev = NULL;
 	int fps = 30, force_w = 0, force_h = 0, want_cursor = 1, nbuf = NBUF, wait = 0, opt;
+	trace = getenv("DL_MIRROR_TRACE") ? atoi(getenv("DL_MIRROR_TRACE")) : 0;
 
 	while ((opt = getopt(argc, argv, "wd:f:m:C1h")) != -1) {
 		switch (opt) {
@@ -488,6 +502,7 @@ again:
 	unsigned long frames = 0, pushed = 0, skipped = 0;
 	int ly0 = 0, ly1 = sh; /* source rows changed by the previous push */
 	double t_next = now(), t_stat = t_next, t_full = t_next, t_flip = 0;
+	double t_start = t_next, t_full_push = t_next;
 
 	while (!quit) {
 		if (!XShmGetImage(dpy, root, img, 0, 0, AllPlanes)) {
@@ -507,10 +522,15 @@ again:
 		/*
 		 * DisplayLinkManager reconnects right after our modeset and drops
 		 * what it had, so a one-off full push isn't enough: resend the whole
-		 * frame every second, not just changed rows.
+		 * frame every second for the first few seconds. After that only every
+		 * 30 s as a safety net: a full frame costs DLM a whole-screen encode,
+		 * and keystrokes queued behind it showed up late on the dock.
 		 */
 		if (now() - t_full >= 1.0) {
-			force_full = 1;
+			if (now() - t_start < 5.0 || now() - t_full_push >= 30.0) {
+				force_full = 1;
+				t_full_push = now();
+			}
 			t_full = now();
 
 			/* Dock gone or DisplayLinkManager disconnected: flips still
@@ -559,6 +579,13 @@ again:
 
 		if (y1 > y0) {
 			int retry = 0;
+			static double t_push;
+			if (trace) {
+				double t = now();
+				log("trace push rows %d-%d%s after %.0f ms idle", y0, y1,
+				    force_full ? " (full)" : "", t_push ? (t - t_push) * 1e3 : 0);
+				t_push = t;
+			}
 			memcpy(&prev[y0 * stride], &frame[y0 * stride], (size_t)(y1 - y0) * stride * 4);
 
 			/*
@@ -590,24 +617,42 @@ again:
 				}
 			}
 
+			drmModeClip clip = {
+				.x1 = force_full ? 0 : s.dx,
+				.y1 = force_full ? 0 : s.dy + d0,
+				.x2 = force_full ? k.mode.hdisplay : s.dx + s.dw,
+				.y2 = force_full ? k.mode.vdisplay : s.dy + d1,
+			};
 			if (k.nbuf > 1) {
-				/* evdi marks the whole screen dirty on a flip. */
-				if (drmModePageFlip(k.fd, k.crtc_id, k.fb_id[back],
-						    DRM_MODE_PAGE_FLIP_EVENT, &k)) {
+				/*
+				 * evdi marks the whole screen dirty on a flip unless
+				 * rects are already pending, and DisplayLinkManager
+				 * then re-encodes all of it (100-300 ms per keystroke).
+				 * Dirtying the off-screen back buffer first only queues
+				 * the rects, so the flip carries just the changed rows.
+				 */
+				if (!force_full && drmModeDirtyFB(k.fd, k.fb_id[back], &clip, 1) &&
+				    errno != ENOSYS && trace)
+					log("trace dirtyfb back: %s", strerror(errno));
+				double t_call = now();
+				int flip_err = drmModePageFlip(k.fd, k.crtc_id, k.fb_id[back],
+							       DRM_MODE_PAGE_FLIP_EVENT, &k);
+				if (trace)
+					log("trace pageflip ioctl %.1f ms (t=%.3f)", (now() - t_call) * 1e3, t_call);
+				if (flip_err) {
 					log("pageflip: %s", strerror(errno));
 					if (errno == ENODEV || errno == ENOENT) { ret = 75; break; }
 					retry = 1;
 				} else {
 					k.flip_pending = 1;
-					t_flip = now();
+					t_flip = k.t_flip = now();
+					if (trace > 1) {
+						int r = kms_wait_flip(&k, 0.5);
+						log("trace blocking wait: %s after %.1f ms", r ? "TIMEOUT" : "done",
+						    (now() - t_flip) * 1e3);
+					}
 				}
 			} else {
-				drmModeClip clip = {
-					.x1 = force_full ? 0 : s.dx,
-					.y1 = force_full ? 0 : s.dy + d0,
-					.x2 = force_full ? k.mode.hdisplay : s.dx + s.dw,
-					.y2 = force_full ? k.mode.vdisplay : s.dy + d1,
-				};
 				if (drmModeDirtyFB(k.fd, k.fb_id[k.front], &clip, 1) && errno != ENOSYS) {
 					log("dirtyfb: %s", strerror(errno));
 					if (errno == ENODEV || errno == ENOENT) { ret = 75; break; }

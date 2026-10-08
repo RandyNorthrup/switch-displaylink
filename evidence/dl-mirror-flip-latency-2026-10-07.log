@@ -1,0 +1,161 @@
+dl-mirror: using /dev/dri/card0 (evdi)
+dl-mirror: drmSetMaster: Permission denied (continuing, may already be master)
+dl-mirror: scanning out 1280x720@60 on crtc 26, double-buffered
+dl-mirror: X screen 1280x720 -> 1280x720 at +0+0 (1:1), 30 fps max
+dl-mirror: trace push rows 0-720 (full) after 0 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=718.564)
+dl-mirror: trace flip done 1.5 ms (t=718.566)
+dl-mirror: trace blocking wait: done after 1.6 ms
+dl-mirror: trace push rows 555-568 after 199 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=718.760)
+dl-mirror: trace flip done 1.4 ms (t=718.762)
+dl-mirror: trace blocking wait: done after 1.4 ms
+dl-mirror: trace push rows 555-568 after 233 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=718.991)
+dl-mirror: trace flip done 0.1 ms (t=718.991)
+dl-mirror: trace blocking wait: done after 0.1 ms
+dl-mirror: trace push rows 319-568 after 200 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=719.193)
+dl-mirror: trace flip done 0.6 ms (t=719.193)
+dl-mirror: trace blocking wait: done after 0.6 ms
+dl-mirror: trace push rows 554-568 after 234 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=719.425)
+dl-mirror: trace flip done 0.6 ms (t=719.426)
+dl-mirror: trace blocking wait: done after 0.6 ms
+dl-mirror: trace push rows 0-720 (full) after 132 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=719.560)
+dl-mirror: trace flip done 1.4 ms (t=719.562)
+dl-mirror: trace blocking wait: done after 1.4 ms
+dl-mirror: trace push rows 318-568 after 101 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=719.661)
+dl-mirror: trace flip done 1.4 ms (t=719.663)
+dl-mirror: trace blocking wait: done after 1.5 ms
+dl-mirror: trace push rows 79-568 after 232 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=719.893)
+dl-mirror: trace flip done 1.0 ms (t=719.894)
+dl-mirror: trace blocking wait: done after 1.0 ms
+dl-mirror: trace push rows 555-568 after 201 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=720.093)
+dl-mirror: trace flip done 1.0 ms (t=720.094)
+dl-mirror: trace blocking wait: done after 1.0 ms
+dl-mirror: trace push rows 302-568 after 233 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=720.326)
+dl-mirror: trace flip done 0.5 ms (t=720.326)
+dl-mirror: trace blocking wait: done after 0.6 ms
+dl-mirror: trace push rows 0-720 (full) after 232 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=720.561)
+dl-mirror: trace flip done 1.5 ms (t=720.563)
+dl-mirror: trace blocking wait: done after 1.5 ms
+dl-mirror: trace push rows 505-568 after 302 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=720.861)
+dl-mirror: trace flip done 1.4 ms (t=720.863)
+dl-mirror: trace blocking wait: done after 1.4 ms
+dl-mirror: trace push rows 302-568 after 65 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=720.925)
+dl-mirror: trace flip done 0.5 ms (t=720.926)
+dl-mirror: trace blocking wait: done after 0.5 ms
+dl-mirror: trace push rows 555-568 after 201 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=721.126)
+dl-mirror: trace flip done 0.8 ms (t=721.127)
+dl-mirror: trace blocking wait: done after 0.8 ms
+dl-mirror: trace push rows 554-568 after 333 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=721.458)
+dl-mirror: trace flip done 0.1 ms (t=721.458)
+dl-mirror: trace blocking wait: done after 0.1 ms
+dl-mirror: trace push rows 0-720 (full) after 98 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=721.561)
+dl-mirror: trace flip done 1.4 ms (t=721.562)
+dl-mirror: trace blocking wait: done after 1.5 ms
+dl-mirror: trace push rows 554-568 after 235 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=721.800)
+dl-mirror: trace flip done 1.7 ms (t=721.801)
+dl-mirror: trace blocking wait: done after 1.7 ms
+dl-mirror: trace push rows 505-566 after 100 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=721.892)
+dl-mirror: trace flip done 0.1 ms (t=721.892)
+dl-mirror: trace blocking wait: done after 0.2 ms
+dl-mirror: trace push rows 555-568 after 234 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=722.125)
+dl-mirror: trace flip done 0.2 ms (t=722.126)
+dl-mirror: trace blocking wait: done after 0.2 ms
+dl-mirror: trace push rows 302-568 after 99 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=722.226)
+dl-mirror: trace flip done 0.5 ms (t=722.226)
+dl-mirror: trace blocking wait: done after 0.6 ms
+dl-mirror: trace push rows 555-568 after 234 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=722.459)
+dl-mirror: trace flip done 0.6 ms (t=722.460)
+dl-mirror: trace blocking wait: done after 0.6 ms
+dl-mirror: trace push rows 0-720 (full) after 131 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=722.594)
+dl-mirror: trace flip done 1.4 ms (t=722.595)
+dl-mirror: trace blocking wait: done after 1.4 ms
+dl-mirror: trace push rows 301-568 after 101 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=722.694)
+dl-mirror: trace flip done 1.4 ms (t=722.696)
+dl-mirror: trace blocking wait: done after 1.4 ms
+dl-mirror: trace push rows 302-568 after 100 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=722.793)
+dl-mirror: trace flip done 0.7 ms (t=722.793)
+dl-mirror: trace blocking wait: done after 0.7 ms
+dl-mirror: trace push rows 505-566 after 100 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=722.892)
+dl-mirror: trace flip done 0.7 ms (t=722.893)
+dl-mirror: trace blocking wait: done after 0.8 ms
+dl-mirror: trace push rows 555-568 after 234 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=723.125)
+dl-mirror: trace flip done 0.2 ms (t=723.125)
+dl-mirror: trace blocking wait: done after 0.2 ms
+dl-mirror: trace push rows 302-568 after 233 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=723.359)
+dl-mirror: trace flip done 0.6 ms (t=723.360)
+dl-mirror: trace blocking wait: done after 0.7 ms
+dl-mirror: trace push rows 301-568 after 200 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=723.559)
+dl-mirror: trace flip done 0.6 ms (t=723.559)
+dl-mirror: trace blocking wait: done after 0.6 ms
+dl-mirror: trace push rows 0-720 (full) after 66 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=723.627)
+dl-mirror: trace flip done 1.4 ms (t=723.629)
+dl-mirror: trace blocking wait: done after 1.5 ms
+dl-mirror: trace push rows 554-568 after 169 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=723.795)
+dl-mirror: trace flip done 1.5 ms (t=723.796)
+dl-mirror: trace blocking wait: done after 1.5 ms
+dl-mirror: trace push rows 505-566 after 133 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=723.925)
+dl-mirror: trace flip done 0.2 ms (t=723.925)
+dl-mirror: trace blocking wait: done after 0.2 ms
+dl-mirror: trace push rows 302-566 after 99 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=724.026)
+dl-mirror: trace flip done 0.6 ms (t=724.027)
+dl-mirror: trace blocking wait: done after 0.7 ms
+dl-mirror: trace push rows 690-695 after 69 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=724.095)
+dl-mirror: trace flip done 0.8 ms (t=724.096)
+dl-mirror: trace blocking wait: done after 0.9 ms
+dl-mirror: trace push rows 690-706 after 31 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=724.125)
+dl-mirror: trace flip done 0.1 ms (t=724.125)
+dl-mirror: trace blocking wait: done after 0.1 ms
+dl-mirror: trace push rows 555-706 after 34 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=724.160)
+dl-mirror: trace flip done 0.4 ms (t=724.160)
+dl-mirror: trace blocking wait: done after 0.4 ms
+dl-mirror: trace push rows 690-706 after 34 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=724.193)
+dl-mirror: trace flip done 0.4 ms (t=724.194)
+dl-mirror: trace blocking wait: done after 0.4 ms
+dl-mirror: trace push rows 690-706 after 33 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=724.225)
+dl-mirror: trace flip done 0.1 ms (t=724.225)
+dl-mirror: trace blocking wait: done after 0.1 ms
+dl-mirror: trace push rows 555-706 after 33 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=724.259)
+dl-mirror: trace flip done 0.3 ms (t=724.259)
+dl-mirror: trace blocking wait: done after 0.4 ms
+dl-mirror: trace push rows 555-700 after 100 ms idle
+dl-mirror: trace pageflip ioctl 0.0 ms (t=724.359)
+dl-mirror: trace flip done 0.4 ms (t=724.359)
+dl-mirror: trace blocking wait: done after 0.4 ms
+dl-mirror: exiting
