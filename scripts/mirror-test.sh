@@ -12,7 +12,7 @@ BASE="$DIR/$(date +%Y%m%d-%H%M%S)"
 
 synced() { while IFS= read -r l; do printf '%s\n' "$l" >>"$1"; sync "$1"; done; }
 
-echo "== $(date -Is) evdi $(modinfo -F version evdi) srcversion $(cat /sys/module/evdi/srcversion 2>/dev/null) ==" >"$BASE.log"
+echo "== $(date -Is) evdi $(/sbin/modinfo -F version evdi) md5 $(md5sum < "$(/sbin/modinfo -n evdi)" | cut -c1-12) ==" >"$BASE.log"
 sudo dmesg -w --time-format iso | synced "$BASE.dmesg" &
 DMESG=$!
 
