@@ -91,5 +91,16 @@ install -m0644 "$REPO_DIR/scripts/dl-panic-capture.service" /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable dl-panic-capture.service
 
+# --- dl-mirror: mirror the desktop onto the dock (user service) -------------
+for p in libdrm-dev libx11-dev libxext-dev libxfixes-dev; do
+  dpkg -s "$p" >/dev/null 2>&1 || apt-get install -y "$p"
+done
+# Build as the invoking user so the repo doesn't end up with root-owned files.
+sudo -u "${SUDO_USER:-root}" make -C "$REPO_DIR/mirror" dl-mirror
+make -C "$REPO_DIR/mirror" install
+systemctl --global enable dl-mirror.service
+log "dl-mirror enabled; it starts with the next graphical login"
+log "  (now: systemctl --user daemon-reload && systemctl --user start dl-mirror)"
+
 log "done. evdi $EVDI_VERSION installed (loads on next boot)."
 log "Reboot with the dock UNPLUGGED, then plug it in to test."

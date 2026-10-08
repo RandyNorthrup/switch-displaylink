@@ -14,7 +14,10 @@
  *
  * Only changed rows are copied, so a static desktop costs almost nothing.
  *
- * Build: make -C mirror      Run: dl-mirror [-d /dev/dri/cardN] [-f fps]
+ * With -w it waits for the dock monitor instead of exiting, and goes back to
+ * waiting when the dock goes away (used by dl-mirror.service).
+ *
+ * Build: make -C mirror      Run: dl-mirror [-w] [-d /dev/dri/cardN] [-f fps]
  */
 #define _GNU_SOURCE
 #include <errno.h>
@@ -39,7 +42,9 @@
 #include <X11/extensions/XShm.h>
 #include <X11/extensions/Xfixes.h>
 
-#define log(...) do { fprintf(stderr, "dl-mirror: " __VA_ARGS__); fputc('\n', stderr); } while (0)
+/* quiet: set while -w is retrying, so a missing dock doesn't flood the log. */
+static int quiet;
+#define log(...) do { if (!quiet) { fprintf(stderr, "dl-mirror: " __VA_ARGS__); fputc('\n', stderr); } } while (0)
 
 static volatile sig_atomic_t quit;
 static void on_signal(int sig) { (void)sig; quit = 1; }
@@ -337,7 +342,8 @@ static double now(void)
 static void usage(void)
 {
 	fprintf(stderr,
-		"usage: dl-mirror [-d /dev/dri/cardN] [-f fps] [-m WxH] [-C] [-1]\n"
+		"usage: dl-mirror [-w] [-d /dev/dri/cardN] [-f fps] [-m WxH] [-C] [-1]\n"
+		"  -w  wait for the dock monitor (and again after it goes away) instead of exiting\n"
 		"  -d  DRM device (default: auto-detect the evdi card)\n"
 		"  -f  max frames per second (default 30)\n"
 		"  -m  force output mode WxH (default: match X screen, else monitor preferred)\n"
@@ -348,10 +354,11 @@ static void usage(void)
 int main(int argc, char **argv)
 {
 	const char *dev = NULL;
-	int fps = 30, force_w = 0, force_h = 0, want_cursor = 1, nbuf = NBUF, opt;
+	int fps = 30, force_w = 0, force_h = 0, want_cursor = 1, nbuf = NBUF, wait = 0, opt;
 
-	while ((opt = getopt(argc, argv, "d:f:m:C1h")) != -1) {
+	while ((opt = getopt(argc, argv, "wd:f:m:C1h")) != -1) {
 		switch (opt) {
+		case 'w': wait = 1; break;
 		case 'd': dev = optarg; break;
 		case 'f': fps = atoi(optarg); if (fps < 1) fps = 1; break;
 		case 'm':
@@ -414,17 +421,33 @@ int main(int argc, char **argv)
 	uint32_t *frame = malloc((size_t)stride * sh * 4); /* src + cursor */
 
 	struct kms k = { .fd = -1 };
-	if (kms_setup(&k, dev, sw, sh, force_w, force_h, nbuf)) {
-		kms_teardown(&k);
-		return errno == EAGAIN ? 75 /* EX_TEMPFAIL */ : 1;
-	}
+	struct scaler s = { 0 };
+	int ret = 0;
 
-	struct scaler s;
+again:
+	for (;;) {
+		if (!kms_setup(&k, dev, sw, sh, force_w, force_h, nbuf))
+			break;
+		int tempfail = errno == EAGAIN || errno == ENODEV;
+		kms_teardown(&k);
+		if (!wait || quit) {
+			ret = tempfail ? 75 /* EX_TEMPFAIL */ : 1;
+			goto out;
+		}
+		if (!quiet)
+			log("waiting for the dock monitor");
+		quiet = 1;
+		sleep(2);
+	}
+	quiet = 0;
+
+	free(s.xmap);
+	free(s.ymap);
 	scaler_init(&s, sw, sh, k.mode.hdisplay, k.mode.vdisplay);
 	log("X screen %dx%d -> %dx%d at +%d+%d%s, %d fps max", sw, sh, s.dw, s.dh,
 	    s.dx, s.dy, s.identity ? " (1:1)" : " (scaled)", fps);
 
-	int force_full = 1, ret = 0;
+	int force_full = 1;
 	const double period = 1.0 / fps;
 	unsigned long frames = 0, pushed = 0, skipped = 0;
 	int ly0 = 0, ly1 = sh; /* source rows changed by the previous push */
@@ -453,6 +476,17 @@ int main(int argc, char **argv)
 		if (now() - t_full >= 1.0) {
 			force_full = 1;
 			t_full = now();
+
+			/* Dock gone or DisplayLinkManager disconnected: flips still
+			 * "succeed" on evdi, so check the connector. */
+			drmModeConnector *c = drmModeGetConnectorCurrent(k.fd, k.conn_id);
+			int up = c && c->connection == DRM_MODE_CONNECTED;
+			drmModeFreeConnector(c);
+			if (!up) {
+				log("dock monitor disconnected");
+				ret = 75;
+				break;
+			}
 		}
 
 		/* A flip that completed after the fallback moved scanout: repaint. */
@@ -564,8 +598,13 @@ int main(int argc, char **argv)
 		}
 	}
 
-	log("exiting");
 	kms_teardown(&k);
+	if (wait && ret == 75 && !quit) {
+		ret = 0;
+		goto again;
+	}
+out:
+	log("exiting");
 	XShmDetach(dpy, &shm);
 	shmdt(shm.shmaddr);
 	XCloseDisplay(dpy);

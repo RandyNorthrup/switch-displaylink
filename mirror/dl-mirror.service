@@ -1,0 +1,16 @@
+# systemd *user* unit: mirror the desktop onto the DisplayLink dock.
+# Installed to /etc/systemd/user/ and enabled for all users by scripts/install.sh.
+# DISPLAY/XAUTHORITY come from the user manager (Plasma exports them).
+# -w: wait quietly while no dock monitor is attached, and reattach on replug.
+[Unit]
+Description=Mirror the desktop to the DisplayLink dock (dl-mirror)
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/local/bin/dl-mirror -w
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target
