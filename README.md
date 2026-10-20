@@ -20,7 +20,10 @@ external display on a Nintendo Switch running **L4T (Linux for Tegra)**, kernel
 >   and the module re-binds the dead xHCI controller, so a replug enumerates
 >   and mirrors again without a reboot (tested 23:32). It was a Tegra xHCI bug,
 >   not DisplayLink: a command-timeout handler spun ~18 s with IRQs off.
->   Details: [docs/unplug-crash.md](docs/unplug-crash.md).
+>   Details: [docs/unplug-crash.md](docs/unplug-crash.md). The proper in-kernel
+>   fix (4 xHCI patches) is on the
+>   [`switch-displaylink` branch](https://github.com/RandyNorthrup/switch-l4t-kernel-4.9/tree/switch-displaylink)
+>   of our kernel fork; see [kernel/README.md](kernel/README.md) to build and boot it.
 > - An extended desktop over PRIME is impossible (`NVIDIA-0 cap 0x0`), which is
 >   why the extended desktop is built the way it is.
 
@@ -106,7 +109,8 @@ fakerandr/           dl-fakerandr.so: LD_PRELOAD xcb-randr shim so KWin/Qt see t
 xorg-test/           isolated second X server on an evdi card (test rig)
 configs/             /etc/X11 config, displaylink unit, crash-debug sysctls
 upstream/            kernel patches for switch-l4t-kernel-4.9 (unplug fix)
-kernel/              build our kernel fork on Windows/WSL, config (see kernel/README.md)
+kernel/              build our kernel fork on Windows/WSL, config (see kernel/README.md);
+                      source: RandyNorthrup/switch-l4t-kernel-4.9, branch switch-displaylink
 evidence/            crash traces, hekate panic dumps, test logs
 scripts/             install.sh            — full fetch+build+install
                       fix-evdi-version.sh   — targeted panic fix (version align)
