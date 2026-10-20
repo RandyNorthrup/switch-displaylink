@@ -17,7 +17,7 @@ of two things:
 - stalls the whole SoC for about 23 s, after which USB stays dead until reboot, or
 - panics with `Watchdog detected hard LOCKUP on cpu 0`.
 
-The old evdi 1.12.0 panic (see the README) was a separate bug and is fixed. With
+The old evdi 1.12.0 panic ([evdi-panic.md](evdi-panic.md)) was a separate bug and is fixed. With
 evdi 1.14.15, evdi and DisplayLinkManager disconnect cleanly, and the crash comes
 after that.
 

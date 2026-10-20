@@ -1,0 +1,62 @@
+name: Problem report
+description: Something doesn't work, crashes, or behaves differently than the README says.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying this! The details below make it much faster to figure out what's going on.
+        If the Switch froze or reset, see "Capturing a crash for a bug report" in the README first.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: dropdown
+    id: model
+    attributes:
+      label: Switch model
+      options:
+        - Switch Lite
+        - Switch (original / Erista)
+        - Switch (Mariko / V2)
+        - Switch OLED
+        - Other / not sure
+    validations:
+      required: true
+  - type: input
+    id: image
+    attributes:
+      label: L4T image, version, and desktop
+      placeholder: "e.g. Switchroot L4T Ubuntu Noble 5.1.2, KDE Plasma (X11)"
+    validations:
+      required: true
+  - type: input
+    id: dock
+    attributes:
+      label: Dock or adapter model, and its `lsusb` line
+      placeholder: "e.g. Plugable UD-3900PDZ, ID 17e9:4323 DisplayLink"
+    validations:
+      required: true
+  - type: textarea
+    id: versions
+    attributes:
+      label: Versions
+      description: Output of these commands.
+      value: |
+        uname -r:
+        dkms status:
+        sha256sum /opt/displaylink/DisplayLinkManager:
+        git -C switch-displaylink log --oneline -1:
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: |
+        Whatever applies:
+        `journalctl -b -u displaylink-driver`, `journalctl _SYSTEMD_USER_UNIT=dl-mirror.service`,
+        `sudo dmesg`, install.sh output, or `/var/log/dl-panics/<timestamp>/console-readable.txt` after a crash.
+      render: text

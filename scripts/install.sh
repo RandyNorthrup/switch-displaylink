@@ -9,9 +9,10 @@
 #   # or
 #   DL_DRIVER_URL=https://.../displaylink-driver.zip       ./scripts/install.sh
 #
-# For Switch/L4T the known-working aarch64 build comes from the Switchroot /
-# theofficialgman community packaging (the kernel here is their build). Stock
-# Synaptics DisplayLink is x86-only and will NOT work on aarch64.
+# Synaptics' "DisplayLink USB Graphics Software for Ubuntu" (5.6 and later)
+# ships aarch64 binaries alongside x86. Its bundled evdi doesn't support kernel
+# 4.9 (upstream evdi starts at 4.15), which is why this repo builds its own
+# (drivers/evdi).
 #
 # Pinned known-good DisplayLinkManager (this machine), for verification:
 #   v5.9.184.0  sha256 845d98daedd0f53658a2ff117b20db84790d595e069da356feea8445a83ee23b
@@ -97,6 +98,11 @@ cat > "$DROPIN_DIR/override.conf" <<EOF
 ExecStartPre=
 ExecStartPre=/bin/sh -c 'modprobe evdi || (dkms install -m evdi -v $EVDI_VERSION -k \$(uname -r) && modprobe evdi)'
 EOF
+
+# --- keep Xorg off the evdi card ---------------------------------------------
+#     Xorg must not auto-add the evdi card as a GPU screen: dl-mirror drives it
+#     directly over KMS, and the Tegra DDX can't use it anyway (no PRIME).
+install -Dm0644 "$REPO_DIR/configs/20-dl-noautogpu.conf" /etc/X11/xorg.conf.d/20-dl-noautogpu.conf
 
 # --- reliable crash capture ------------------------------------------------
 install -m0755 "$REPO_DIR/scripts/dl-panic-capture.sh"      /usr/local/sbin/dl-panic-capture.sh

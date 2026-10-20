@@ -1,0 +1,36 @@
+name: It works on my setup
+description: Report a dock, Switch model, or L4T image that works, so others know it's tested.
+labels: ["works-for-me"]
+body:
+  - type: input
+    id: model
+    attributes:
+      label: Switch model
+    validations:
+      required: true
+  - type: input
+    id: image
+    attributes:
+      label: L4T image, version, and desktop
+    validations:
+      required: true
+  - type: input
+    id: dock
+    attributes:
+      label: Dock or adapter model, and its `lsusb` line
+    validations:
+      required: true
+  - type: checkboxes
+    id: features
+    attributes:
+      label: What you tested
+      options:
+        - label: Mirroring
+        - label: Extended desktop
+        - label: Hot-unplug and replug
+        - label: Charging through the dock
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Anything you had to do differently, monitor resolutions, quirks.
