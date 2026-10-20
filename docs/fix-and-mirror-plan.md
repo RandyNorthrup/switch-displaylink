@@ -1,6 +1,12 @@
 # Fix & mirror plan
 
-> **Where this stands (2026-10-07).** This was the original plan.
+> **Update 2026-10-20:** both items that were "still open" below are done.
+> The unplug crash is fixed by `xusb_bwfix`
+> ([unplug-crash.md](unplug-crash.md)). Multi-monitor works, though not through
+> B2: [extend.md](extend.md) uses an enlarged X screen with one `dl-mirror -s`
+> per monitor.
+>
+> **Where this stood (2026-10-07).** This was the original plan.
 > - Part A: **done via A1.** evdi 1.14.15 is installed, 1.12.0 removed, and the
 >   service picks the version pinned instead of by mtime.
 > - Part B: **done, but neither B1 nor B2.** A direct-KMS mirror daemon

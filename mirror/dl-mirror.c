@@ -418,9 +418,10 @@ static double now(void)
 static void usage(void)
 {
 	fprintf(stderr,
-		"usage: dl-mirror [-w] [-d /dev/dri/cardN] [-f fps] [-m WxH] [-C] [-K] [-1]\n"
+		"usage: dl-mirror [-w] [-d /dev/dri/cardN] [-s WxH+X+Y] [-f fps] [-m WxH] [-C] [-K] [-1]\n"
 		"  -w  wait for the dock monitor (and again after it goes away) instead of exiting\n"
 		"  -d  DRM device (default: auto-detect the evdi card)\n"
+		"  -s  show only this part of the X screen (extended desktop: one region per monitor)\n"
 		"  -f  max frames per second (default 60)\n"
 		"  -m  force output mode WxH (default: match X screen, else monitor preferred)\n"
 		"  -C  don't draw the mouse cursor\n"
@@ -432,12 +433,16 @@ int main(int argc, char **argv)
 {
 	const char *dev = NULL;
 	int fps = 60, force_w = 0, force_h = 0, want_cursor = 1, nbuf = NBUF, wait = 0, opt;
+	int rw = 0, rh = 0, rx = 0, ry = 0; /* -s source region */
 	trace = getenv("DL_MIRROR_TRACE") ? atoi(getenv("DL_MIRROR_TRACE")) : 0;
 
-	while ((opt = getopt(argc, argv, "wd:f:m:CK1h")) != -1) {
+	while ((opt = getopt(argc, argv, "wd:s:f:m:CK1h")) != -1) {
 		switch (opt) {
 		case 'w': wait = 1; break;
 		case 'd': dev = optarg; break;
+		case 's':
+			if (sscanf(optarg, "%dx%d+%d+%d", &rw, &rh, &rx, &ry) != 4 || rw < 1 || rh < 1) { usage(); return 2; }
+			break;
 		case 'f': fps = atoi(optarg); if (fps < 1) fps = 1; break;
 		case 'm':
 			if (sscanf(optarg, "%dx%d", &force_w, &force_h) != 2) { usage(); return 2; }
@@ -466,6 +471,14 @@ int main(int argc, char **argv)
 	int scr = DefaultScreen(dpy);
 	Window root = RootWindow(dpy, scr);
 	int sw = DisplayWidth(dpy, scr), sh = DisplayHeight(dpy, scr);
+	if (rw) {
+		if (rx < 0 || ry < 0 || rx + rw > sw || ry + rh > sh) {
+			log("region %dx%d+%d+%d is outside the %dx%d X screen", rw, rh, rx, ry, sw, sh);
+			return 1;
+		}
+		sw = rw;
+		sh = rh;
+	}
 	if (DefaultDepth(dpy, scr) != 24) {
 		log("unsupported X depth %d (need 24)", DefaultDepth(dpy, scr));
 		return 1;
@@ -525,7 +538,7 @@ again:
 	free(s.xmap);
 	free(s.ymap);
 	scaler_init(&s, sw, sh, k.mode.hdisplay, k.mode.vdisplay);
-	log("X screen %dx%d -> %dx%d at +%d+%d%s, %d fps max", sw, sh, s.dw, s.dh,
+	log("X %dx%d+%d+%d -> %dx%d at +%d+%d%s, %d fps max", sw, sh, rx, ry, s.dw, s.dh,
 	    s.dx, s.dy, s.identity ? " (1:1)" : " (scaled)", fps);
 
 	kwin_compositing(0);
@@ -544,7 +557,7 @@ again:
 			max_gap = t_it - t_iter;
 		t_iter = t_it;
 		double t_grab = now();
-		if (!XShmGetImage(dpy, root, img, 0, 0, AllPlanes)) {
+		if (!XShmGetImage(dpy, root, img, rx, ry, AllPlanes)) {
 			log("XShmGetImage failed");
 			ret = 1;
 			break;
@@ -555,6 +568,8 @@ again:
 		if (want_cursor) {
 			XFixesCursorImage *ci = XFixesGetCursorImage(dpy);
 			if (ci) {
+				ci->x -= rx;
+				ci->y -= ry;
 				draw_cursor(frame, stride, sw, sh, ci);
 				XFree(ci);
 			}

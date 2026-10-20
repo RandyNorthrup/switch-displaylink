@@ -176,6 +176,10 @@ static struct drm_connector_helper_funcs evdi_connector_helper_funcs = {
 };
 
 static const struct drm_connector_funcs evdi_connector_funcs = {
+#if KERNEL_VERSION(4, 14, 0) > LINUX_VERSION_CODE
+	/* <4.14 calls this unconditionally when the DPMS property is set (NULL deref from Xorg modesetting) */
+	.dpms = drm_atomic_helper_connector_dpms,
+#endif
 	.detect = evdi_detect,
 	.fill_modes = drm_helper_probe_single_connector_modes,
 	.destroy = evdi_connector_destroy,

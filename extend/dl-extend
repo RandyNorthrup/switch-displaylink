@@ -1,0 +1,202 @@
+#!/bin/bash
+# dl-extend -- extended desktop on the DisplayLink dock monitors.
+#
+# The Tegra X driver cannot drive the evdi cards (no PRIME), so the X screen is
+# enlarged past the internal panel and one dl-mirror per monitor shows its part
+# of it. dl-fakerandr.so tells KWin/Qt about the extra monitors.
+#
+#   dl-extend detect    write ~/.config/dl-extend.conf from the monitors attached now
+#   dl-extend identify  show each screen's name on it for a few seconds
+#   dl-extend arrange A B C   set the left-to-right order on the desk and apply
+#                       it now, e.g. "dl-extend arrange DOCK2 PANEL DOCK1"
+#                       (PANEL is the Switch screen)
+#   dl-extend mirror    show the Switch screen on every monitor instead (now and at login)
+#   dl-extend extend    back to the extended desktop
+#   dl-extend session   (login, before KWin) enlarge the X screen; exit 0 if extended
+#   dl-extend run       (dl-mirror.service) one dl-mirror per monitor, or a plain mirror
+#   dl-extend off       forget the layout: mirror again from the next login
+#
+# Layout file, one monitor per line (edit X/Y to rearrange, then log in again):
+#   NAME WIDTH HEIGHT X Y MM_WIDTH MM_HEIGHT /dev/dri/by-path/platform-evdi.N-card
+#
+# The Switch screen has to stay at the top-left corner (0,0) of the enlarged X
+# screen: anywhere else the NVIDIA driver either pans it after the pointer or
+# (panning area shrunk to the panel) confines the pointer to it. The dock
+# monitors can go anywhere to its right or below.
+#
+# Monitors standing LEFT of the Switch are therefore put at the far right end
+# of the X screen, and dl-edgewrap joins the two ends for the pointer: a
+# "WRAP X" line gives the seam it has to block (see dl-edgewrap.c).
+set -u
+CONF=${XDG_CONFIG_HOME:-$HOME/.config}/dl-extend.conf
+LIVE=${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/dl-fake-randr
+MODE=${XDG_CONFIG_HOME:-$HOME/.config}/dl-extend.mode # "mirror" or absent (= extend)
+FPS=${DL_EXTEND_FPS:-30}
+
+dock_present() { grep -qs 17e9 /sys/bus/usb/devices/*/idVendor; }
+layout() { grep -Ev '^\s*(#|$|PANEL\s|WRAP\s)' "$1" 2>/dev/null; }
+panel_size() { xrandr | sed -n 's/.* connected primary \([0-9]*\)x\([0-9]*\)+.*/\1 \2/p'; }
+
+# Enlarge the X screen to hold the layout in $CONF and describe it to clients.
+apply_layout() {
+	local pw ph fw fh out name w h x y mmw mmh _
+	read -r pw ph < <(panel_size); pw=${pw:-1280}; ph=${ph:-720}
+	fw=$pw; fh=$ph
+	while read -r name w h x y _; do
+		[ $((x + w)) -gt $fw ] && fw=$((x + w)); [ $((y + h)) -gt $fh ] && fh=$((y + h))
+	done < <(layout "$CONF")
+	out=$(xrandr | sed -n 's/^\(\S*\) connected primary.*/\1/p')
+	# tracking 1x1: the panel must not pan when the pointer leaves it
+	xrandr --fb ${fw}x${fh} --output "$out" --pos 0x0 --panning ${fw}x${fh}+0+0/1x1+0+0 || return 1
+	for name in $(xrandr --listmonitors | sed -n 's/^ *[0-9]*: \(DOCK\S*\) .*/\1/p'); do
+		xrandr --delmonitor "$name"
+	done
+	while read -r name w h x y mmw mmh _; do
+		xrandr --setmonitor "$name" "$w/${mmw}x$h/$mmh+$x+$y" none
+	done < <(layout "$CONF")
+	grep -Ev '^\s*(#|$|PANEL\s)' "$CONF" >"$LIVE"
+}
+
+# Shrink the X screen back to the panel and forget the virtual monitors.
+unapply_layout() {
+	local pw ph out name
+	read -r pw ph < <(panel_size)
+	out=$(xrandr | sed -n 's/^\(\S*\) connected primary.*/\1/p')
+	for name in $(xrandr --listmonitors | sed -n 's/^ *[0-9]*: \(DOCK\S*\) .*/\1/p'); do
+		xrandr --delmonitor "$name"
+	done
+	rm -f "$LIVE"
+	xrandr --fb ${pw:-1280}x${ph:-720} --output "$out" --pos 0x0 --panning 0x0
+}
+
+# Switch the running session to what $CONF and $MODE say.
+go_live() {
+	local fw fh
+	systemctl --user stop dl-mirror.service
+	if [ "$(cat "$MODE" 2>/dev/null)" = mirror ]; then
+		unapply_layout
+	else
+		apply_layout || return 1
+		# KWin/Qt only re-read the monitors on a screen-size change: make sure one happens
+		read -r fw fh < <(xrandr | sed -n '1s/.*current \([0-9]*\) x \([0-9]*\).*/\1 \2/p')
+		xrandr --fb ${fw}x$((fh + 8)) 2>/dev/null; apply_layout
+	fi
+	systemctl --user start dl-mirror.service
+	# plasmashell keeps drawing the desktops at their old places otherwise
+	systemctl --user try-restart plasma-plasmashell.service
+}
+
+case "${1:-}" in
+detect)
+	read -r pw ph < <(panel_size)
+	x=${pw:-1280}; n=0; : >"$CONF.new"
+	for st in /sys/devices/platform/evdi.*/drm/card*/card*-*/status; do
+		[ "$(cat "$st" 2>/dev/null)" = connected ] || continue
+		dir=$(dirname "$st"); evdi=$(echo "$st" | sed 's|.*/\(evdi\.[0-9]*\)/.*|\1|')
+		mode=$(grep -m1 -x 1920x1080 "$dir/modes" || head -1 "$dir/modes")
+		[ -n "$mode" ] || mode=1920x1080
+		n=$((n + 1)); w=${mode%x*}; h=${mode#*x}
+		# physical size only matters for DPI: assume ~92 dpi
+		echo "DOCK$n $w $h $x 0 $((w * 254 / 920)) $((h * 254 / 920)) /dev/dri/by-path/platform-$evdi-card" >>"$CONF.new"
+		x=$((x + w))
+	done
+	[ $n -gt 0 ] || { rm -f "$CONF.new"; echo "no dock monitor attached" >&2; exit 1; }
+	mv "$CONF.new" "$CONF"; cat "$CONF"
+	;;
+arrange)
+	shift
+	[ -n "$(layout "$CONF")" ] || { echo "no layout yet: run 'dl-extend detect' first" >&2; exit 1; }
+	[ $# -ge 2 ] || { echo "usage: dl-extend arrange NAME... (left to right; names: PANEL $(layout "$CONF" | cut -d' ' -f1 | tr '\n' ' '))" >&2; exit 2; }
+	case " $* " in *" PANEL "*) ;; *) echo "include PANEL (the Switch screen) in the order" >&2; exit 2 ;; esac
+	# X screen order: panel, the monitors right of it, then the ones left of it
+	left=(); right=(); seen=0
+	for n in "$@"; do
+		if [ "$n" = PANEL ]; then seen=1; elif [ $seen = 1 ]; then right+=("$n"); else left+=("$n"); fi
+	done
+	read -r pw ph < <(panel_size); x=${pw:-1280}; seam=0; : >"$CONF.new"
+	for n in ${right[@]+"${right[@]}"} WRAP ${left[@]+"${left[@]}"}; do
+		if [ "$n" = WRAP ]; then
+			[ ${#left[@]} -gt 0 ] && echo "WRAP $x" >>"$CONF.new"
+			continue
+		fi
+		name=; read -r name w h _ _ mmw mmh card < <(layout "$CONF" | grep -m1 "^$n ")
+		[ -n "$name" ] || { echo "unknown monitor $n" >&2; rm -f "$CONF.new"; exit 1; }
+		echo "$name $w $h $x 0 $mmw $mmh $card" >>"$CONF.new"; x=$((x + w))
+	done
+	mv "$CONF.new" "$CONF"; cat "$CONF"
+	rm -f "$MODE"
+	[ -n "${DISPLAY:-}" ] || { echo "saved; applies at the next login"; exit 0; }
+	go_live
+	;;
+mirror)
+	echo mirror >"$MODE"
+	[ -n "${DISPLAY:-}" ] && go_live
+	;;
+extend)
+	[ -n "$(layout "$CONF")" ] || { echo "no layout yet: run 'dl-extend detect' first" >&2; exit 1; }
+	rm -f "$MODE"
+	[ -n "${DISPLAY:-}" ] && go_live
+	;;
+identify)
+	read -r pw ph < <(panel_size)
+	{ echo "PANEL ${pw:-1280} ${ph:-720} 0 0"; layout "$LIVE"; } | python3 -c '
+import sys
+from PyQt5 import QtCore, QtGui, QtWidgets
+app = QtWidgets.QApplication([])
+keep = []
+for line in sys.stdin:
+    name, w, h, x, y = line.split()[:5]
+    l = QtWidgets.QLabel(name)
+    l.setWindowFlags(QtCore.Qt.X11BypassWindowManagerHint | QtCore.Qt.WindowStaysOnTopHint)
+    l.setAlignment(QtCore.Qt.AlignCenter)
+    f = QtGui.QFont(); f.setPixelSize(int(h) // 4); f.setBold(True); l.setFont(f)
+    l.setStyleSheet("background:#201040;color:#40e0d0;")
+    l.setGeometry(int(x) + int(w) // 4, int(y) + int(h) // 4, int(w) // 2, int(h) // 2)
+    l.show(); keep.append(l)
+QtCore.QTimer.singleShot(int(sys.argv[1]) * 1000, app.quit)
+app.exec_()' "${2:-10}"
+	;;
+session)
+	rm -f "$LIVE"
+	dock_present && [ -n "$(layout "$CONF")" ] || exit 1
+	# Mirroring still exits 0: the shim must be loaded for "dl-extend extend" to
+	# work later in the session, and it does nothing without $LIVE.
+	[ "$(cat "$MODE" 2>/dev/null)" = mirror ] && exit 0
+	apply_layout || { rm -f "$LIVE"; exit 1; }
+	;;
+run)
+	pids=()
+	trap 'kill "${pids[@]}" 2>/dev/null' TERM INT HUP
+	if [ ! -s "$LIVE" ]; then
+		# mirror: the whole X screen on every dock monitor
+		cards=(/dev/dri/by-path/platform-evdi.*-card)
+		[ -e "${cards[0]}" ] || exec /usr/local/bin/dl-mirror -w
+		for card in "${cards[@]}"; do
+			/usr/local/bin/dl-mirror -w -d "$card" &
+			pids+=($!)
+		done
+		wait "${pids[@]}"
+		wait "${pids[@]}" 2>/dev/null
+		exit 0
+	fi
+	seam=0
+	while read -r name w h x y mmw mmh card; do
+		[ "$name" = WRAP ] && { seam=$w; continue; }
+		/usr/local/bin/dl-mirror -w -d "$card" -s "${w}x$h+$x+$y" -m "${w}x$h" -f "$FPS" &
+		pids+=($!)
+	done <"$LIVE"
+	read -r pw ph < <(panel_size)
+	read -r fw fh < <(xrandr | sed -n '1s/.*current \([0-9]*\) x \([0-9]*\).*/\1 \2/p')
+	/usr/local/bin/dl-edgewrap "$fw" "$fh" "${pw:-1280}" "${ph:-720}" "$seam" &
+	pids+=($!)
+	wait "${pids[@]}"
+	wait "${pids[@]}" 2>/dev/null # again: the first wait returns when the trap fires
+	exit 0
+	;;
+off)
+	rm -f "$CONF"; echo "layout removed; log out and in to go back to mirroring"
+	;;
+*)
+	sed -n '2,15p' "$0" | sed 's/^# \?//'; exit 2
+	;;
+esac

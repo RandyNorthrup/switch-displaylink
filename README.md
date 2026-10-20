@@ -4,9 +4,15 @@ Getting a **Plugable UD-3900PDZ** (DisplayLink, USB ID `17e9:4323`) working as a
 external display on a Nintendo Switch running **L4T (Linux for Tegra)**, kernel
 `4.9.140-l4t`, aarch64 (Tegra X1).
 
-> **Status (2026-10-07):**
+> **Status (2026-10-20):**
 > - **Mirroring works.** [`dl-mirror`](docs/mirror.md) mirrors the Switch screen
 >   to the dock tear-free, autostarts at login, and reattaches after a replug.
+> - **Extended desktop works** (panel + both dock monitors, any left/right order):
+>   an enlarged X screen, one `dl-mirror -s` per monitor and a RandR shim for
+>   KWin/Qt. See [docs/extend.md](docs/extend.md). It needed an evdi `.dpms` fix
+>   for kernels before 4.14.
+> - **Dock not charging?** It's a USB-C PD role race at plug-in. Power the dock
+>   up fully *before* connecting the Switch. See [docs/charging.md](docs/charging.md).
 > - **The evdi hotplug panic is fixed:** the version is aligned to evdi 1.14.15,
 >   plus two 4.9 fixes in `drivers/evdi`.
 > - **Unplugging the dock is fixed by [`drivers/xusb-bwfix`](drivers/xusb-bwfix)**
@@ -15,8 +21,8 @@ external display on a Nintendo Switch running **L4T (Linux for Tegra)**, kernel
 >   and mirrors again without a reboot (tested 23:32). It was a Tegra xHCI bug,
 >   not DisplayLink: a command-timeout handler spun ~18 s with IRQs off.
 >   Details: [docs/unplug-crash.md](docs/unplug-crash.md).
-> - An extended desktop over PRIME is impossible (`NVIDIA-0 cap 0x0`), so
->   multi-monitor is still to do.
+> - An extended desktop over PRIME is impossible (`NVIDIA-0 cap 0x0`), which is
+>   why the extended desktop is built the way it is.
 
 ## Hardware / software
 
@@ -80,8 +86,9 @@ So we rely on the earlier, intact traces, which are the same signature.
 DisplayLink-on-Linux path (`xrandr --setprovideroutputsource evdi NVIDIA-0`)
 needs the primary GPU to advertise *Source Output*; the Tegra driver advertises
 nothing. So a unified/extended desktop via PRIME is **not possible** on this
-platform. Mirroring and multi-monitor therefore need a different mechanism
-(separate X screen or a Wayland compositor) — see the plan doc.
+platform. Mirroring and multi-monitor therefore need a different mechanism.
+Both are now done with `dl-mirror` reading the X screen. See
+[docs/mirror.md](docs/mirror.md) and [docs/extend.md](docs/extend.md).
 
 ## Repo layout
 
@@ -94,6 +101,9 @@ drivers/xusb-bwfix/  the unplug-lockup fix (DKMS, loads at boot; see docs/unplug
 drivers/xusb-otgdefer/ unplug-crash experiment (defer OTG detach); does NOT fix it
 drivers/cpu-pcsample/  CoreSight PC sampler; blocked (external debug fused off)
 mirror/              dl-mirror (KMS mirror daemon) + its systemd user unit
+extend/              dl-extend (extended-desktop layout/session/run) + dl-edgewrap
+fakerandr/           dl-fakerandr.so: LD_PRELOAD xcb-randr shim so KWin/Qt see the dock monitors
+xorg-test/           isolated second X server on an evdi card (test rig)
 configs/             /etc/X11 config, displaylink unit, crash-debug sysctls
 upstream/            kernel patches for switch-l4t-kernel-4.9 (unplug fix)
 kernel/              build our kernel fork on Windows/WSL, config (see kernel/README.md)
@@ -107,6 +117,8 @@ scripts/             install.sh            — full fetch+build+install
                       capture-staleness.c   — how stale X root grabs are (compositing test)
                       dl-panic-capture.*    — reliable crash capture
 docs/                mirror.md             — how dl-mirror works, tuning notes
+                      extend.md             — extended desktop (multi-monitor)
+                      charging.md           — dock not charging: PD role race at plug-in
                       unplug-crash.md       — the xHCI unplug crash (fixed by xusb_bwfix)
                       atmosphere.md         — driving the dock from Atmosphère (protocol RE, in progress)
                       fix-and-mirror-plan.md — original plan + what was done
@@ -147,15 +159,18 @@ After the next crash + reboot, the trace is under `/var/log/dl-panics/<timestamp
 
 ## Unplugging the dock
 
-Until the [xHCI unplug crash](docs/unplug-crash.md) is fixed, run this first:
+With [`xusb_bwfix`](drivers/xusb-bwfix) loaded (installed via DKMS and loaded at
+boot by `install.sh`), you can just pull the cable, even while mirroring. The
+module skips the endpoint drops that used to lock up the box and re-binds the
+xHCI controller, so a replug enumerates and the picture returns after ~15 s.
+Background: [docs/unplug-crash.md](docs/unplug-crash.md).
 
-```sh
-sudo ./scripts/dock-eject.sh   # then pull the cable
-```
+Without the module, run `sudo ./scripts/dock-eject.sh` before pulling the
+cable. Otherwise the Switch can freeze for ~20 s (leaving USB dead until
+reboot) or hard-lock.
 
-Pulling the cable while the dock is active can freeze the Switch for ~20 s
-(leaving USB dead until reboot) or hard-lock it. To reattach, plug the cable
-back in. A picture returns after ~15 s.
+When plugging back in, power the dock up first, so the Switch charges from it
+instead of powering it ([docs/charging.md](docs/charging.md)).
 
 ## Safety
 

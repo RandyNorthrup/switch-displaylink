@@ -112,6 +112,16 @@ done
 # Build as the invoking user so the repo doesn't end up with root-owned files.
 sudo -u "${SUDO_USER:-root}" make -C "$REPO_DIR/mirror" dl-mirror
 make -C "$REPO_DIR/mirror" install
+# Extended desktop: KWin/Qt shim + login hook (inactive until "dl-extend detect").
+dpkg -s libxcb-randr0-dev >/dev/null 2>&1 || apt-get install -y libxcb-randr0-dev
+sudo -u "${SUDO_USER:-root}" make -C "$REPO_DIR/fakerandr"
+make -C "$REPO_DIR/fakerandr" install
+dpkg -s libxi-dev >/dev/null 2>&1 || apt-get install -y libxi-dev
+sudo -u "${SUDO_USER:-root}" cc -O2 -Wall -Wextra -std=gnu11 -o "$REPO_DIR/extend/dl-edgewrap" \
+  "$REPO_DIR/extend/dl-edgewrap.c" -lX11 -lXi -lXfixes
+install -Dm0755 "$REPO_DIR/extend/dl-edgewrap" /usr/local/bin/dl-edgewrap
+install -Dm0755 "$REPO_DIR/extend/dl-extend" /usr/local/bin/dl-extend
+install -Dm0644 "$REPO_DIR/extend/dl-extend-env.sh" /etc/xdg/plasma-workspace/env/dl-extend.sh
 systemctl --global enable dl-mirror.service
 log "dl-mirror enabled; it starts with the next graphical login"
 log "  (now: systemctl --user daemon-reload && systemctl --user start dl-mirror)"

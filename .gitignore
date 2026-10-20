@@ -1,3 +1,8 @@
 # local scratch
 *.tmp
 *.swp
+
+# build outputs / test logs
+fakerandr/*.so
+xorg-test/*.log
+xorg-test/*.out
